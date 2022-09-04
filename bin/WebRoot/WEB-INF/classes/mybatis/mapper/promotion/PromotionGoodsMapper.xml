@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+【优惠促销活动所关联的商品表】对象关系映射 配置 
+ @author AutoCode 309444359@qq.com
+ @date 2016-01-08 16:25:23
+ -->
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.bluemobi.dao.promotion.PromotionGoodsDao">
+
+	<resultMap id="promotionGoodsResultMap" type="com.bluemobi.po.promotion.PromotionGoods">
+		<id property="id" column="id" />
+       <result property="promotionId" column="promotion_id" />
+       <result property="skuId" column="sku_id" />
+	</resultMap>
+	<resultMap id="mapResultMap"  type="java.util.HashMap" extends="promotionGoodsResultMap"></resultMap>
+	<resultMap id="pageResultMap"  type="java.util.HashMap" extends="promotionGoodsResultMap"></resultMap>
+	
+	
+	<insert id="insert" parameterType="com.bluemobi.po.promotion.PromotionGoods" useGeneratedKeys="true" keyProperty="id" >
+	   insert into promotion_goods (
+	     id,
+	     promotion_id,
+	     sku_id
+	   )values (
+	     #{id},
+	     #{promotionId},
+	     #{skuId}
+	   )
+	</insert>
+
+	<delete id="delete" parameterType="map">
+	   delete from 
+	     promotion_goods 
+	   where 
+	    promotion_id=#{promotionId} 
+	</delete>
+	
+	<insert id="batchInsert" parameterType="java.util.List">  
+	    insert into promotion_goods (promotion_id, sku_id)   
+	    values  
+	    <foreach collection="list" item="item" index="index" separator="," >  
+	        (#{item.promotionId},#{item.skuId})  
+	    </foreach>  
+	</insert>
+	
+	<select id="selectObjectList" parameterType="map" resultMap="promotionGoodsResultMap">
+	   select 
+	     id,
+	     promotion_id,
+	     sku_id
+	   from promotion_goods
+	   <where>
+	     <if test="promotionId != null">
+	        and promotion_id=#{promotionId}
+	     </if>
+	     <if test="skuId != null">
+	        and sku_id=#{skuId}
+	     </if>
+	   </where>
+	</select>
+
+	
+</mapper> 

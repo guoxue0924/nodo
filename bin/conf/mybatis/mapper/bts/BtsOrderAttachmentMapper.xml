@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+【订单附件关系表】对象关系映射 配置 
+ @author AutoCode 309444359@qq.com
+ @date 2015-11-17 13:27:05
+ -->
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.bluemobi.dao.bts.BtsOrderAttachmentDao">
+
+	<resultMap id="btsOrderAttachmentResultMap" type="com.bluemobi.po.bts.BtsOrderAttachment">
+		<id property="id" column="id" />
+		<id property="attachmentid" column="attachmentid" />
+		<id property="userid" column="userid" />
+		<id property="type" column="type" />
+       <result property="toId" column="to_id" />
+	</resultMap>
+	<resultMap id="mapResultMap"  type="java.util.HashMap" extends="btsOrderAttachmentResultMap"></resultMap>
+	<resultMap id="pageResultMap"  type="java.util.HashMap" extends="btsOrderAttachmentResultMap"></resultMap>
+	
+	
+	<insert id="insert" parameterType="com.bluemobi.po.bts.BtsOrderAttachment">
+	   insert into bts_order_attachment (
+	     id,
+	     to_id,
+	     attachmentid,
+	     userid,
+	     type
+	   )values (
+	     #{id},
+	     #{toId},
+	     #{attachmentid},
+	     #{userid},
+	     #{type}
+	   )
+	</insert>
+
+	<update id="update" parameterType="com.bluemobi.po.bts.BtsOrderAttachment">
+		update bts_order_attachment
+		<set>
+			<if test="id != null">
+				id=#{id},
+			</if>
+			<if test="toId != null">
+				to_id=#{toId},
+			</if>
+			<if test="attachmentid != null">
+				attachmentid=#{attachmentid},
+			</if>
+			<if test="userid != null">
+				userid=#{userid},
+			</if>
+			<if test="type != null">
+				type=#{type},
+			</if>
+		</set>
+		<where>
+			id=#{id} 
+			 andattachmentid=#{attachmentid} 
+			 anduserid=#{userid} 
+			 andtype=#{type} 
+		</where>
+	</update>
+
+	<delete id="delete" parameterType="map">
+	   delete from 
+	     bts_order_attachment 
+	   where 
+	    id=#{id} 
+	    and attachmentid=#{attachmentid} 
+	    and userid=#{userid} 
+	    and type=#{type} 
+	</delete>
+
+	<select id="selectObject" parameterType="map" resultMap="btsOrderAttachmentResultMap">
+	   select 
+	    id,
+	    to_id,
+	    attachmentid,
+	    userid,
+	    type
+	   from bts_order_attachment
+	   where 
+	    id=#{id} 
+	    and attachmentid=#{attachmentid} 
+	    and userid=#{userid} 
+	    and type=#{type} 
+	</select>
+	
+	<select id="selectObjectList" parameterType="map" resultMap="btsOrderAttachmentResultMap">
+	   select 
+	     id,
+	     to_id,
+	     attachmentid,
+	     userid,
+	     type
+	   from bts_order_attachment
+	   <where>
+	     <if test="id != null">
+	        id=#{id}
+	     </if>
+	     <if test="toId != null">
+	        and to_id=#{toId}
+	     </if>
+	     <if test="attachmentid != null">
+	        and attachmentid=#{attachmentid}
+	     </if>
+	     <if test="userid != null">
+	        and userid=#{userid}
+	     </if>
+	     <if test="type != null">
+	        and type=#{type}
+	     </if>
+	   </where>
+	</select>
+
+	<select id="selectMap" parameterType="map" resultMap="mapResultMap">
+	   select 
+	    id,
+	    to_id,
+	    attachmentid,
+	    userid,
+	    type
+	   from bts_order_attachment
+	   where 
+	    id=#{id} 
+	    and attachmentid=#{attachmentid} 
+	    and userid=#{userid} 
+	    and type=#{type} 
+	</select>
+
+	<select id="selectMapList" parameterType="map" resultMap="mapResultMap">
+	   select 
+	     id,
+	     to_id,
+	     attachmentid,
+	     userid,
+	     type
+	   from bts_order_attachment
+	   <where>
+	     <if test="id != null">
+	        id=#{id}
+	     </if>
+	     <if test="toId != null">
+	        and to_id=#{toId}
+	     </if>
+	     <if test="attachmentid != null">
+	        and attachmentid=#{attachmentid}
+	     </if>
+	     <if test="userid != null">
+	        and userid=#{userid}
+	     </if>
+	     <if test="type != null">
+	        and type=#{type}
+	     </if>
+	   </where>
+	</select>
+	
+	<select id="page" parameterType="map" resultMap="pageResultMap">
+	   select 
+	     id,
+	     to_id,
+	     attachmentid,
+	     userid,
+	     type
+	<include refid="pageCondition" />
+	limit #{begin},#{end}
+	</select>
+
+	<select id="pageCount" parameterType="map" resultMap="pageResultMap">
+	   select count(1)
+	   <include refid="pageCondition" />
+	</select>
+
+	<sql id="pageCondition">
+	   from bts_order_attachment
+	   <where>
+	     <if test="id != null">
+	        id=#{id}
+	     </if>
+	     <if test="toId != null">
+	        and to_id=#{toId}
+	     </if>
+	     <if test="attachmentid != null">
+	        and attachmentid=#{attachmentid}
+	     </if>
+	     <if test="userid != null">
+	        and userid=#{userid}
+	     </if>
+	     <if test="type != null">
+	        and type=#{type}
+	     </if>
+	   </where>
+	</sql>
+
+	<insert id="batchInsert" parameterType="map">  
+	    insert into bts_order_attachment (refund_id, attachmentid)   
+	    values  
+	    <foreach collection="imageIds" item="item" index="index" separator="," >  
+	        (#{refundId},#{item})  
+	    </foreach>  
+	</insert>
+	
+</mapper> 

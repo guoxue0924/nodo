@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+【优惠促销活动主体表】对象关系映射 配置 
+ @author AutoCode 309444359@qq.com
+ @date 2016-01-08 16:25:22
+ -->
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.bluemobi.dao.promotion.PromotionContentDao">
+
+	<resultMap id="promotionContentResultMap" type="com.bluemobi.po.promotion.PromotionContent">
+		<id property="promotionId" column="promotion_id" />
+       <result property="categoryId" column="category_id" />
+       <result property="title" column="title" />
+       <result property="content" column="content" />
+       <result property="rules" column="rules" />
+       <result property="isOverall" column="is_overall" />
+       <result property="status" column="status" />
+       <result property="isDel" column="is_del" />
+       <result property="startTime" column="start_time" />
+       <result property="endTime" column="end_time" />
+       <result property="ctime" column="ctime" />
+       <result property="mtime" column="mtime" />
+	</resultMap>
+	<resultMap id="mapResultMap"  type="java.util.HashMap" extends="promotionContentResultMap"></resultMap>
+	<resultMap id="pageResultMap"  type="com.bluemobi.to.promotion.PromotionTO" extends="promotionContentResultMap">
+		<result property="categoryTitle" column="category_title" />
+	</resultMap>
+	
+	<resultMap id="detailResultMap"  type="com.bluemobi.to.promotion.PromotionDetailTO" extends="promotionContentResultMap">
+		<association property="category" javaType="com.bluemobi.po.promotion.PromotionCategory">
+			<id property="categoryId" column="category_id"/>
+			<result property="title" column="category_title" />
+			<result property="templateName" column="templateName" />
+		</association>
+		<collection property="skuList" ofType="com.bluemobi.to.goods.GoodsContentAndSkuTO">
+			<id property="skuId" column="sku_id" />
+			<result property="name" column="name" />
+		</collection>
+	</resultMap>
+	
+	
+	<insert id="insert" parameterType="com.bluemobi.po.promotion.PromotionContent" useGeneratedKeys="true" keyProperty="promotionId" >
+	   insert into promotion_content (
+	     promotion_id,
+	     category_id,
+	     title,
+	     content,
+	     rules,
+	     is_overall,
+	     status,
+	     is_del,
+	     start_time,
+	     end_time,
+	     ctime,
+	     mtime
+	   )values (
+	     #{promotionId},
+	     #{categoryId},
+	     #{title},
+	     #{content},
+	     #{rules},
+	     #{isOverall},
+	     #{status},
+	     #{isDel},
+	     #{startTime},
+	     #{endTime},
+	     #{ctime},
+	     #{mtime}
+	   )
+	</insert>
+
+	<update id="update" parameterType="com.bluemobi.po.promotion.PromotionContent">
+		update promotion_content
+		<set>
+			<if test="promotionId != null">
+				promotion_id=#{promotionId},
+			</if>
+			<if test="categoryId != null">
+				category_id=#{categoryId},
+			</if>
+			<if test="title != null">
+				title=#{title},
+			</if>
+			<if test="content != null">
+				content=#{content},
+			</if>
+			<if test="rules != null">
+				rules=#{rules},
+			</if>
+			<if test="isOverall != null">
+				is_overall=#{isOverall},
+			</if>
+			<if test="status != null">
+				status=#{status},
+			</if>
+			<if test="isDel != null">
+				is_del=#{isDel},
+			</if>
+			<if test="startTime != null">
+				start_time=#{startTime},
+			</if>
+			<if test="endTime != null">
+				end_time=#{endTime},
+			</if>
+			<if test="ctime != null">
+				ctime=#{ctime},
+			</if>
+			<if test="mtime != null">
+				mtime=#{mtime},
+			</if>
+		</set>
+		<where>
+			promotion_id=#{promotionId} 
+		</where>
+	</update>
+	
+	<update id="updateStatus" parameterType="int">
+		UPDATE promotion_content
+		SET STATUS = (
+			CASE `status`
+			WHEN 0 THEN
+				1
+			ELSE
+				0
+			END
+		)
+		WHERE
+			promotion_id = #{promotionId}
+	</update>
+
+	<delete id="delete" parameterType="map">
+	   delete from 
+	     promotion_content 
+	   where 
+	    promotion_id=#{promotionId} 
+	</delete>
+
+	<select id="selectObject" parameterType="map" resultMap="detailResultMap">
+	   SELECT
+			con.promotion_id,
+			con.category_id,
+			con.title,
+			con.rules,
+			con.status,
+			con.is_del,
+			con.start_time,
+			con.end_time,
+			cat.title as category_title,
+			cat.template_name,
+			sku.sku_id,
+			gc.name
+		FROM
+			promotion_content con,
+			promotion_category cat,
+			promotion_goods pgs,
+			goods_content_sku sku,
+			goods_content gc
+		where 
+			con.category_id = cat.category_id
+			and con.promotion_id = pgs.promotion_id
+			and sku.sku_id = pgs.sku_id
+			and sku.content_id = gc.content_id
+		    and con.promotion_id=#{promotionId} 
+	</select>
+	
+	<select id="selectObjectList" parameterType="map" resultMap="promotionContentResultMap">
+	   select 
+	     promotion_id,
+	     category_id,
+	     title,
+	     content,
+	     rules,
+	     is_overall,
+	     status,
+	     is_del,
+	     start_time,
+	     end_time,
+	     ctime,
+	     mtime
+	   from promotion_content
+	   <where>
+	     <if test="promotionId != null">
+	        promotion_id=#{promotionId}
+	     </if>
+	     <if test="categoryId != null">
+	        and category_id=#{categoryId}
+	     </if>
+	     <if test="title != null">
+	        and title=#{title}
+	     </if>
+	     <if test="content != null">
+	        and content=#{content}
+	     </if>
+	     <if test="rules != null">
+	        and rules=#{rules}
+	     </if>
+	     <if test="isOverall != null">
+	        and is_overall=#{isOverall}
+	     </if>
+	     <if test="status != null">
+	        and status=#{status}
+	     </if>
+	     <if test="isDel != null">
+	        and is_del=#{isDel}
+	     </if>
+	     <if test="startTime != null">
+	        and start_time=#{startTime}
+	     </if>
+	     <if test="endTime != null">
+	        and end_time=#{endTime}
+	     </if>
+	     <if test="ctime != null">
+	        and ctime=#{ctime}
+	     </if>
+	     <if test="mtime != null">
+	        and mtime=#{mtime}
+	     </if>
+	   </where>
+	</select>
+
+	<select id="selectMap" parameterType="map" resultMap="mapResultMap">
+	   select 
+	    promotion_id,
+	    category_id,
+	    title,
+	    content,
+	    rules,
+	    is_overall,
+	    status,
+	    is_del,
+	    start_time,
+	    end_time,
+	    ctime,
+	    mtime
+	   from promotion_content
+	   where 
+	    promotion_id=#{promotionId} 
+	</select>
+
+	<select id="selectMapList" parameterType="map" resultMap="mapResultMap">
+	   select 
+	     promotion_id,
+	     category_id,
+	     title,
+	     content,
+	     rules,
+	     is_overall,
+	     status,
+	     is_del,
+	     start_time,
+	     end_time,
+	     ctime,
+	     mtime
+	   from promotion_content
+	   <where>
+	     <if test="promotionId != null">
+	        promotion_id=#{promotionId}
+	     </if>
+	     <if test="categoryId != null">
+	        and category_id=#{categoryId}
+	     </if>
+	     <if test="title != null">
+	        and title=#{title}
+	     </if>
+	     <if test="content != null">
+	        and content=#{content}
+	     </if>
+	     <if test="rules != null">
+	        and rules=#{rules}
+	     </if>
+	     <if test="isOverall != null">
+	        and is_overall=#{isOverall}
+	     </if>
+	     <if test="status != null">
+	        and status=#{status}
+	     </if>
+	     <if test="isDel != null">
+	        and is_del=#{isDel}
+	     </if>
+	     <if test="startTime != null">
+	        and start_time=#{startTime}
+	     </if>
+	     <if test="endTime != null">
+	        and end_time=#{endTime}
+	     </if>
+	     <if test="ctime != null">
+	        and ctime=#{ctime}
+	     </if>
+	     <if test="mtime != null">
+	        and mtime=#{mtime}
+	     </if>
+	   </where>
+	</select>
+	
+	<select id="page" parameterType="map" resultMap="pageResultMap">
+		SELECT
+			con.promotion_id,
+			con.title,
+			cat.title as category_title,
+			con.start_time,
+			con.end_time,
+			con.ctime,
+			con.status
+	<include refid="pageCondition" />
+	limit #{offset},#{rows}
+	</select>
+
+	<select id="pageCount" parameterType="map" resultType="int">
+	   select count(1)
+	   <include refid="pageCondition" />
+	</select>
+
+	<sql id="pageCondition">
+		 FROM
+			promotion_content con,
+			promotion_category cat
+	   <where>
+	   	 con.category_id = cat.category_id
+	   	 and con.is_del = 0
+	     <if test="categoryId != null">
+	        and con.category_id=#{categoryId}
+	     </if>
+	     <if test="key != null">
+            and con.title LIKE CONCAT(CONCAT('%', #{key}), '%')
+         </if>
+	   </where>
+	</sql>
+	
+	<select id="selectForCheckActive" parameterType="map" resultType="Integer">
+       SELECT
+			count(1)
+		FROM
+			promotion_content con,
+			promotion_category cat,
+			promotion_goods pgs,
+			goods_content_sku sku
+		<where>
+			con.category_id = cat.category_id
+			and con.promotion_id = pgs.promotion_id
+			and sku.sku_id = pgs.sku_id
+			and (
+	            (con.start_time &gt;=#{startTime}) or 
+	            (con.end_time&lt;=#{endTime})
+	           )
+	        and sku.sku_id=#{skuId} 
+	        <if test="promotionId != null">
+	            and con.promotionId &lt;&gt; #{promotionId}
+	         </if>
+         </where>
+    </select>
+	
+</mapper> 

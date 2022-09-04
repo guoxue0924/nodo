@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+【商品属性与分组关系表】对象关系映射 配置 
+ @author AutoCode 309444359@qq.com
+ @date 2015-07-30 10:42:29
+ -->
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.bluemobi.dao.trend.TrendPropertyToGroupDao">
+
+	<resultMap id="trendPropertyToGroupResultMap" type="com.bluemobi.po.trend.TrendPropertyToGroup">
+		<id property="propertyId" column="property_id" />
+		<id property="propertyGroupId" column="property_group_id" />
+		<result property="propertyId" column="property_id" />
+		<result property="propertyGroupId" column="property_group_id" />
+		<result property="sortOrder" column="sort_order" />
+		<result property="sortOrder" column="sort_order" />
+	</resultMap>
+	<resultMap id="mapResultMap"  type="java.util.HashMap" extends="trendPropertyToGroupResultMap">
+		<result property="propertyId" column="property_id" />
+        <result property="name" column="name" />
+        <result property="valInputtype" column="val_inputtype" />
+        <result property="labelName" column="label_name" />
+        <result property="placeholder" column="placeholder" />
+        <result property="note" column="note" />
+        <result property="propertySortOrder" column="property_sort_order" />
+        <result property="isSpec" column="is_spec" />
+        <result property="status" column="status" />
+        <result property="propertyGroupId" column="property_group_id" />
+        <result property="propertyGroupName" column="property_group_name" />
+        <result property="groupSortOrder" column="group_sort_order" />
+        <result property="count" column="count" />
+	</resultMap>
+	<resultMap id="pageResultMap"  type="java.util.HashMap" extends="trendPropertyToGroupResultMap"></resultMap>
+	
+	
+	<insert id="insert" parameterType="com.bluemobi.po.trend.TrendPropertyToGroup">
+	   insert into trend_property_to_group (
+	     property_id,
+	     property_group_id,
+	     sort_order
+	   )values (
+	     #{propertyId},
+	     #{propertyGroupId},
+	     #{sortOrder}
+	   )
+	</insert>
+
+	<update id="update" parameterType="com.bluemobi.po.trend.TrendPropertyToGroup">
+	   update trend_property_to_group set
+	     property_id=#{propertyId},
+	     property_group_id=#{propertyGroupId},
+	     sort_order=#{sortOrder}
+	   where 
+	    property_id=#{propertyId} 
+	    and property_group_id=#{propertyGroupId} 
+	</update>
+
+	<delete id="delete" parameterType="map">
+	   delete from 
+	     trend_property_to_group 
+	   where 
+	    property_id=#{propertyId} 
+	    and property_group_id=#{propertyGroupId} 
+	</delete>
+
+	<select id="selectObject" parameterType="map" resultMap="trendPropertyToGroupResultMap">
+	   select 
+	    property_id,
+	    property_group_id,
+	    sort_order
+	   from trend_property_to_group
+	   where 
+	    property_id=#{propertyId} 
+	    and property_group_id=#{propertyGroupId} 
+	</select>
+	
+	<select id="selectObjectList" parameterType="map" resultMap="trendPropertyToGroupResultMap">
+	   select 
+	     property_id,
+	     property_group_id,
+	     sort_order
+	   from trend_property_to_group
+	   <where>
+	     <if test="propertyId != null">
+	        property_id=#{propertyId}
+	     </if>
+	     <if test="propertyGroupId != null">
+	        and property_group_id=#{propertyGroupId}
+	     </if>
+	     <if test="sortOrder != null">
+	        and sort_order=#{sortOrder}
+	     </if>
+	   </where>
+	</select>
+
+	<select id="selectMap" parameterType="map" resultMap="mapResultMap">
+	   select 
+	    property_id,
+	    property_group_id,
+	    sort_order
+	   from trend_property_to_group
+	   where 
+	    property_id=#{propertyId} 
+	    and property_group_id=#{propertyGroupId} 
+	</select>
+
+	<select id="selectMapList" parameterType="map" resultMap="mapResultMap">
+	   select 
+	     t.property_id,
+	     t.property_group_id,
+	     t.sort_order,
+	     p.property_id,
+         p.name,
+         p.val_inputtype,
+         p.label_name,
+         p.placeholder,
+         p.note,
+         p.sort_order as property_sort_order,
+         p.is_spec,
+         p.status,
+         g.property_group_id,
+         g.property_group_name,
+         g.sort_order as group_sort_order
+	   from trend_property_to_group t, trend_property p, trend_property_group g
+	   <where>
+	        t.property_group_id = g.property_group_id 
+	        and t.property_id = p.property_id 
+	     <if test="propertyId != null">
+	        and t.property_id=#{propertyId}
+	     </if>
+	     <if test="propertyGroupId != null">
+	        and t.property_group_id=#{propertyGroupId}
+	     </if>
+	     <if test="sortOrder != null">
+	        and t.sort_order=#{sortOrder}
+	     </if>
+	   </where>
+	   order by t.sort_order
+	</select>
+	
+	<select id="page" parameterType="map" resultMap="pageResultMap">
+	   select 
+	     property_id,
+	     property_group_id,
+	     sort_order
+	   <include refid="pageCondition" />
+        limit #{offset},#{rows}
+	</select>
+	
+	<select id="pageCount" parameterType="map" resultType="int">
+        select count(1)
+        <include refid="pageCondition" />
+    </select>
+	
+	<sql id="pageCondition">
+	   from trend_property_to_group
+       <where>
+         <if test="propertyId != null">
+            property_id=#{propertyId}
+         </if>
+         <if test="propertyGroupId != null">
+            and property_group_id=#{propertyGroupId}
+         </if>
+         <if test="sortOrder != null">
+            and sort_order=#{sortOrder}
+         </if>
+       </where>
+	</sql>
+	
+	<insert id="insertTrendPropertyToGroups" parameterType="java.util.List">
+          insert into trend_property_to_group 
+              (
+                  property_id, property_group_id, sort_order
+              ) 
+          values
+          <foreach collection="list" item="item" index="index" separator=",">
+              (
+                  #{item.propertyId}, #{item.propertyGroupId}, #{item.sortOrder}
+              )
+          </foreach>
+    </insert>
+    
+    <delete id="deleteByGroupId" parameterType="map">
+       delete from 
+         trend_property_to_group 
+       where 
+        property_group_id=#{propertyGroupId} 
+    </delete>
+    
+    <select id="selectPropertyCountByGroupId" parameterType="map" resultType="int">
+        select count(1) as count
+            from trend_property_to_group 
+        where 
+        property_group_id in 
+        <foreach collection="propertyGroupIds" item = "propertyGroupId" open="(" separator="," close=")">
+              #{propertyGroupId}
+        </foreach>
+    </select>
+    
+    <delete id="deleteByPropertyGroupIds" parameterType="map">
+       delete from 
+          trend_property_to_group 
+       where 
+          property_group_id in  
+        <foreach collection="propertyGroupIds" item = "propertyGroupId" open="(" separator="," close=")">
+              #{propertyGroupId}  
+        </foreach>  
+    </delete>
+	
+</mapper> 

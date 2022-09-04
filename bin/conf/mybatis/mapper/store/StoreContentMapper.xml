@@ -1,0 +1,956 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 【已签约商户表】对象关系映射 配置 @author AutoCode 309444359@qq.com @date 2015-09-15 
+	17:24:48 -->
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.bluemobi.dao.store.StoreContentDao">
+
+	<resultMap id="storeContentResultMap" type="com.bluemobi.po.store.StoreContent">
+		<id property="storeId" column="store_id" />
+		<result property="userid" column="userid" />
+		<result property="storeName" column="store_name" />
+		<result property="companyName" column="company_name" />
+		<result property="logo" column="logo" />
+		<result property="setupDate" column="setup_date" />
+		<result property="registerCapital" column="register_capital" />
+		<result property="employeeNums" column="employee_nums" />
+		<result property="regionId" column="region_id" />
+		<result property="regionName" column="region_name" />
+		<result property="address" column="address" />
+		<result property="regionIdShip" column="region_id_ship" />
+		<result property="addressReturn" column="address_return" />
+		<result property="returnRule" column="return_rule" />
+		<result property="businessTime" column="business_time" />
+		<result property="runCategory" column="run_category" />
+		<result property="tel" column="tel" />
+		<result property="fax" column="fax" />
+		<result property="homepage" column="homepage" />
+		<result property="email" column="email" />
+		<result property="imageDefault" column="image_default" />
+		<result property="businessLicense" column="business_license" />
+		<result property="businessImage" column="business_image" />
+		<result property="businessCategoryids" column="business_categoryids" />
+		<result property="legalpName" column="legalp_name" />
+		<result property="description" column="description" />
+		<result property="isOfficial" column="is_official" />
+		<result property="source" column="source" />
+		<result property="isSigning" column="is_signing" />
+		<result property="signingTimeStart" column="signing_time_start" />
+		<result property="signingTimeEnd" column="signing_time_end" />
+		<result property="status" column="status" />
+		<result property="isVerify" column="is_verify" />
+		<result property="rejectionReason" column="rejection_reason" />
+		<result property="creatorUserid" column="creator_userid" />
+		<result property="goodsVerify" column="goods_verify" />
+		<result property="ctime" column="ctime" />
+		<result property="mtime" column="mtime" />
+		<result property="verifyTime" column="verify_time" />
+	</resultMap>
+	<resultMap id="mapResultMap" type="java.util.HashMap" extends="storeContentResultMap">
+		<result property="username" column="username" />
+		<result property="password" column="password" />
+		<result property="regionNameLocal" column="region_name_local" />
+		<result property="regionNameShip" column="region_name_ship" />
+		<result property="hid" column="hid" />
+		<result property="hidShip" column="hid_ship" />
+		<result property="areaName" column="areaName" />
+		<result property="cityName" column="cityName" />
+		<result property="provinceName" column="provinceName" />
+	</resultMap>
+	<resultMap id="pageResultMap" type="java.util.HashMap"
+		extends="storeContentResultMap">
+		<result property="username" column="username" />
+	</resultMap>
+
+
+	<insert id="insert" parameterType="com.bluemobi.po.store.StoreContent" useGeneratedKeys="true" keyProperty="storeId">
+		insert into store_content (
+				store_id,
+				userid,
+				store_name,
+				company_name,
+				logo,
+				setup_date,
+				register_capital,
+				employee_nums,
+				region_id,
+				region_name,
+				address,
+				region_id_ship,
+				address_return,
+				return_rule,
+				business_time,
+				run_category,
+				tel,
+				fax,
+				homepage,
+				email,
+				image_default,
+				business_license,
+				business_image,
+				business_categoryids,
+				legalp_name,
+				description,
+				is_official,
+				source,
+				is_signing,
+				signing_time_start,
+				signing_time_end,
+				status,
+				is_verify,
+				rejection_reason,
+				creator_userid,
+				goods_verify,
+				ctime,
+				mtime,
+				verify_time
+		)values (
+				#{storeId},
+				#{userid},
+				#{storeName},
+				#{companyName},
+				#{logo},
+				#{setupDate},
+				#{registerCapital},
+				#{employeeNums},
+				#{regionId},
+				#{regionName},
+				#{address},
+				#{regionIdShip},
+				#{addressReturn},
+				#{returnRule},
+				#{businessTime},
+				#{runCategory},
+				#{tel},
+				#{fax},
+				#{homepage},
+				#{email},
+				#{imageDefault},
+				#{businessLicense},
+				#{businessImage},
+				#{businessCategoryids},
+				#{legalpName},
+				#{description},
+				#{isOfficial},
+				#{source},
+				#{isSigning},
+				#{signingTimeStart},
+				#{signingTimeEnd},
+				#{status},
+				#{isVerify},
+				#{rejectionReason},
+				#{creatorUserid},
+				#{goodsVerify},
+				#{ctime},
+				#{mtime},
+				#{verifyTime}
+		)
+	</insert>
+
+	<update id="update" parameterType="com.bluemobi.po.store.StoreContent">
+		update store_content
+		<set>
+			<if test="userid != null">
+				userid=#{userid},
+			</if>
+			<if test="storeName != null">
+				store_name=#{storeName},
+			</if>
+			<if test="companyName != null">
+				company_name=#{companyName},
+			</if>
+			<if test="logo != null">
+				logo=#{logo},
+			</if>
+			<if test="setupDate != null">
+				setup_date=#{setupDate},
+			</if>
+			<if test="registerCapital != null">
+				register_capital=#{registerCapital},
+			</if>
+			<if test="employeeNums != null">
+				employee_nums=#{employeeNums},
+			</if>
+			<if test="regionId != null">
+				region_id=#{regionId},
+			</if>
+			<if test="regionName != null">
+				region_name=#{regionName},
+			</if>
+			<if test="address != null">
+				address=#{address},
+			</if>
+			<if test="regionIdShip != null">
+				region_id_ship=#{regionIdShip},
+			</if>
+			<if test="addressReturn != null">
+				address_return=#{addressReturn},
+			</if>
+			<if test="returnRule != null">
+				return_rule=#{returnRule},
+			</if>
+			<if test="businessTime != null">
+				business_time=#{businessTime},
+			</if>
+			<if test="runCategory != null">
+				run_category=#{runCategory},
+			</if>
+			<if test="tel != null">
+				tel=#{tel},
+			</if>
+			<if test="fax != null">
+				fax=#{fax},
+			</if>
+			<if test="homepage != null">
+				homepage=#{homepage},
+			</if>
+			<if test="email != null">
+				email=#{email},
+			</if>
+			<if test="imageDefault != null">
+				image_default=#{imageDefault},
+			</if>
+			<if test="businessLicense != null">
+				business_license=#{businessLicense},
+			</if>
+			<if test="businessImage != null">
+				business_image=#{businessImage},
+			</if>
+			<if test="businessCategoryids != null">
+				business_categoryids=#{businessCategoryids},
+			</if>
+			<if test="legalpName != null">
+				legalp_name=#{legalpName},
+			</if>
+			<if test="description != null">
+				description=#{description},
+			</if>
+			<if test="isOfficial != null">
+				is_official=#{isOfficial},
+			</if>
+			<if test="source != null">
+				source=#{source},
+			</if>
+			<if test="isSigning != null">
+				is_signing=#{isSigning},
+			</if>
+			<if test="signingTimeStart != null">
+				signing_time_start=#{signingTimeStart},
+			</if>
+			<if test="signingTimeEnd != null">
+				signing_time_end=#{signingTimeEnd},
+			</if>
+			<if test="status != null">
+				status=#{status},
+			</if>
+			<if test="isVerify != null">
+				is_verify=#{isVerify},
+			</if>
+			<if test="rejectionReason != null">
+				rejection_reason=#{rejectionReason},
+			</if>
+			<if test="creatorUserid != null">
+				creator_userid=#{creatorUserid},
+			</if>
+			<if test="goodsVerify != null">
+				goods_verify=#{goodsVerify},
+			</if>
+			<if test="ctime != null">
+				ctime=#{ctime},
+			</if>
+			<if test="mtime != null">
+				mtime=#{mtime},
+			</if>
+			<if test="verifyTime != null">
+				verify_time=#{verifyTime},
+			</if>
+		</set>
+		where
+		store_id=#{storeId}
+	</update>
+
+	<delete id="delete" parameterType="map">
+		delete from
+		    store_content
+		where
+		    store_id=#{storeId}
+	</delete>
+
+	<select id="selectObject" parameterType="map" resultMap="storeContentResultMap">
+		select
+			store_id,
+			userid,
+			store_name,
+			company_name,
+			logo,
+			setup_date,
+			register_capital,
+			employee_nums,
+			region_id,
+			region_name,
+			address,
+			region_id_ship,
+			address_return,
+			return_rule,
+			business_time,
+			run_category,
+			tel,
+			fax,
+			homepage,
+			email,
+			image_default,
+			business_license,
+			business_image,
+			business_categoryids,
+			legalp_name,
+			description,
+			is_official,
+			source,
+			is_signing,
+			signing_time_start,
+			signing_time_end,
+			status,
+			is_verify,
+			rejection_reason,
+			creator_userid,
+			goods_verify,
+			ctime,
+			mtime,
+			verify_time
+		from 
+		    store_content
+		where
+		    store_id=#{storeId}
+	</select>
+
+	<select id="selectObjectList" parameterType="map"
+		resultMap="storeContentResultMap">
+		select
+			store_id,
+			userid,
+			store_name,
+			company_name,
+			logo,
+			setup_date,
+			register_capital,
+			employee_nums,
+			region_id,
+			region_name,
+			address,
+			region_id_ship,
+			address_return,
+			return_rule,
+			business_time,
+			run_category,
+			tel,
+			fax,
+			homepage,
+			email,
+			image_default,
+			business_license,
+			business_image,
+			business_categoryids,
+			legalp_name,
+			description,
+			is_official,
+			source,
+			is_signing,
+			signing_time_start,
+			signing_time_end,
+			status,
+			is_verify,
+			rejection_reason,
+			creator_userid,
+			goods_verify,
+			ctime,
+			mtime,
+			verify_time
+		from 
+		    store_content
+		<where>
+			<if test="storeId != null">
+				store_id=#{storeId}
+			</if>
+			<if test="userid != null">
+				and userid=#{userid}
+			</if>
+			<if test="storeName != null">
+				and store_name=#{storeName}
+			</if>
+			<if test="companyName != null">
+				and company_name=#{companyName}
+			</if>
+			<if test="logo != null">
+				and logo=#{logo}
+			</if>
+			<if test="setupDate != null">
+				and setup_date=#{setupDate}
+			</if>
+			<if test="registerCapital != null">
+				and register_capital=#{registerCapital}
+			</if>
+			<if test="employeeNums != null">
+				and employee_nums=#{employeeNums}
+			</if>
+			<if test="regionId != null">
+				and region_id=#{regionId}
+			</if>
+			<if test="regionName != null">
+				and region_name=#{regionName}
+			</if>
+			<if test="address != null">
+				and address=#{address}
+			</if>
+			<if test="regionIdShip != null">
+				and region_id_ship=#{regionIdShip}
+			</if>
+			<if test="addressReturn != null">
+				and address_return=#{addressReturn}
+			</if>
+			<if test="returnRule != null">
+				and return_rule=#{returnRule}
+			</if>
+			<if test="businessTime != null">
+				and business_time=#{businessTime}
+			</if>
+			<if test="runCategory != null">
+				and run_category=#{runCategory}
+			</if>
+			<if test="tel != null">
+				and tel=#{tel}
+			</if>
+			<if test="fax != null">
+				and fax=#{fax}
+			</if>
+			<if test="homepage != null">
+				and homepage=#{homepage}
+			</if>
+			<if test="email != null">
+				and email=#{email}
+			</if>
+			<if test="imageDefault != null">
+				and image_default=#{imageDefault}
+			</if>
+			<if test="businessLicense != null">
+				and business_license=#{businessLicense}
+			</if>
+			<if test="businessImage != null">
+				and business_image=#{businessImage}
+			</if>
+			<if test="businessCategoryids != null">
+				and business_categoryids=#{businessCategoryids}
+			</if>
+			<if test="legalpName != null">
+				and legalp_name=#{legalpName}
+			</if>
+			<if test="description != null">
+				and description=#{description}
+			</if>
+			<if test="isOfficial != null">
+				and is_official=#{isOfficial}
+			</if>
+			<if test="source != null">
+				and source=#{source}
+			</if>
+			<if test="isSigning != null">
+				and is_signing=#{isSigning}
+			</if>
+			<if test="signingTimeStart != null">
+				and signing_time_start=#{signingTimeStart}
+			</if>
+			<if test="signingTimeEnd != null">
+				and signing_time_end=#{signingTimeEnd}
+			</if>
+			<if test="status != null">
+				and status=#{status}
+			</if>
+			<if test="isVerify != null">
+				and is_verify=#{isVerify}
+			</if>
+			<if test="rejectionReason != null">
+				and rejection_reason=#{rejectionReason}
+			</if>
+			<if test="creatorUserid != null">
+				and creator_userid=#{creatorUserid}
+			</if>
+			<if test="goodsVerify != null">
+				and goods_verify=#{goodsVerify}
+			</if>
+			<if test="ctime != null">
+				and ctime=#{ctime}
+			</if>
+			<if test="mtime != null">
+				and mtime=#{mtime}
+			</if>
+			<if test="verifyTime != null">
+				and verify_time=#{verifyTime}
+			</if>
+		</where>
+	</select>
+
+	<select id="selectMap" parameterType="map" resultMap="mapResultMap">
+		select
+			store_id,
+			userid,
+			store_name,
+			company_name,
+			logo,
+			setup_date,
+			register_capital,
+			employee_nums,
+			region_id,
+			region_name,
+			address,
+			region_id_ship,
+			address_return,
+			return_rule,
+			business_time,
+			run_category,
+			tel,
+			fax,
+			homepage,
+			email,
+			image_default,
+			business_license,
+			business_image,
+			business_categoryids,
+			legalp_name,
+			description,
+			is_official,
+			source,
+			is_signing,
+			signing_time_start,
+			signing_time_end,
+			status,
+			is_verify,
+			rejection_reason,
+			creator_userid,
+			goods_verify,
+			ctime,
+			mtime,
+			verify_time
+		from 
+		    store_content
+		where
+		    store_id=#{storeId}
+	</select>
+
+	<select id="selectMapList" parameterType="map" resultMap="mapResultMap">
+		select
+			store_id,
+			userid,
+			store_name,
+			company_name,
+			logo,
+			setup_date,
+			register_capital,
+			employee_nums,
+			region_id,
+			region_name,
+			address,
+			region_id_ship,
+			address_return,
+			return_rule,
+			business_time,
+			run_category,
+			tel,
+			fax,
+			homepage,
+			email,
+			image_default,
+			business_license,
+			business_image,
+			business_categoryids,
+			legalp_name,
+			description,
+			is_official,
+			source,
+			is_signing,
+			signing_time_start,
+			signing_time_end,
+			status,
+			is_verify,
+			rejection_reason,
+			creator_userid,
+			goods_verify,
+			ctime,
+			mtime,
+			verify_time
+		from 
+		    store_content
+		<where>
+			<if test="storeId != null">
+				store_id=#{storeId}
+			</if>
+			<if test="userid != null">
+				and userid=#{userid}
+			</if>
+			<if test="storeName != null">
+				and store_name=#{storeName}
+			</if>
+			<if test="companyName != null">
+				and company_name=#{companyName}
+			</if>
+			<if test="logo != null">
+				and logo=#{logo}
+			</if>
+			<if test="setupDate != null">
+				and setup_date=#{setupDate}
+			</if>
+			<if test="registerCapital != null">
+				and register_capital=#{registerCapital}
+			</if>
+			<if test="employeeNums != null">
+				and employee_nums=#{employeeNums}
+			</if>
+			<if test="regionId != null">
+				and region_id=#{regionId}
+			</if>
+			<if test="regionName != null">
+				and region_name=#{regionName}
+			</if>
+			<if test="address != null">
+				and address=#{address}
+			</if>
+			<if test="regionIdShip != null">
+				and region_id_ship=#{regionIdShip}
+			</if>
+			<if test="addressReturn != null">
+				and address_return=#{addressReturn}
+			</if>
+			<if test="returnRule != null">
+				and return_rule=#{returnRule}
+			</if>
+			<if test="businessTime != null">
+				and business_time=#{businessTime}
+			</if>
+			<if test="runCategory != null">
+				and run_category=#{runCategory}
+			</if>
+			<if test="tel != null">
+				and tel=#{tel}
+			</if>
+			<if test="fax != null">
+				and fax=#{fax}
+			</if>
+			<if test="homepage != null">
+				and homepage=#{homepage}
+			</if>
+			<if test="email != null">
+				and email=#{email}
+			</if>
+			<if test="imageDefault != null">
+				and image_default=#{imageDefault}
+			</if>
+			<if test="businessLicense != null">
+				and business_license=#{businessLicense}
+			</if>
+			<if test="businessImage != null">
+				and business_image=#{businessImage}
+			</if>
+			<if test="businessCategoryids != null">
+				and business_categoryids=#{businessCategoryids}
+			</if>
+			<if test="legalpName != null">
+				and legalp_name=#{legalpName}
+			</if>
+			<if test="description != null">
+				and description=#{description}
+			</if>
+			<if test="isOfficial != null">
+				and is_official=#{isOfficial}
+			</if>
+			<if test="source != null">
+				and source=#{source}
+			</if>
+			<if test="isSigning != null">
+				and is_signing=#{isSigning}
+			</if>
+			<if test="signingTimeStart != null">
+				and signing_time_start=#{signingTimeStart}
+			</if>
+			<if test="signingTimeEnd != null">
+				and signing_time_end=#{signingTimeEnd}
+			</if>
+			<if test="status != null">
+				and status=#{status}
+			</if>
+			<if test="isVerify != null">
+				and is_verify=#{isVerify}
+			</if>
+			<if test="rejectionReason != null">
+				and rejection_reason=#{rejectionReason}
+			</if>
+			<if test="creatorUserid != null">
+				and creator_userid=#{creatorUserid}
+			</if>
+			<if test="goodsVerify != null">
+				and goods_verify=#{goodsVerify}
+			</if>
+			<if test="ctime != null">
+				and ctime=#{ctime}
+			</if>
+			<if test="mtime != null">
+				and mtime=#{mtime}
+			</if>
+			<if test="verifyTime != null">
+				and verify_time=#{verifyTime}
+			</if>
+		</where>
+	</select>
+
+	<select id="page" parameterType="map" resultMap="pageResultMap">
+		SELECT
+			s.store_id,
+			s.userid,
+			s.store_name,
+			s.company_name,
+			s.logo,
+			s.setup_date,
+			s.register_capital,
+			s.employee_nums,
+			s.region_id,
+			s.region_name,
+			s.address,
+			s.region_id_ship,
+			s.address_return,
+			s.return_rule,
+			s.business_time,
+			s.run_category,
+			s.tel,
+			s.fax,
+			s.homepage,
+			s.email,
+			s.image_default,
+			s.business_license,
+			s.business_image,
+			s.business_categoryids,
+			s.legalp_name,
+			s.description,
+			s.is_official,
+			s.source,
+			s.is_signing,
+			s.signing_time_start,
+			s.signing_time_end,
+			s.status,
+			s.is_verify,
+			s.rejection_reason,
+			s.creator_userid,
+			s.goods_verify,
+			s.ctime,
+			s.mtime,
+			s.verify_time,
+			u.username,
+			r.region_name AS areaName,
+		    r2.region_name AS cityName,
+		    r3.region_name AS provinceName
+        <include refid="pageCondition" />
+        LIMIT #{offset},#{rows}
+	</select>
+	
+	<select id="pageCount" parameterType="map" resultType="int">
+        SELECT count(1)
+        <include refid="pageCondition" />
+    </select>
+    
+    <sql id="pageCondition">
+        FROM
+            store_content s
+        LEFT JOIN cas_user u ON s.userid = u.userid
+		LEFT JOIN trend_region r ON s.region_id = r.region_id
+		LEFT JOIN trend_region r2 ON r.pid = r2.region_id
+		LEFT JOIN trend_region r3 ON r2.pid = r3.region_id
+        <where>
+            <if test="key != null">
+                (
+                s.company_name LIKE CONCAT(CONCAT('%', #{key}), '%')
+                or s.store_name LIKE CONCAT(CONCAT('%', #{key}), '%')
+                or s.legalp_name LIKE CONCAT(CONCAT('%', #{key}), '%')
+                or s.tel LIKE CONCAT(CONCAT('%', #{key}), '%')
+                )
+            </if>
+            <if test="storeId != null">
+                and s.store_id=#{storeId}
+            </if>
+            <if test="userid != null">
+                and s.userid=#{userid}
+            </if>
+            <if test="storeName != null">
+                and s.store_name=#{storeName}
+            </if>
+            <if test="companyName != null">
+                and s.company_name=#{companyName}
+            </if>
+            <if test="logo != null">
+                and s.logo=#{logo}
+            </if>
+            <if test="setupDate != null">
+                and s.setup_date=#{setupDate}
+            </if>
+            <if test="registerCapital != null">
+                and s.register_capital=#{registerCapital}
+            </if>
+            <if test="employeeNums != null">
+                and s.employee_nums=#{employeeNums}
+            </if>
+            <if test="regionId != null">
+                and s.region_id=#{regionId}
+            </if>
+            <if test="regionName != null">
+                and s.region_name=#{regionName}
+            </if>
+            <if test="address != null">
+                and s.address=#{address}
+            </if>
+            <if test="regionIdShip != null">
+                and s.region_id_ship=#{regionIdShip}
+            </if>
+            <if test="addressReturn != null">
+                and s.address_return=#{addressReturn}
+            </if>
+            <if test="returnRule != null">
+                and s.return_rule=#{returnRule}
+            </if>
+            <if test="businessTime != null">
+                and s.business_time=#{businessTime}
+            </if>
+            <if test="runCategory != null">
+                and s.run_category=#{runCategory}
+            </if>
+            <if test="tel != null">
+                and s.tel=#{tel}
+            </if>
+            <if test="fax != null">
+                and s.fax=#{fax}
+            </if>
+            <if test="homepage != null">
+                and s.homepage=#{homepage}
+            </if>
+            <if test="email != null">
+                and s.email=#{email}
+            </if>
+            <if test="imageDefault != null">
+                and s.image_default=#{imageDefault}
+            </if>
+            <if test="businessLicense != null">
+                and s.business_license=#{businessLicense}
+            </if>
+            <if test="businessImage != null">
+                and s.business_image=#{businessImage}
+            </if>
+            <if test="businessCategoryids != null">
+                and s.business_categoryids=#{businessCategoryids}
+            </if>
+            <if test="legalpName != null">
+                and s.legalp_name=#{legalpName}
+            </if>
+            <if test="description != null">
+                and s.description=#{description}
+            </if>
+            <if test="isOfficial != null">
+                and s.is_official=#{isOfficial}
+            </if>
+            <if test="source != null">
+                and s.source=#{source}
+            </if>
+            <if test="isSigning != null">
+                and s.is_signing=#{isSigning}
+            </if>
+            <if test="signingTimeStart != null">
+                and s.signing_time_start=#{signingTimeStart}
+            </if>
+            <if test="signingTimeEnd != null">
+                and s.signing_time_end=#{signingTimeEnd}
+            </if>
+            <if test="status != null">
+                and s.status=#{status}
+            </if>
+            <if test="isVerify != null">
+                and s.is_verify=#{isVerify}
+            </if>
+            <if test="rejectionReason != null">
+                and s.rejection_reason=#{rejectionReason}
+            </if>
+            <if test="creatorUserid != null">
+                and s.creator_userid=#{creatorUserid}
+            </if>
+            <if test="goodsVerify != null">
+                and s.goods_verify=#{goodsVerify}
+            </if>
+            <if test="ctime != null">
+                and s.ctime=#{ctime}
+            </if>
+            <if test="mtime != null">
+                and s.mtime=#{mtime}
+            </if>
+            <if test="verifyTime != null">
+                and s.verify_time=#{verifyTime}
+            </if>
+        </where>
+    </sql>
+
+	<select id="selectMapStoreInfo" parameterType="map" resultMap="mapResultMap">
+		select
+			s.store_id,
+			s.userid,
+			s.store_name,
+			s.company_name,
+			s.logo,
+			s.setup_date,
+			s.register_capital,
+			s.employee_nums,
+			s.region_id,
+			s.region_name,
+			s.address,
+			s.region_id_ship,
+			s.address_return,
+			s.return_rule,
+			s.business_time,
+			s.run_category,
+			s.tel,
+			s.fax,
+			s.homepage,
+			s.email,
+			s.image_default,
+			s.business_license,
+			s.business_image,
+			s.business_categoryids,
+			s.legalp_name,
+			s.description,
+			s.is_official,
+			s.source,
+			s.is_signing,
+			s.signing_time_start,
+			s.signing_time_end,
+			s.status,
+			s.is_verify,
+			s.rejection_reason,
+			s.creator_userid,
+			s.goods_verify,
+			s.ctime,
+			s.mtime,
+			s.verify_time,
+			u.username,
+			u.password,
+			r.region_name as region_name_local,
+			r.hid as hid,
+			r2.region_name as
+			region_name_ship,
+			r2.hid as hid_ship
+		from 
+		        store_content s
+			left join 
+			    cas_user u 
+			    on s.userid = u.userid
+			left join 
+			    trend_region r 
+			    on s.region_id = r.region_id
+			left join 
+			    trend_region r2 
+			    on s.region_id_ship = r2.region_id
+		where
+		    store_id=#{storeId}
+	</select>
+
+</mapper> 

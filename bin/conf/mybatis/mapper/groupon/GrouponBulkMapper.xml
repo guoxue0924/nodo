@@ -1,0 +1,432 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+【团购表】对象关系映射 配置 
+ @author AutoCode 309444359@qq.com
+ @date 2015-10-20 16:51:17
+ -->
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.bluemobi.dao.groupon.GrouponBulkDao">
+
+	<resultMap id="grouponBulkResultMap" type="com.bluemobi.po.groupon.GrouponBulk">
+		<id property="bulkId" column="bulk_id" />
+		<result property="title" column="title" />
+		<result property="number" column="number" />
+		<result property="startTime" column="start_time" />	 
+		<result property="endTime" column="end_time" />
+		<result property="inventorySum" column="inventory_sum" />
+		<result property="inventory" column="inventory" />
+		<result property="price" column="price" />
+		<result property="skuId" column="sku_id" />
+		<result property="integral" column="integral" />
+		<result property="buyNumber" column="buynumber" />
+		<result property="status" column="status" />
+		<result property="ctime" column="ctime" />
+	</resultMap>
+	
+	<!-- 团购或抢购带商品信息 -->
+	<resultMap id="grouponBulkGoodsMap"  type="com.bluemobi.to.groupon.GrouponBulkTO">
+		<id property="bulkId" column="bulk_id" />
+		<result property="startTime" column="start_time" />	 
+		<result property="endTime" column="end_time" />
+		<result property="inventorySum" column="inventory_sum" />
+		<result property="inventory" column="inventory" />
+		<result property="price" column="price" />
+		<result property="skuId" column="sku_id" />
+		<result property="integral" column="integral" />
+		<result property="buyNumber" column="buynumber" />
+		<association property="sku" javaType="com.bluemobi.to.groupon.SkuTO">
+			<id property="skuId" column="goods_sku_id"/>
+			<result property="name" column="name" />
+			<result property="price" column="goods_price" />
+			<result property="stock" column="stock" />
+			<result property="brandName" column="brand_name" />
+		</association>
+	</resultMap>
+	
+	<!-- 团购或抢购详细信息 -->
+	<resultMap id="grouponBulkDetailMap"  type="com.bluemobi.to.groupon.GrouponBulkTO" extends="grouponBulkGoodsMap">
+		<collection property="categorys" ofType="com.bluemobi.po.groupon.GrouponCategory">
+			<id property="categoryId" column="category_id" />
+			<result property="title" column="category_title" />
+		</collection>
+	</resultMap>
+	<resultMap id="mapResultMap"  type="java.util.HashMap" extends="grouponBulkResultMap"></resultMap>
+	<resultMap id="pageResultMap"  type="java.util.HashMap" extends="grouponBulkResultMap"></resultMap>
+	
+	
+	<insert id="insert" parameterType="com.bluemobi.po.groupon.GrouponBulk" useGeneratedKeys="true" keyColumn="bulk_id" keyProperty="bulkId">
+	   insert into groupon_bulk (
+	     bulk_id,
+	     title,
+	     number,
+	     start_time,
+	     end_time,
+	     inventory_sum,
+	     inventory,
+	     price,
+	     sku_id,
+	     integral,
+	     buynumber,
+	     status,
+	     ctime
+	   )values (
+	     #{bulkId},
+	     #{title},
+	     #{number},
+	     #{startTime},
+	     #{endTime},
+	     #{inventorySum},
+	     #{inventorySum},
+	     #{price},
+	     #{skuId},
+	     #{integral},
+	     #{buyNumber},
+	     #{status},
+	     #{ctime}
+	   )
+	</insert>
+
+	<update id="update" parameterType="com.bluemobi.po.groupon.GrouponBulk">
+		update groupon_bulk
+		<set>
+			<if test="bulkId != null">
+				bulk_id=#{bulkId},
+			</if>
+			<if test="title != null">
+				title=#{title},
+			</if>
+			<if test="number != null">
+				number=#{number},
+			</if>
+			<if test="startTime != null">
+				start_time=#{startTime},
+			</if>
+			<if test="endTime != null">
+				end_time=#{endTime},
+			</if>
+			<if test="inventorySum != null">
+				inventory_sum=#{inventorySum},
+			</if>
+			<if test="inventory != null">
+				inventory=#{inventory},
+			</if>
+			<if test="price != null">
+				price=#{price},
+			</if>
+			<if test="skuId != null">
+				sku_id=#{skuId},
+			</if>
+			<if test="integral != null">
+				integral=#{integral},
+			</if>
+			<if test="buyNumber != null">
+				buynumber=#{buyNumber},
+			</if>
+			<if test="status != null">
+				status=#{status},
+			</if>
+			<if test="ctime != null">
+				ctime=#{ctime},
+			</if>
+		</set>
+		<where>
+			bulk_id=#{bulkId} 
+		</where>
+	</update>
+
+	<delete id="delete" parameterType="map">
+	   delete from 
+	     groupon_bulk 
+	   where 
+	    bulk_id=#{bulkId} 
+	</delete>
+
+	<select id="selectObject" parameterType="map" resultMap="grouponBulkResultMap">
+	   select 
+	     bulk_id,
+         title,
+         number,
+         start_time,
+         end_time,
+         inventory_sum,
+         inventory,
+         price,
+         sku_id,
+         integral,
+         buynumber,
+         status,
+         ctime
+       from 
+       	groupon_bulk 
+	   where 
+	    bulk_id=#{bulkId} 
+	</select>
+	
+	<select id="selectObjectList" parameterType="map" resultMap="grouponBulkResultMap">
+	   select 
+	     bulk_id,
+	     title,
+	     number,
+	     start_time,
+	     end_time,
+	     inventory_sum,
+	     inventory,
+	     price,
+	     sku_id,
+	     integral,
+	     buynumber,
+         status,
+	     ctime
+	   from groupon_bulk
+	   <where>
+	     <if test="bulkId != null">
+	        bulk_id=#{bulkId}
+	     </if>
+	     <if test="title != null">
+	        and title=#{title}
+	     </if>
+	     <if test="number != null">
+	        and number=#{number}
+	     </if>
+	     <if test="startTime != null">
+	        and start_time=#{startTime}
+	     </if>
+	     <if test="endTime != null">
+	        and end_time=#{endTime}
+	     </if>
+	     <if test="inventorySum != null">
+	        and inventory_sum=#{inventorySum}
+	     </if>
+	     <if test="inventory != null">
+	        and inventory=#{inventory}
+	     </if>
+	     <if test="price != null">
+	        and price=#{price}
+	     </if>
+	     <if test="skuId != null">
+			and sku_id=#{skuId}
+		 </if>
+	     <if test="integral != null">
+	        and integral=#{integral}
+	     </if>
+	     <if test="buyNumber != null">
+			and	buynumber=#{buyNumber}
+		 </if>
+		 <if test="status != null">
+			and status=#{status}
+		 </if>
+	     <if test="ctime != null">
+	        and ctime=#{ctime}
+	     </if>
+	   </where>
+	</select>
+	
+	
+	<select id="selectDetail" resultMap="grouponBulkDetailMap">
+	   	SELECT
+			gb.bulk_id,
+			gb.start_time,
+			gb.end_time,
+			gb.inventory_sum,
+			gb.inventory,
+			gb.price,
+			gb.sku_id,
+			gb.integral,
+			gcs.sku_id AS goods_sku_id,
+			gc.name,
+			gcs.price AS goods_price,
+			gcs.stock,
+			gbr.brand_name, 
+			c.category_id,
+			c.title AS category_title
+		FROM
+			groupon_bulk gb
+		LEFT JOIN 
+			groupon_bulk_category bc ON bc.bulk_id = gb.bulk_id
+		LEFT JOIN 
+			groupon_category c ON bc.category_id = c.category_id,
+		 	goods_content_sku gcs,
+			goods_content gc,
+			goods_brand gbr
+		WHERE
+			gb.sku_id = gcs.sku_id
+			AND gcs.content_id = gc.content_id
+			AND gc.brand_id = gbr.brand_id
+	    	and gb.bulk_id=#{bulkId} 
+	</select>
+	
+	
+	<select id="selectForCheckTime" parameterType="map" resultMap="grouponBulkResultMap">
+       select 
+         bulk_id,
+         title,
+         number,
+         start_time,
+         end_time,
+         inventory_sum,
+         inventory,
+         price,
+         sku_id,
+         integral,
+         buynumber,
+         status,
+         ctime
+       from groupon_bulk
+       where (
+            (start_time &gt;=#{startTime}) or 
+            (end_time&lt;=#{endTime})
+           )
+           and sku_id=#{skuId} 
+    </select>
+    
+    <select id="selectBySku" parameterType="map" resultMap="grouponBulkResultMap">
+       select 
+         bulk_id,
+         title,
+         number,
+         start_time,
+         end_time,
+         inventory_sum,
+         inventory,
+         price,
+         sku_id,
+         integral,
+         buynumber,
+         status,
+         ctime
+       from groupon_bulk
+       where (start_time &gt;=#{currentTime} and end_time&lt;=#{currentTime}) 
+           and sku_id=#{skuId} 
+    </select>
+
+	<select id="selectMap" parameterType="map" resultMap="mapResultMap">
+	   select 
+	    bulk_id,
+	    title,
+	    number,
+	    start_time,
+	    end_time,
+	    inventory_sum,
+	    inventory,
+	    price,
+	    sku_id,
+	    integral,
+	    buynumber,
+	    status,
+	    ctime
+	   from groupon_bulk
+	   where 
+	    bulk_id=#{bulkId} 
+	</select>
+
+	<select id="selectMapList" parameterType="map" resultMap="mapResultMap">
+	   select 
+	     bulk_id,
+	     title,
+	     number,
+	     start_time,
+	     end_time,
+	     inventory_sum,
+	     inventory,
+	     price,
+	     sku_id,
+	     integral,
+	     buynumber,
+	     status,
+	     ctime
+	   from groupon_bulk
+	   <where>
+	     <if test="bulkId != null">
+	        bulk_id=#{bulkId}
+	     </if>
+	     <if test="title != null">
+	        and title=#{title}
+	     </if>
+	     <if test="number != null">
+	        and number=#{number}
+	     </if>
+	     <if test="startTime != null">
+	        and start_time=#{startTime}
+	     </if>
+	     <if test="endTime != null">
+	        and end_time=#{endTime}
+	     </if>
+	     <if test="inventorySum != null">
+	        and inventory_sum=#{inventorySum}
+	     </if>
+	     <if test="inventory != null">
+	        and inventory=#{inventory}
+	     </if>
+	     <if test="price != null">
+	        and price=#{price}
+	     </if>
+	     <if test="skuId != null">
+	        and sku_id=#{skuId}
+	     </if>
+	     <if test="integral != null">
+	        and integral=#{integral}
+	     </if>
+	     <if test="buyNumber != null">
+	        and buynumber=#{buyNumber}
+	     </if>
+	     <if test="status != null">
+	        and status=#{status}
+	     </if>
+	     <if test="ctime != null">
+	        and ctime=#{ctime}
+	     </if>
+	   </where>
+	</select>
+	
+	<sql id="pageCondition">
+	   FROM
+			groupon_bulk gb,
+			goods_content_sku gcs,
+			goods_content gc,
+			goods_brand gbr
+       <where>
+			gb.sku_id = gcs.sku_id AND 
+			gcs.content_id = gc.content_id AND 
+			gc.brand_id = gbr.brand_id
+         <if test="key != null and key != ''">
+            and gc.name LIKE CONCAT(CONCAT('%', #{key}), '%')
+         </if>
+       	 <if test="status == 0">
+       		and gb.start_time &gt; #{currentTime}
+       	 </if>
+       	 <if test="status == 1">
+       		and gb.start_time &lt;= #{currentTime} and gb.end_time &gt; #{currentTime}
+       	 </if>
+       	 <if test="status == 2">
+       		and gb.start_time &lt; #{currentTime}
+       	 </if>
+       </where>
+	</sql>
+	
+	<select id="pageCount" parameterType="map" resultType="int">
+        select count(1)
+        <include refid="pageCondition" />
+    </select>
+	
+	<select id="page" parameterType="map" resultMap="grouponBulkGoodsMap">
+	   select 
+	     gb.bulk_id,
+		 gb.start_time,
+		 gb.end_time,
+		 gb.inventory_sum,
+		 gb.inventory,
+		 gb.price,
+		 gb.sku_id,
+		 gb.integral,
+		 gcs.sku_id AS goods_sku_id,
+		 gc.name,
+		 gcs.price AS goods_price,
+		 gcs.stock,
+		 gbr.brand_name
+	     <include refid="pageCondition" />
+         limit #{offset},#{rows}
+	</select>
+	
+</mapper> 

@@ -1,0 +1,1183 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+【 商品详细内容，包括商品详情、meta 相关字段等】对象关系映射 配置 
+ @author AutoCode 309444359@qq.com
+ @date 2016-02-17 15:44:21
+ -->
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.bluemobi.dao.goods.GoodsContentDao">
+
+	<resultMap id="goodsContentResultMap" type="com.bluemobi.po.goods.GoodsContent">
+		<id property="contentId" column="content_id" />
+       <result property="categoryId" column="category_id" />
+       <result property="brandId" column="brand_id" />
+       <result property="userid" column="userid" />
+       <result property="name" column="name" />
+       <result property="memo" column="memo" />
+       <result property="body" column="body" />
+       <result property="metaTitle" column="meta_title" />
+       <result property="metaKeywords" column="meta_keywords" />
+       <result property="metaDescription" column="meta_description" />
+       <result property="sortOrder" column="sort_order" />
+       <result property="related" column="related" />
+       <result property="isSpec" column="is_spec" />
+       <result property="isDel" column="is_del" />
+       <result property="isShelf" column="is_shelf" />
+       <result property="onSaleTime" column="on_sale_time" />
+       <result property="offSaleTime" column="off_sale_time" />
+       <result property="ctime" column="ctime" />
+       <result property="mtime" column="mtime" />
+	</resultMap>
+	<resultMap id="mapResultMap"  type="java.util.HashMap" extends="goodsContentResultMap"></resultMap>
+	<resultMap id="pageResultMap"  type="java.util.HashMap" extends="goodsContentResultMap">
+	   <result property="brandName" column="brand_name" />
+       <result property="categoryName" column="category_name" />
+       
+       <result property="skuId" column="sku_id" />
+       <result property="sku" column="sku" />
+       <result property="stock" column="stock" />
+       <result property="weight" column="weight" />
+       <result property="length" column="length" />
+       <result property="wide" column="wide" />
+       <result property="height" column="height" />
+       <result property="price" column="price" />
+       <result property="priceMarket" column="price_market" />
+       <result property="priceCost" column="price_cost" />
+       <result property="salesVolume" column="sales_volume" />
+       <result property="salesAmount" column="sales_amount" />
+       <result property="rankAverage" column="rank_average" />
+       <result property="viewed" column="viewed" />
+       <result property="rev" column="rev" />
+       <result property="skuOrder" column="sku_order" />
+       <result property="attachmentids" column="attachmentids" />
+       <result property="skuIsShelf" column="sku_is_shelf" />
+       <result property="skuIsDel" column="sku_del" />
+       <result property="skuctime" column="sku_ctime" />
+       <result property="skumtime" column="sku_mtime" />
+       
+       <result property="favoriteCount" column="favoriteCount" />
+       <result property="salesCount" column="salesCount" />
+	</resultMap>
+	
+	<resultMap id="goodsContentAndSkuResultMap"  type="com.bluemobi.to.goods.GoodsContentAndSkuTO" extends="goodsContentResultMap">
+	   <result property="skuId" column="sku_id" />
+	   <result property="sku" column="sku" />
+       <result property="stock" column="stock" />
+       <result property="weight" column="weight" />
+       <result property="length" column="length" />
+       <result property="wide" column="wide" />
+       <result property="height" column="height" />
+       <result property="price" column="price" />
+       <result property="priceMarket" column="price_market" />
+       <result property="priceCost" column="price_cost" />
+       <result property="property" column="property" />
+       <result property="salesVolume" column="sales_volume" />
+       <result property="salesAmount" column="sales_amount" />
+       <result property="rankAverage" column="rank_average" />
+       <result property="viewed" column="viewed" />
+       <result property="rev" column="rev" />
+       <result property="skuSortOrder" column="sku_sort_order" />
+       <result property="attachmentids" column="attachmentids" />
+       <result property="skuIsShelf" column="sku_is_shelf" />
+       <result property="skuIsDel" column="sku_is_del" />
+       <result property="skuCtime" column="sku_ctime" />
+       <result property="skuMtime" column="sku_mtime" />
+	</resultMap>
+	
+	<insert id="insert" parameterType="com.bluemobi.po.goods.GoodsContent" useGeneratedKeys="true" keyProperty="contentId" >
+	   insert into goods_content (
+	     content_id,
+	     category_id,
+	     brand_id,
+	     userid,
+	     name,
+	     memo,
+	     body,
+	     meta_title,
+	     meta_keywords,
+	     meta_description,
+	     sort_order,
+	     related,
+	     is_spec,
+	     is_del,
+	     is_shelf,
+	     on_sale_time,
+	     off_sale_time,
+	     ctime,
+	     mtime
+	   )values (
+	     #{contentId},
+	     #{categoryId},
+	     #{brandId},
+	     #{userid},
+	     #{name},
+	     #{memo},
+	     #{body},
+	     #{metaTitle},
+	     #{metaKeywords},
+	     #{metaDescription},
+	     #{sortOrder},
+	     #{related},
+	     #{isSpec},
+	     #{isDel},
+	     #{isShelf},
+	     #{onSaleTime},
+	     #{offSaleTime},
+	     #{ctime},
+	     #{mtime}
+	   )
+	</insert>
+
+	<update id="update" parameterType="com.bluemobi.po.goods.GoodsContent">
+		update goods_content
+		<set>
+			<if test="contentId != null">
+				content_id=#{contentId},
+			</if>
+			<if test="categoryId != null">
+				category_id=#{categoryId},
+			</if>
+			<if test="brandId != null">
+				brand_id=#{brandId},
+			</if>
+			<if test="userid != null">
+				userid=#{userid},
+			</if>
+			<if test="name != null">
+				name=#{name},
+			</if>
+			<if test="memo != null">
+				memo=#{memo},
+			</if>
+			<if test="body != null">
+				body=#{body},
+			</if>
+			<if test="metaTitle != null">
+				meta_title=#{metaTitle},
+			</if>
+			<if test="metaKeywords != null">
+				meta_keywords=#{metaKeywords},
+			</if>
+			<if test="metaDescription != null">
+				meta_description=#{metaDescription},
+			</if>
+			<if test="sortOrder != null">
+				sort_order=#{sortOrder},
+			</if>
+			<if test="related != null">
+				related=#{related},
+			</if>
+			<if test="isSpec != null">
+				is_spec=#{isSpec},
+			</if>
+			<if test="isDel != null">
+				is_del=#{isDel},
+			</if>
+			<if test="isShelf != null">
+				is_shelf=#{isShelf},
+			</if>
+			<if test="onSaleTime != null">
+				on_sale_time=#{onSaleTime},
+			</if>
+			<if test="offSaleTime != null">
+				off_sale_time=#{offSaleTime},
+			</if>
+			<if test="ctime != null">
+				ctime=#{ctime},
+			</if>
+			<if test="mtime != null">
+				mtime=#{mtime},
+			</if>
+		</set>
+		<where>
+			content_id=#{contentId} 
+		</where>
+	</update>
+
+	<delete id="delete" parameterType="map">
+	   delete from 
+	     goods_content 
+	   where 
+	    content_id=#{contentId} 
+	</delete>
+
+	<select id="selectObject" parameterType="map" resultMap="goodsContentResultMap">
+	   select 
+	    content_id,
+	    category_id,
+	    brand_id,
+	    userid,
+	    name,
+	    memo,
+	    body,
+	    meta_title,
+	    meta_keywords,
+	    meta_description,
+	    sort_order,
+	    related,
+	    is_spec,
+	    is_del,
+	    is_shelf,
+	    on_sale_time,
+	    off_sale_time,
+	    ctime,
+	    mtime
+	   from goods_content
+	   where 
+	    content_id=#{contentId} 
+	</select>
+	
+	<select id="selectObjectList" parameterType="map" resultMap="goodsContentResultMap">
+	   select 
+	     content_id,
+	     category_id,
+	     brand_id,
+	     userid,
+	     name,
+	     memo,
+	     body,
+	     meta_title,
+	     meta_keywords,
+	     meta_description,
+	     sort_order,
+	     related,
+	     is_spec,
+	     is_del,
+	     is_shelf,
+	     on_sale_time,
+	     off_sale_time,
+	     ctime,
+	     mtime
+	   from goods_content
+	   <where>
+	     <if test="contentId != null">
+	        content_id=#{contentId}
+	     </if>
+	     <if test="categoryId != null">
+	        and category_id=#{categoryId}
+	     </if>
+	     <if test="brandId != null">
+	        and brand_id=#{brandId}
+	     </if>
+	     <if test="userid != null">
+	        and userid=#{userid}
+	     </if>
+	     <if test="name != null">
+	        and name=#{name}
+	     </if>
+	     <if test="memo != null">
+	        and memo=#{memo}
+	     </if>
+	     <if test="body != null">
+	        and body=#{body}
+	     </if>
+	     <if test="metaTitle != null">
+	        and meta_title=#{metaTitle}
+	     </if>
+	     <if test="metaKeywords != null">
+	        and meta_keywords=#{metaKeywords}
+	     </if>
+	     <if test="metaDescription != null">
+	        and meta_description=#{metaDescription}
+	     </if>
+	     <if test="sortOrder != null">
+	        and sort_order=#{sortOrder}
+	     </if>
+	     <if test="related != null">
+	        and related=#{related}
+	     </if>
+	     <if test="isSpec != null">
+	        and is_spec=#{isSpec}
+	     </if>
+	     <if test="isDel != null">
+	        and is_del=#{isDel}
+	     </if>
+	     <if test="isShelf != null">
+	        and is_shelf=#{isShelf}
+	     </if>
+	     <if test="onSaleTime != null">
+	        and on_sale_time=#{onSaleTime}
+	     </if>
+	     <if test="offSaleTime != null">
+	        and off_sale_time=#{offSaleTime}
+	     </if>
+	     <if test="ctime != null">
+	        and ctime=#{ctime}
+	     </if>
+	     <if test="mtime != null">
+	        and mtime=#{mtime}
+	     </if>
+	   </where>
+	</select>
+
+	<select id="selectMap" parameterType="map" resultMap="mapResultMap">
+	   select 
+	    content_id,
+	    category_id,
+	    brand_id,
+	    userid,
+	    name,
+	    memo,
+	    body,
+	    meta_title,
+	    meta_keywords,
+	    meta_description,
+	    sort_order,
+	    related,
+	    is_spec,
+	    is_del,
+	    is_shelf,
+	    on_sale_time,
+	    off_sale_time,
+	    ctime,
+	    mtime
+	   from goods_content
+	   where 
+	    content_id=#{contentId} 
+	</select>
+
+	<select id="selectMapList" parameterType="map" resultMap="mapResultMap">
+	   select 
+	     content_id,
+	     category_id,
+	     brand_id,
+	     userid,
+	     name,
+	     memo,
+	     body,
+	     meta_title,
+	     meta_keywords,
+	     meta_description,
+	     sort_order,
+	     related,
+	     is_spec,
+	     is_del,
+	     is_shelf,
+	     on_sale_time,
+	     off_sale_time,
+	     ctime,
+	     mtime
+	   from goods_content
+	   <where>
+	     <if test="contentId != null">
+	        content_id=#{contentId}
+	     </if>
+	     <if test="categoryId != null">
+	        and category_id=#{categoryId}
+	     </if>
+	     <if test="brandId != null">
+	        and brand_id=#{brandId}
+	     </if>
+	     <if test="userid != null">
+	        and userid=#{userid}
+	     </if>
+	     <if test="name != null">
+	        and name=#{name}
+	     </if>
+	     <if test="memo != null">
+	        and memo=#{memo}
+	     </if>
+	     <if test="body != null">
+	        and body=#{body}
+	     </if>
+	     <if test="metaTitle != null">
+	        and meta_title=#{metaTitle}
+	     </if>
+	     <if test="metaKeywords != null">
+	        and meta_keywords=#{metaKeywords}
+	     </if>
+	     <if test="metaDescription != null">
+	        and meta_description=#{metaDescription}
+	     </if>
+	     <if test="sortOrder != null">
+	        and sort_order=#{sortOrder}
+	     </if>
+	     <if test="related != null">
+	        and related=#{related}
+	     </if>
+	     <if test="isSpec != null">
+	        and is_spec=#{isSpec}
+	     </if>
+	     <if test="isDel != null">
+	        and is_del=#{isDel}
+	     </if>
+	     <if test="isShelf != null">
+	        and is_shelf=#{isShelf}
+	     </if>
+	     <if test="onSaleTime != null">
+	        and on_sale_time=#{onSaleTime}
+	     </if>
+	     <if test="offSaleTime != null">
+	        and off_sale_time=#{offSaleTime}
+	     </if>
+	     <if test="ctime != null">
+	        and ctime=#{ctime}
+	     </if>
+	     <if test="mtime != null">
+	        and mtime=#{mtime}
+	     </if>
+	   </where>
+	</select>
+	
+	<select id="page" parameterType="map" resultMap="pageResultMap">
+	   select 
+	     g.content_id,
+	     g.category_id,
+	     g.brand_id,
+	     g.userid,
+	     g.name,
+	     g.memo,
+	     g.body,
+	     g.meta_title,
+	     g.meta_keywords,
+	     g.meta_description,
+	     g.sort_order,
+	     g.related,
+	     g.is_spec,
+	     g.is_del,
+	     g.is_shelf,
+	     g.on_sale_time,
+	     g.off_sale_time,
+	     g.ctime,
+	     g.mtime,
+	     s.sku_id,
+         s.stock,
+         s.weight,
+         s.length,
+         s.wide,
+         s.height,
+         s.property,
+         s.price,
+         s.price_market,
+         s.price_cost,
+         s.sales_volume,
+         s.sales_amount,
+         s.rank_average,
+         s.viewed,
+         s.rev,
+         s.sort_order as sku_order,
+         s.attachmentids,
+         s.is_shelf,
+         s.is_del as sku_del,
+         s.ctime as sku_ctime,
+         s.mtime as sku_mtime,
+	     b.brand_name,
+         c.category_name
+	<include refid="pageCondition" />
+	order by g.sort_order desc
+	limit #{offset},#{rows}
+	</select>
+
+	<select id="pageCount" parameterType="map" resultType="int">
+	   select count(1) from
+        (
+            select 1 
+            <include refid="pageCondition" />
+        ) t
+	</select>
+
+	<sql id="pageCondition">
+	   from goods_content g, goods_content_sku s, goods_brand b, goods_category c 
+	   <where>
+	       g.content_id = s.content_id
+	       and g.brand_id = b.brand_id
+           and g.category_id = c.category_id
+         <if test="key != null">
+           and g.name LIKE CONCAT(CONCAT('%', #{key}), '%')
+         </if>
+         <if test="priceMin != null">
+             <![CDATA[
+                and s.price>#{priceMin}
+             ]]>
+         </if>
+         <if test="priceMax != null">
+             <![CDATA[
+                and s.price<#{priceMax}
+             ]]>
+         </if>
+	     <if test="contentId != null">
+	        and g.content_id=#{contentId}
+	     </if>
+	     <if test="categoryId != null">
+	        and g.category_id=#{categoryId}
+	     </if>
+	     <if test="brandId != null">
+	        and g.brand_id=#{brandId}
+	     </if>
+	     <if test="userid != null">
+	        and g.userid=#{userid}
+	     </if>
+	     <if test="name != null">
+	        and g.name=#{name}
+	     </if>
+	     <if test="memo != null">
+	        and g.memo=#{memo}
+	     </if>
+	     <if test="body != null">
+	        and g.body=#{body}
+	     </if>
+	     <if test="metaTitle != null">
+	        and g.meta_title=#{metaTitle}
+	     </if>
+	     <if test="metaKeywords != null">
+	        and g.meta_keywords=#{metaKeywords}
+	     </if>
+	     <if test="metaDescription != null">
+	        and g.meta_description=#{metaDescription}
+	     </if>
+	     <if test="sortOrder != null">
+	        and g.sort_order=#{sortOrder}
+	     </if>
+	     <if test="related != null">
+	        and g.related=#{related}
+	     </if>
+	     <if test="isSpec != null">
+	        and g.is_spec=#{isSpec}
+	     </if>
+	     <if test="isDel != null">
+	        and g.is_del=#{isDel}
+	     </if>
+	     <if test="isShelf != null">
+	        and g.is_shelf=#{isShelf}
+	     </if>
+	     <if test="onSaleTime != null">
+	        and g.on_sale_time=#{onSaleTime}
+	     </if>
+	     <if test="offSaleTime != null">
+	        and g.off_sale_time=#{offSaleTime}
+	     </if>
+	     <if test="ctime != null">
+	        and g.ctime=#{ctime}
+	     </if>
+	     <if test="mtime != null">
+	        and g.mtime=#{mtime}
+	     </if>
+	   </where>
+	   GROUP BY g.content_id 
+	</sql>
+
+    <update id="deleteNotTrueByIds" parameterType="com.bluemobi.po.goods.GoodsContent">
+        update goods_content
+        <set>
+                is_del = 1,
+            <if test="mtime != null">
+                mtime=#{mtime},
+            </if>
+        </set>
+        <where>
+            content_id in  
+        <foreach collection="contentIds" item = "contentId" open="(" separator="," close=")">
+              #{contentId}  
+        </foreach>
+        </where>
+    </update>
+    
+    <delete id="deleteByIds" parameterType="map">
+       delete from 
+          goods_content 
+       where 
+          content_id in  
+        <foreach collection="contentIds" item = "contentId" open="(" separator="," close=")">
+              #{contentId}  
+        </foreach>
+    </delete>
+    
+    <select id="pageApi" parameterType="map" resultMap="pageResultMap">
+        SELECT 
+            g.content_id,
+         g.category_id,
+         g.brand_id,
+         g.userid,
+         g.name,
+         g.memo,
+         g.body,
+         g.meta_title,
+         g.meta_keywords,
+         g.meta_description,
+         g.sort_order,
+         g.related,
+         g.is_spec,
+         g.is_del,
+         g.is_shelf,
+         g.on_sale_time,
+         g.off_sale_time,
+         g.ctime,
+         g.mtime
+        <include refid="pageConditionApi" />
+            <if test="order != null">
+                ORDER BY #{order} 
+            </if>
+        limit #{offset},#{rows}
+    </select>
+    
+    <select id="pageCountApi" parameterType="map" resultType="int">
+        select count(1) from
+        (
+            select 1 
+            <include refid="pageConditionApi" />
+        ) t
+    </select>
+    
+    <sql id="pageConditionApi">
+        FROM goods_content g, goods_content_detail d, goods_category c, goods_brand b, goods_property t, trend_property p, trend_property_value v
+        <where>
+                g.content_id = d.content_id
+                AND g.category = c.category_id
+                AND g.brand_id = b.brand_id
+                AND g.content_id = t.content_id
+                AND p.property_id = t.property_id
+                AND v.property_value_id = t.property_value_id
+            <if test="key != null">
+                and
+                (
+                    g.name LIKE CONCAT(CONCAT('%', #{key}), '%')
+                    or g.sku LIKE CONCAT(CONCAT('%', #{key}), '%')
+                )
+            </if>
+            <if test="contentId != null">
+            and g.content_id=#{contentId}
+         </if>
+         <if test="categoryId != null">
+            and g.category_id=#{categoryId}
+         </if>
+         <if test="brandId != null">
+            and g.brand_id=#{brandId}
+         </if>
+            <if test="brandId != null">
+                and g.brand_id=#{brandId}
+            </if>
+        </where>
+            GROUP BY g.content_id 
+    </sql>
+    
+    <select id="selectObjectListByIdAndParentId" parameterType="map" resultMap="goodsContentResultMap">
+        select 
+            content_id,
+            parent_id,
+            category,
+            brand_id,
+            userid,
+            name,
+            sku,
+            image_default,
+            property_related,
+            stock,
+            weight,
+            length,
+            wide,
+            height,
+            price,
+            price_market,
+            price_cost,
+            purchase_max,
+            sales_volume,
+            sales_amount,
+            rank_average,
+            serialize_specs,
+            viewed,
+            sort_order,
+            rev,
+            pinned,
+            promotion_type,
+            is_shelf,
+            is_spec,
+            is_del,
+            on_sale_time,
+            off_sale_time,
+            ctime,
+            mtime
+        from goods_content
+        <where>
+            <if test="contentId != null">
+                content_id=#{contentId}
+            </if>
+            <if test="parentId != null">
+                or parent_id=#{parentId}
+            </if>
+        </where>
+    </select>
+    
+    <select id="pageGoodsContent" parameterType="map" resultMap="pageResultMap">
+       select 
+         g.content_id,
+         g.parent_id,
+         g.category,
+         g.brand_id,
+         g.userid,
+         g.name,
+         g.sku,
+         g.image_default,
+         g.property_related,
+         g.stock,
+         g.weight,
+         g.length,
+         g.wide,
+         g.height,
+         g.price,
+         g.price_market,
+         g.price_cost,
+         g.purchase_max,
+         g.sales_volume,
+         g.sales_amount,
+         g.rank_average,
+         g.serialize_specs,
+         g.viewed,
+         g.sort_order,
+         g.rev,
+         g.pinned,
+         g.promotion_type,
+         g.is_shelf,
+         g.is_spec,
+         g.is_del,
+         g.on_sale_time,
+         g.off_sale_time,
+         g.ctime,
+         g.mtime,
+         b.brand_name,
+         c.category_name
+       <include refid="pageConditionGoodsContent" />
+        limit #{offset},#{rows}
+    </select>
+    
+    <select id="pageCountGoodsContent" parameterType="map" resultType="int">
+        select count(1)
+        <include refid="pageConditionGoodsContent" />
+    </select>
+    
+    <sql id="pageConditionGoodsContent">
+       from goods_content g, goods_brand b, goods_category c
+       <where>
+           g.brand_id = b.brand_id
+           and g.category = c.category_id
+         <if test="key != null">
+           and
+           (
+                g.name LIKE CONCAT(CONCAT('%', #{key}), '%')
+                or g.sku LIKE CONCAT(CONCAT('%', #{key}), '%')
+           )
+         </if>
+         <if test="category != null">
+            and g.category=#{category}
+         </if>
+         <if test="brandId != null">
+            and g.brand_id=#{brandId}
+         </if>
+       </where>
+    </sql>
+    
+    <select id="selectAllContentAndSku" parameterType="map" resultMap="goodsContentAndSkuResultMap">
+       select 
+         g.content_id,
+         g.category_id,
+         g.brand_id,
+         g.userid,
+         g.name,
+         g.memo,
+         g.body,
+         g.meta_title,
+         g.meta_keywords,
+         g.meta_description,
+         g.sort_order,
+         g.related,
+         g.is_spec,
+         g.is_del,
+         g.is_shelf,
+         g.on_sale_time,
+         g.off_sale_time,
+         g.ctime,
+         g.mtime,
+         s.sku_id,
+         s.sku,
+         s.stock,
+         s.weight,
+         s.length,
+         s.wide,
+         s.height,
+         s.price,
+         s.price_market,
+         s.price_cost,
+         s.property,
+         s.sales_volume,
+         s.sales_amount,
+         s.rank_average,
+         s.viewed,
+         s.rev,
+         s.sort_order as sku_sort_order,
+         s.attachmentids,
+         s.is_shelf as sku_is_shelf,
+         s.is_del as sku_is_del,
+         s.ctime as sku_ctime,
+         s.mtime as sku_mtime
+       from goods_content g, goods_content_sku s
+       <where>
+            g.content_id = s.content_id
+         <if test="contentId != null">
+            and g.content_id=#{contentId}
+         </if>
+         <if test="categoryId != null">
+            and g.category_id=#{categoryId}
+         </if>
+         <if test="brandId != null">
+            and g.brand_id=#{brandId}
+         </if>
+         <if test="userid != null">
+            and g.userid=#{userid}
+         </if>
+         <if test="name != null">
+            and g.name=#{name}
+         </if>
+         <if test="memo != null">
+            and g.memo=#{memo}
+         </if>
+         <if test="body != null">
+            and g.body=#{body}
+         </if>
+         <if test="metaTitle != null">
+            and g.meta_title=#{metaTitle}
+         </if>
+         <if test="metaKeywords != null">
+            and g.meta_keywords=#{metaKeywords}
+         </if>
+         <if test="metaDescription != null">
+            and g.meta_description=#{metaDescription}
+         </if>
+         <if test="isDel != null">
+            and g.is_del=#{isDel}
+         </if>
+         <if test="isShelf != null">
+            g.is_shelf=#{isShelf}
+         </if>
+         <if test="onSaleTime != null">
+            g.on_sale_time=#{onSaleTime}
+         </if>
+         <if test="offSaleTime != null">
+            g.off_sale_time=#{offSaleTime}
+         </if>
+         <if test="ctime != null">
+            and g.ctime=#{ctime}
+         </if>
+         <if test="mtime != null">
+            and g.mtime=#{mtime}
+         </if>
+         <if test="skuId != null">
+            and s.sku_id=#{skuId}
+         </if>
+         <if test="sku != null">
+            and s.sku=#{sku}
+         </if>
+       </where>
+    </select>
+
+    <select id="pageGoodsByGrouponBulk" parameterType="map" resultMap="pageResultMap">
+        SELECT
+            s.sku_id,
+            g.name,
+            s.price,
+            s.stock,
+            b.brand_name
+    <include refid="pageGoodsConditionByGrouponBulk" />
+        order by s.sort_order desc
+        limit #{offset},#{rows}
+    </select>
+
+    <select id="pageCountGoodsByGrouponBulk" parameterType="map" resultType="int">
+       select count(1) from
+        (
+            select 1 
+            <include refid="pageGoodsConditionByGrouponBulk" />
+        ) t
+    </select>
+
+    <sql id="pageGoodsConditionByGrouponBulk">
+        FROM
+            goods_content_sku AS s,
+            goods_content AS g,
+            goods_brand AS b
+        <where>
+            g.content_id = s.content_id
+            AND g.brand_id = b.brand_id
+         <if test="key != null">
+           and g.name LIKE CONCAT(CONCAT('%', #{key}), '%')
+         </if>
+       </where>
+    </sql>
+    
+    <select id="pageByActivity" parameterType="map" resultMap="pageResultMap">
+        SELECT DISTINCT
+		    s.sku_id,
+		    c.category_name,
+		    g.name,
+		    b.brand_name,
+		    s.sku,
+		    s.price,
+		    s.property
+    <include refid="pageGoodsConditionByActivity" />
+        GROUP BY
+            s.sku_id
+        ORDER BY
+            s.sort_order,
+            s.content_id,
+            g.sort_order
+        limit #{offset},#{rows}
+    </select>
+
+    <select id="pageCountByActivity" parameterType="map" resultType="int">
+       select count(1) from
+        (
+            select 1 
+            <include refid="pageGoodsConditionByActivity" />
+            GROUP BY
+                s.sku_id
+        ) t
+    </select>
+
+    <sql id="pageGoodsConditionByActivity">
+        FROM
+            goods_content_sku s,
+            goods_content g,
+            goods_category c,
+            goods_brand b,
+            trend_property p,
+            trend_property_value v,
+            goods_property gp
+        <where>
+	            s.content_id = g.content_id
+	        AND g.category_id = c.category_id
+	        AND g.brand_id = b.brand_id
+	        AND gp.content_id = g.content_id
+	        AND gp.property_id = p.property_id
+	        AND gp.property_value_id = v.property_value_id
+	        AND p.property_id = v.property_id
+        <if test="key != null">
+            AND g.name LIKE CONCAT(CONCAT('%', #{key}), '%')
+        </if>
+        <if test="brandId != null">
+            AND g.brand_id = #{brandId}
+        </if>
+        <if test="categoryId != null">
+            AND g.category_id = #{categoryId}
+        </if>
+        </where>
+    </sql>
+    
+    <select id="pageByFrontSearch" parameterType="map" resultMap="pageResultMap">
+        SELECT g.content_id,
+            g.category_id,
+            g.brand_id,
+            g.userid,
+            g.name,
+            g.memo,
+            g.body,
+            g.meta_title,
+            g.meta_keywords,
+            g.meta_description,
+            g.sort_order,
+            g.related,
+            g.is_spec,
+            g.is_del,
+            g.is_shelf,
+            g.on_sale_time,
+            g.off_sale_time,
+            g.ctime,
+            g.mtime,
+            s.sku_id,
+            s.stock,
+            s.weight,
+            s.length,
+            s.wide,
+            s.height,
+            s.property,
+            s.price,
+            s.price_market,
+            s.price_cost,
+            s.sales_volume,
+            s.sales_amount,
+            s.rank_average,
+            s.viewed,
+            s.rev,
+            s.sort_order AS sku_order,
+            s.attachmentids,
+            s.is_shelf AS sku_is_shelf,
+            s.is_del AS sku_del,
+            s.ctime AS sku_ctime,
+            s.mtime AS sku_mtime,
+            c.category_name
+    <include refid="pageGoodsConditionByFrontSearch" />
+        GROUP BY
+            g.content_id
+        ORDER BY
+            <if test="orderByDefault != null">
+	            s.sort_order,
+	            s.content_id,
+	            g.sort_order
+            </if>
+            <if test="orderBySales != null">
+                s.sales_volume
+            </if>
+            <if test="orderByPrice != null">
+                s.price
+            </if>
+            <if test="desc != null">
+                DESC
+            </if>
+            <if test="asc != null">
+                ASC
+            </if>
+        limit #{offset},#{rows}
+    </select>
+
+    <select id="pageCountByFrontSearch" parameterType="map" resultType="int">
+       select count(1) from
+        (
+            select 1 
+            <include refid="pageGoodsConditionByFrontSearch" />
+            GROUP BY
+                g.content_id
+        ) t
+    </select>
+
+    <sql id="pageGoodsConditionByFrontSearch">
+        FROM 
+            goods_content g,
+            goods_content_sku s,
+            goods_category c
+        <where>
+            g.content_id = s.content_id
+            AND g.category_id = c.category_id
+            AND g.is_del = 0
+        <if test="key != null">
+            AND g.name LIKE CONCAT(CONCAT('%', #{key}), '%')
+        </if>
+        <if test="categoryIds != null">
+            AND g.category_id in
+	        <foreach collection="categoryIds" item = "categoryId" open="(" separator="," close=")">
+	              #{categoryId}  
+	        </foreach>
+        </if>
+        </where>
+    </sql>
+    
+    <select id="selectHotSales" parameterType="map" resultMap="pageResultMap">
+        select 
+	        g.content_id,
+            g.category_id,
+            g.brand_id,
+            g.userid,
+            g.name,
+            g.memo,
+            g.body,
+            g.meta_title,
+            g.meta_keywords,
+            g.meta_description,
+            g.sort_order,
+            g.related,
+            g.is_spec,
+            g.is_del,
+            g.is_shelf,
+            g.on_sale_time,
+            g.off_sale_time,
+            g.ctime,
+            g.mtime,
+            s.sku_id,
+            s.stock,
+            s.weight,
+            s.length,
+            s.wide,
+            s.height,
+            s.property,
+            s.price,
+            s.price_market,
+            s.price_cost,
+            s.sales_volume,
+            s.sales_amount,
+            s.rank_average,
+            s.viewed,
+            s.rev,
+            s.sort_order as sku_order,
+            s.attachmentids,
+            s.is_shelf,
+            s.is_del as sku_del,
+            s.ctime as sku_ctime,
+            s.mtime as sku_mtime,
+            b.brand_name,
+            c.category_name,
+            count(o.order_id) as salesCount
+         from goods_content g, goods_content_sku s, goods_brand b, goods_category c, bts_order_item i, bts_order o
+        <where>
+            g.content_id = s.content_id
+            and g.brand_id = b.brand_id
+            and g.category_id = c.category_id
+            and g.is_del=0
+            and s.sku_id = i.sku_id
+            and i.order_id = o.order_id
+        </where>
+        GROUP BY g.content_id 
+        order by salesCount desc
+        limit 0,5
+    </select>
+    
+    <select id="selectHotCollectList" parameterType="map" resultMap="pageResultMap">
+        SELECT
+		    g.content_id,
+		    g.category_id,
+		    g.brand_id,
+		    g.userid,
+		    g.name,
+		    g.memo,
+		    g.body,
+		    g.meta_title,
+		    g.meta_keywords,
+		    g.meta_description,
+		    g.sort_order,
+		    g.related,
+		    g.is_spec,
+		    g.is_del,
+		    g.is_shelf,
+		    g.on_sale_time,
+		    g.off_sale_time,
+		    g.ctime,
+		    g.mtime,
+		    s.sku_id,
+		    s.stock,
+		    s.weight,
+		    s.length,
+		    s.wide,
+		    s.height,
+		    s.property,
+		    s.price,
+		    s.price_market,
+		    s.price_cost,
+		    s.sales_volume,
+		    s.sales_amount,
+		    s.rank_average,
+		    s.viewed,
+		    s.rev,
+		    s.sort_order AS sku_order,
+		    s.attachmentids,
+		    s.is_shelf,
+		    s.is_del AS sku_del,
+		    s.ctime AS sku_ctime,
+		    s.mtime AS sku_mtime,
+		    b.brand_name,
+		    c.category_name,
+		    count(f.favorite_id) as favoriteCount
+		FROM
+		    goods_content g,
+		    goods_content_sku s,
+		    goods_brand b,
+		    goods_category c,
+		    cas_user_favorite f
+		WHERE
+		     g.content_id = s.content_id
+		AND g.brand_id = b.brand_id
+		AND g.category_id = c.category_id
+		AND g.is_del = 0 
+		and f.specificationId = s.sku_id
+		    group by g.content_id
+		    order by favoriteCount desc
+        limit 0,5
+    </select>
+	
+</mapper> 

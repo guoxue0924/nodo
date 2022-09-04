@@ -1,0 +1,364 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+【】对象关系映射 配置 
+ @author AutoCode 309444359@qq.com
+ @date 2015-10-27 14:36:20
+ -->
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.bluemobi.dao.coupon.CouponListingDao">
+
+	<resultMap id="couponListingResultMap" type="com.bluemobi.po.coupon.CouponListing">
+		<id property="cpnsId" column="cpns_id" />
+       <result property="couponId" column="coupon_id" />
+       <result property="cpnsStatus" column="cpns_status" />
+       <result property="isDel" column="is_del" />
+       <result property="disabled" column="disabled" />
+       <result property="userid" column="userid" />
+       <result property="ctime" column="ctime" />
+       <result property="mtime" column="mtime" />
+	</resultMap>
+	<resultMap id="mapResultMap"  type="java.util.HashMap" extends="couponListingResultMap"></resultMap>
+	
+	<resultMap id="frontPageResultMap"  type="java.util.HashMap">
+	   <id property="cpnsId" column="cpns_id" />
+       <result property="couponName" column="coupon_name" />
+       <result property="cpnsStatus" column="cpns_status" />
+       <result property="faceValue" column="face_value" />
+       <result property="validStime" column="valid_stime" />
+       <result property="validEtime" column="valid_etime" />
+	</resultMap>
+	
+	<resultMap id="pageResultMap"  type="com.bluemobi.to.coupon.CouponListTO">
+	   <id property="cpnsId" column="cpns_id" />
+       <result property="couponName" column="coupon_name" />
+       <result property="cpnsStatus" column="cpns_status" />
+       <result property="isDel" column="is_del" />
+       <result property="disabled" column="disabled" />
+       <result property="username" column="username" />
+       <result property="ctime" column="ctime" />
+       <result property="mtime" column="mtime" />
+	</resultMap>
+	
+	<resultMap id="customerPageResultMap"  type="com.bluemobi.to.coupon.CustomerCouponTO">
+       <id property="cpnsId" column="cpns_id" />
+       <result property="couponName" column="coupon_name" />
+       <result property="faceValue" column="face_value" />
+       <result property="couponType" column="coupon_type" />
+       <result property="couponPoint" column="coupon_point" />
+       <result property="isExchange" column="is_exchange" />
+       <result property="rule" column="rule" />
+       <result property="body" column="body" />
+       <result property="validStime" column="valid_stime" />
+       <result property="validEtime" column="valid_etime" />
+    </resultMap>
+	
+	
+	<insert id="insert" parameterType="com.bluemobi.po.coupon.CouponListing">
+	   insert into coupon_listing (
+	     cpns_id,
+	     coupon_id,
+	     cpns_status,
+	     is_del,
+	     disabled,
+	     userid,
+	     ctime,
+	     mtime
+	   )values (
+	     #{cpnsId},
+	     #{couponId},
+	     #{cpnsStatus},
+	     #{isDel},
+	     #{disabled},
+	     #{userid},
+	     #{ctime},
+	     #{mtime}
+	   )
+	</insert>
+
+	<update id="update" parameterType="com.bluemobi.po.coupon.CouponListing">
+		update coupon_listing
+		<set>
+			<if test="cpnsId != null">
+				cpns_id=#{cpnsId},
+			</if>
+			<if test="couponId != null">
+				coupon_id=#{couponId},
+			</if>
+			<if test="cpnsStatus != null">
+				cpns_status=#{cpnsStatus},
+			</if>
+			<if test="isDel != null">
+				is_del=#{isDel},
+			</if>
+			<if test="disabled != null">
+				disabled=#{disabled},
+			</if>
+			<if test="userid != null">
+				userid=#{userid},
+			</if>
+			<if test="ctime != null">
+				ctime=#{ctime},
+			</if>
+			<if test="mtime != null">
+				mtime=#{mtime},
+			</if>
+		</set>
+		<where>
+			cpns_id=#{cpnsId} 
+		</where>
+	</update>
+
+	<delete id="delete" parameterType="map">
+	   delete from 
+	     coupon_listing 
+	   where 
+	    cpns_id=#{cpnsId} 
+	</delete>
+
+	<select id="selectObject" parameterType="map" resultMap="couponListingResultMap">
+	   select 
+	    cpns_id,
+	    coupon_id,
+	    cpns_status,
+	    is_del,
+	    disabled,
+	    userid,
+	    ctime,
+	    mtime
+	   from coupon_listing
+	   where 
+	    cpns_id=#{cpnsId} 
+	</select>
+	
+	<select id="selectObjectList" parameterType="map" resultMap="couponListingResultMap">
+	   select 
+	     cpns_id,
+	     coupon_id,
+	     cpns_status,
+	     is_del,
+	     disabled,
+	     userid,
+	     ctime,
+	     mtime
+	   from coupon_listing
+	   <where>
+	     <if test="cpnsId != null">
+	        cpns_id=#{cpnsId}
+	     </if>
+	     <if test="couponId != null">
+	        and coupon_id=#{couponId}
+	     </if>
+	     <if test="cpnsStatus != null">
+	        and cpns_status=#{cpnsStatus}
+	     </if>
+	     <if test="isDel != null">
+	        and is_del=#{isDel}
+	     </if>
+	     <if test="disabled != null">
+	        and disabled=#{disabled}
+	     </if>
+	     <if test="userid != null">
+	        and userid=#{userid}
+	     </if>
+	     <if test="ctime != null">
+	        and ctime=#{ctime}
+	     </if>
+	     <if test="mtime != null">
+	        and mtime=#{mtime}
+	     </if>
+	   </where>
+	</select>
+
+	<select id="selectMap" parameterType="map" resultMap="mapResultMap">
+	   select 
+	    cpns_id,
+	    coupon_id,
+	    cpns_status,
+	    is_del,
+	    disabled,
+	    userid,
+	    ctime,
+	    mtime
+	   from coupon_listing
+	   where 
+	    cpns_id=#{cpnsId} 
+	</select>
+
+	<select id="selectMapList" parameterType="map" resultMap="mapResultMap">
+	   select 
+	     cpns_id,
+	     coupon_id,
+	     cpns_status,
+	     is_del,
+	     disabled,
+	     userid,
+	     ctime,
+	     mtime
+	   from coupon_listing
+	   <where>
+	     <if test="cpnsId != null">
+	        cpns_id=#{cpnsId}
+	     </if>
+	     <if test="couponId != null">
+	        and coupon_id=#{couponId}
+	     </if>
+	     <if test="cpnsStatus != null">
+	        and cpns_status=#{cpnsStatus}
+	     </if>
+	     <if test="isDel != null">
+	        and is_del=#{isDel}
+	     </if>
+	     <if test="disabled != null">
+	        and disabled=#{disabled}
+	     </if>
+	     <if test="userid != null">
+	        and userid=#{userid}
+	     </if>
+	     <if test="ctime != null">
+	        and ctime=#{ctime}
+	     </if>
+	     <if test="mtime != null">
+	        and mtime=#{mtime}
+	     </if>
+	   </where>
+	</select>
+	
+	<select id="customerPage" parameterType="map" resultMap="customerPageResultMap">
+	   select 
+	     l.cpns_id,
+		 c.coupon_name,
+		 c.face_value,
+		 c.coupon_type,
+		 c.coupon_point,
+		 c.is_exchange,
+		 c.rule,
+		 c.body,
+		 c.valid_stime,
+		 c.valid_etime
+	<include refid="customerPageCondition" />
+	limit #{offset},#{rows}
+	</select>
+
+	<select id="customerPageCount" parameterType="map" resultType="int">
+	   select count(1)
+	   <include refid="customerPageCondition" />
+	</select>
+
+	<sql id="customerPageCondition">
+	   from coupon_listing l, coupon_category c, cas_user u 
+	   <where>
+	     l.coupon_id = c.coupon_id and l.userid = u.userid 
+         <if test="type != null and type != ''">
+            and c.coupon_type=#{type}
+         </if>
+         <if test="status != null">
+            and l.cpns_status=#{status}
+         </if>
+         <if test="userId != null">
+            and u.userid=#{userId}
+         </if>
+	   </where>
+	   <if test="sort != null and sort = '1'">
+           order by c.valid_etime 
+       </if>
+       <if test="sort != null and sort = '2'">
+           order by c.face_value desc 
+       </if>
+	</sql>
+	
+	<select id="page" parameterType="map" resultMap="pageResultMap">
+       select 
+         l.cpns_id,
+         c.coupon_name,
+         l.cpns_status,
+         l.is_del,
+         l.disabled,
+         u.username,
+         l.ctime,
+         l.mtime
+    <include refid="pageCondition" />
+    limit #{offset},#{rows}
+    </select>
+
+    <select id="pageCount" parameterType="map" resultType="int">
+       select count(1)
+       <include refid="pageCondition" />
+    </select>
+
+    <sql id="pageCondition">
+       from coupon_listing l, coupon_category c, cas_user u 
+       <where>
+         l.coupon_id = c.coupon_id and l.userid = u.userid 
+         <if test="key != null">
+            and (
+                c.coupon_name LIKE CONCAT(CONCAT('%', #{key}), '%')
+                or u.username LIKE CONCAT(CONCAT('%', #{key}), '%')
+            )
+         </if>
+         <if test="status != null and status != ''">
+            and l.cpns_status=#{status}
+         </if>
+         <if test="type != null and type != ''">
+            and c.coupon_type=#{type}
+         </if>
+         <if test="creatStartDate != null">
+            and l.ctime&gt;=#{creatStartDate}
+         </if>
+         <if test="createEndDate != null">
+            and l.ctime&lt;=#{createEndDate}
+         </if>
+         <if test="modifyStartDate != null">
+            and l.mtime&gt;=#{modifyStartDate}
+         </if>
+         <if test="modifyEndDate != null">
+            and l.mtime&lt;=#{modifyEndDate}
+         </if>
+         <if test="couponId != null">
+            and l.coupon_id=#{couponId}
+         </if>
+       </where>
+    </sql>
+    
+    <select id="frontPage" parameterType="map" resultMap="frontPageResultMap">
+	   SELECT
+			l.cpns_id,
+			c.coupon_name,
+			case l.cpns_status 
+				when 0 then '未使用'
+				when 1 then '已使用'
+				when 2 then '锁定'
+				else '未知'
+			end as cpns_status,
+			FORMAT(c.face_value,2) as face_value,
+			DATE_FORMAT(c.valid_stime, "%Y-%m-%d %T") as valid_stime,
+			DATE_FORMAT(c.valid_etime, "%Y-%m-%d %T") as valid_etime
+		FROM
+			coupon_category c,
+			coupon_listing l
+		<where>
+			c.coupon_id = l.coupon_id
+			AND l.userid = #{userid}
+			<if test="status != null">
+	            and l.cpns_status=#{status}
+	         </if>
+	    </where>
+			limit #{offset},#{rows}
+	</select>
+
+	<select id="frontPageCount" parameterType="map" resultType="int">
+	   select count(1)
+	   FROM
+			coupon_category c,
+			coupon_listing l
+		<where>
+			c.coupon_id = l.coupon_id
+			AND l.userid = #{userid}
+			<if test="status != null">
+	            and l.cpns_status=#{status}
+	        </if>
+	    </where>
+	</select>
+	
+</mapper> 

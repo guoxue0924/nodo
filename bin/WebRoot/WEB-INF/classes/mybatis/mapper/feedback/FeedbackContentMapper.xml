@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+【留言反馈表】对象关系映射 配置 
+ @author AutoCode 309444359@qq.com
+ @date 2015-10-13 13:35:15
+ -->
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.bluemobi.dao.feedback.FeedbackContentDao">
+
+	<resultMap id="feedbackContentResultMap" type="com.bluemobi.po.feedback.FeedbackContent">
+		<id property="contentId" column="content_id" />
+		<result property="body" column="body" />
+		<result property="ctime" column="ctime" />
+		<result property="ip" column="ip" />
+		<result property="reply" column="reply" />
+		<result property="replyTime" column="reply_time" />
+		<result property="status" column="status" />
+		<result property="title" column="title" />
+		<result property="userid" column="userid" />
+		<result property="realname" column="realname" />
+	</resultMap>
+	<resultMap id="mapResultMap"  type="java.util.HashMap" extends="feedbackContentResultMap"></resultMap>
+	<resultMap id="pageResultMap"  type="java.util.HashMap" extends="feedbackContentResultMap"></resultMap>
+	
+	
+	<insert id="insert" parameterType="com.bluemobi.po.feedback.FeedbackContent">
+	   insert into feedback_content (
+<!-- 	     content_id, -->
+	     body,
+	     ctime,
+	     ip,
+	     reply,
+	     reply_time,
+	     status,
+	     title,
+	     userid
+	   )values (
+<!-- 	     #{contentId}, -->
+	     #{body},
+	     #{ctime},
+	     #{ip},
+	     #{reply},
+	     #{replyTime},
+	     #{status},
+	     #{title},
+	     #{userid}
+	   )
+	</insert>
+
+	<update id="update" parameterType="com.bluemobi.po.feedback.FeedbackContent">
+		update feedback_content
+		<set>
+			<if test="contentId != null">
+				content_id=#{contentId},
+			</if>
+			<if test="body != null">
+				body=#{body},
+			</if>
+			<if test="ctime != null">
+				ctime=#{ctime},
+			</if>
+			<if test="ip != null">
+				ip=#{ip},
+			</if>
+			<if test="reply != null">
+				reply=#{reply},
+			</if>
+			<if test="replyTime != null">
+				reply_time=#{replyTime},
+			</if>
+			<if test="status != null">
+				status=#{status},
+			</if>
+			<if test="title != null">
+				title=#{title},
+			</if>
+			<if test="userid != null">
+				userid=#{userid},
+			</if>
+		</set>
+		<where>
+			content_id=#{contentId} 
+		</where>
+	</update>
+
+	<delete id="delete" parameterType="map">
+	   delete from 
+	     feedback_content 
+	   where 
+	    content_id=#{contentId} 
+	</delete>
+
+	<select id="selectObject" parameterType="map" resultMap="feedbackContentResultMap">
+	   select 
+	    f.content_id,
+	    f.body,
+	    f.ctime,
+	    f.ip,
+	    f.reply,
+	    f.reply_time,
+	    f.status,
+	    f.title,
+	    f.userid,
+	    IFNULL(c.realname,'匿名用户') as realname
+	   from feedback_content f left join cas_user c on f.userid = c.userid 
+	   where 
+	    f.content_id=#{contentId} 
+	</select>
+	
+	<select id="selectObjectList" parameterType="map" resultMap="feedbackContentResultMap">
+	   select 
+	     content_id,
+	     body,
+	     ctime,
+	     ip,
+	     reply,
+	     reply_time,
+	     status,
+	     title,
+	     userid
+	   from feedback_content
+	   <where>
+	     <if test="contentId != null">
+	        content_id=#{contentId}
+	     </if>
+	     <if test="body != null">
+	        and body=#{body}
+	     </if>
+	     <if test="ctime != null">
+	        and ctime=#{ctime}
+	     </if>
+	     <if test="ip != null">
+	        and ip=#{ip}
+	     </if>
+	     <if test="reply != null">
+	        and reply=#{reply}
+	     </if>
+	     <if test="replyTime != null">
+	        and reply_time=#{replyTime}
+	     </if>
+	     <if test="status != null">
+	        and status=#{status}
+	     </if>
+	     <if test="title != null">
+	        and title=#{title}
+	     </if>
+	     <if test="userid != null">
+	        and userid=#{userid}
+	     </if>
+	   </where>
+	</select>
+
+	<select id="selectMap" parameterType="map" resultMap="mapResultMap">
+	   select 
+	    content_id,
+	    body,
+	    ctime,
+	    ip,
+	    reply,
+	    reply_time,
+	    status,
+	    title,
+	    userid
+	   from feedback_content
+	   where 
+	    content_id=#{contentId} 
+	</select>
+
+	<select id="selectMapList" parameterType="map" resultMap="mapResultMap">
+	   select 
+	     content_id,
+	     body,
+	     ctime,
+	     ip,
+	     reply,
+	     reply_time,
+	     status,
+	     title,
+	     userid
+	   from feedback_content
+	   <where>
+	     <if test="contentId != null">
+	        content_id=#{contentId}
+	     </if>
+	     <if test="body != null">
+	        and body=#{body}
+	     </if>
+	     <if test="ctime != null">
+	        and ctime=#{ctime}
+	     </if>
+	     <if test="ip != null">
+	        and ip=#{ip}
+	     </if>
+	     <if test="reply != null">
+	        and reply=#{reply}
+	     </if>
+	     <if test="replyTime != null">
+	        and reply_time=#{replyTime}
+	     </if>
+	     <if test="status != null">
+	        and status=#{status}
+	     </if>
+	     <if test="title != null">
+	        and title=#{title}
+	     </if>
+	     <if test="userid != null">
+	        and userid=#{userid}
+	     </if>
+	   </where>
+	</select>
+	
+	<sql id="pageCondition">
+	   from feedback_content f left join cas_user c on f.userid = c.userid 
+       <where>
+         <if test="key != null">
+            (
+                f.body LIKE CONCAT(CONCAT('%', #{key}), '%')
+                or f.reply LIKE CONCAT(CONCAT('%', #{key}), '%')
+            )
+         </if>
+         <if test="hasName == 1">
+            and f.userid = 0  
+         </if>
+         <if test="hasName == 2">
+            and f.userid > 0
+         </if>
+       </where>
+	</sql>
+
+	<select id="pageCount" parameterType="map" resultType="int">
+        select count(1)
+        <include refid="pageCondition" />
+    </select>
+	
+	
+	<select id="page" parameterType="map" resultMap="pageResultMap">
+	   select 
+	     f.content_id,
+	     f.body,
+	     f.ctime,
+	     f.ip,
+	     f.reply,
+	     f.reply_time,
+	     f.status,
+	     f.title,
+	     f.userid,
+	     IFNULL(c.realname,'匿名用户') as realname
+	   <include refid="pageCondition" />
+	   limit #{offset},#{rows}
+	</select>
+	
+</mapper> 

@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+【版本管理】对象关系映射 配置 
+ @author AutoCode 309444359@qq.com
+ @date 2015-12-02 17:27:20
+ -->
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.bluemobi.dao.trend.TrendVersionDao">
+
+	<resultMap id="trendVersionResultMap" type="com.bluemobi.po.trend.TrendVersion">
+		<id property="id" column="id" />
+       <result property="platform" column="platform" />
+       <result property="vCode" column="v_code" />
+       <result property="vName" column="v_name" />
+       <result property="content" column="content" />
+       <result property="filepath" column="filepath" />
+       <result property="size" column="size" />
+       <result property="filepathTdc" column="filepath_tdc" />
+       <result property="status" column="status" />
+       <result property="ctime" column="ctime" />
+       <result property="mtime" column="mtime" />
+	</resultMap>
+	<resultMap id="mapResultMap"  type="java.util.HashMap" extends="trendVersionResultMap"></resultMap>
+	<resultMap id="pageResultMap"  type="java.util.HashMap" extends="trendVersionResultMap"></resultMap>
+	
+	
+	<insert id="insert" parameterType="com.bluemobi.po.trend.TrendVersion">
+	   insert into trend_version (
+	     id,
+	     platform,
+	     v_code,
+	     v_name,
+	     content,
+	     filepath,
+	     size,
+	     filepath_tdc,
+	     status,
+	     ctime,
+	     mtime
+	   )values (
+	     #{id},
+	     #{platform},
+	     #{vCode},
+	     #{vName},
+	     #{content},
+	     #{filepath},
+	     #{size},
+	     #{filepathTdc},
+	     #{status},
+	     #{ctime},
+	     #{mtime}
+	   )
+	</insert>
+
+	<update id="update" parameterType="com.bluemobi.po.trend.TrendVersion">
+		update trend_version
+		<set>
+			<if test="id != null">
+				id=#{id},
+			</if>
+			<if test="platform != null">
+				platform=#{platform},
+			</if>
+			<if test="vCode != null">
+				v_code=#{vCode},
+			</if>
+			<if test="vName != null">
+				v_name=#{vName},
+			</if>
+			<if test="content != null">
+				content=#{content},
+			</if>
+			<if test="filepath != null">
+				filepath=#{filepath},
+			</if>
+			<if test="size != null">
+				size=#{size},
+			</if>
+			<if test="filepathTdc != null">
+				filepath_tdc=#{filepathTdc},
+			</if>
+			<if test="status != null">
+				status=#{status},
+			</if>
+			<if test="ctime != null">
+				ctime=#{ctime},
+			</if>
+			<if test="mtime != null">
+				mtime=#{mtime},
+			</if>
+		</set>
+		<where>
+			id=#{id} 
+		</where>
+	</update>
+
+	<delete id="delete" parameterType="map">
+	   delete from 
+	     trend_version 
+	   where 
+	    id=#{id} 
+	</delete>
+
+	<select id="selectObject" parameterType="map" resultMap="trendVersionResultMap">
+	   select 
+	    id,
+	    platform,
+	    v_code,
+	    v_name,
+	    content,
+	    filepath,
+	    size,
+	    filepath_tdc,
+	    status,
+	    ctime,
+	    mtime
+	   from trend_version
+	   where 
+	    id=#{id} 
+	</select>
+	
+	<select id="selectObjectList" parameterType="map" resultMap="trendVersionResultMap">
+	   select 
+	     id,
+	     platform,
+	     v_code,
+	     v_name,
+	     content,
+	     filepath,
+	     size,
+	     filepath_tdc,
+	     status,
+	     ctime,
+	     mtime
+	   from trend_version
+	   <where>
+	     <if test="id != null">
+	        id=#{id}
+	     </if>
+	     <if test="platform != null">
+	        and platform=#{platform}
+	     </if>
+	     <if test="vCode != null">
+	        and v_code=#{vCode}
+	     </if>
+	     <if test="vName != null">
+	        and v_name=#{vName}
+	     </if>
+	     <if test="content != null">
+	        and content=#{content}
+	     </if>
+	     <if test="filepath != null">
+	        and filepath=#{filepath}
+	     </if>
+	     <if test="size != null">
+	        and size=#{size}
+	     </if>
+	     <if test="filepathTdc != null">
+	        and filepath_tdc=#{filepathTdc}
+	     </if>
+	     <if test="status != null">
+	        and status=#{status}
+	     </if>
+	     <if test="ctime != null">
+	        and ctime=#{ctime}
+	     </if>
+	     <if test="mtime != null">
+	        and mtime=#{mtime}
+	     </if>
+	   </where>
+	</select>
+
+	<select id="selectMap" parameterType="map" resultMap="mapResultMap">
+	   select 
+	    id,
+	    platform,
+	    v_code,
+	    v_name,
+	    content,
+	    filepath,
+	    size,
+	    filepath_tdc,
+	    status,
+	    ctime,
+	    mtime
+	   from trend_version
+	   where 
+	    id=#{id} 
+	</select>
+
+	<select id="selectMapList" parameterType="map" resultMap="mapResultMap">
+	   select 
+	     id,
+	     platform,
+	     v_code,
+	     v_name,
+	     content,
+	     filepath,
+	     size,
+	     filepath_tdc,
+	     status,
+	     ctime,
+	     mtime
+	   from trend_version
+	   <where>
+	     <if test="id != null">
+	        id=#{id}
+	     </if>
+	     <if test="platform != null">
+	        and platform=#{platform}
+	     </if>
+	     <if test="vCode != null">
+	        and v_code=#{vCode}
+	     </if>
+	     <if test="vName != null">
+	        and v_name=#{vName}
+	     </if>
+	     <if test="content != null">
+	        and content=#{content}
+	     </if>
+	     <if test="filepath != null">
+	        and filepath=#{filepath}
+	     </if>
+	     <if test="size != null">
+	        and size=#{size}
+	     </if>
+	     <if test="filepathTdc != null">
+	        and filepath_tdc=#{filepathTdc}
+	     </if>
+	     <if test="status != null">
+	        and status=#{status}
+	     </if>
+	     <if test="ctime != null">
+	        and ctime=#{ctime}
+	     </if>
+	     <if test="mtime != null">
+	        and mtime=#{mtime}
+	     </if>
+	   </where>
+	</select>
+	
+	<select id="page" parameterType="map" resultMap="pageResultMap">
+	   select 
+	     id,
+	     platform,
+	     v_code,
+	     v_name,
+	     content,
+	     filepath,
+	     size,
+	     filepath_tdc,
+	     status,
+	     ctime,
+	     mtime
+	<include refid="pageCondition" />
+	limit #{offset},#{rows}
+	</select>
+
+	<select id="pageCount" parameterType="map" resultType="int">
+	   select count(1)
+	   <include refid="pageCondition" />
+	</select>
+
+	<sql id="pageCondition">
+	   from trend_version
+	   <where>
+	     <if test="id != null">
+	        id=#{id}
+	     </if>
+	     <if test="platform != null">
+	        and platform=#{platform}
+	     </if>
+	     <if test="vCode != null">
+	        and v_code=#{vCode}
+	     </if>
+	     <if test="vName != null">
+	        and v_name=#{vName}
+	     </if>
+	     <if test="content != null">
+	        and content=#{content}
+	     </if>
+	     <if test="filepath != null">
+	        and filepath=#{filepath}
+	     </if>
+	     <if test="size != null">
+	        and size=#{size}
+	     </if>
+	     <if test="filepathTdc != null">
+	        and filepath_tdc=#{filepathTdc}
+	     </if>
+	     <if test="status != null">
+	        and status=#{status}
+	     </if>
+	     <if test="ctime != null">
+	        and ctime=#{ctime}
+	     </if>
+	     <if test="mtime != null">
+	        and mtime=#{mtime}
+	     </if>
+	   </where>
+	</sql>
+
+	
+</mapper> 

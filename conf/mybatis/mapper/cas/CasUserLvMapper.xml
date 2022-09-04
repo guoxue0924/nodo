@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+【用户等级表】对象关系映射 配置 
+ @author AutoCode 309444359@qq.com
+ @date 2015-09-11 16:25:18
+ -->
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.bluemobi.dao.cas.CasUserLvDao">
+
+	<resultMap id="casUserLvResultMap" type="com.bluemobi.po.cas.CasUserLv">
+		<id property="userLvId" column="user_lv_id" />
+		<result property="userGroupId" column="user_group_id" />
+		<result property="storeId" column="store_id" />
+		<result property="name" column="name" />
+		<result property="isDefault" column="is_default" />
+		<result property="status" column="status" />
+		<result property="description" column="description" />
+		<result property="ctime" column="ctime" />
+		<result property="mtime" column="mtime" />
+	</resultMap>
+	<resultMap id="mapResultMap"  type="java.util.HashMap" extends="casUserLvResultMap"></resultMap>
+	<resultMap id="pageResultMap"  type="java.util.HashMap" extends="casUserLvResultMap">
+		<result property="groupName" column="group_name" />
+	</resultMap>
+	
+	
+	<insert id="insert" parameterType="com.bluemobi.po.cas.CasUserLv">
+	   insert into cas_user_lv (
+	     user_lv_id,
+	     user_group_id,
+	     store_id,
+	     name,
+	     is_default,
+	     status,
+	     description,
+	     ctime,
+	     mtime
+	   )values (
+	     #{userLvId},
+	     #{userGroupId},
+	     #{storeId},
+	     #{name},
+	     #{isDefault},
+	     #{status},
+	     #{description},
+	     #{ctime},
+	     #{mtime}
+	   )
+	</insert>
+
+	<update id="update" parameterType="com.bluemobi.po.cas.CasUserLv">
+	   update cas_user_lv set
+	     user_lv_id=#{userLvId},
+	     user_group_id=#{userGroupId},
+	     store_id=#{storeId},
+	     name=#{name},
+	     is_default=#{isDefault},
+	     status=#{status},
+	     description=#{description},
+	     ctime=#{ctime},
+	     mtime=#{mtime}
+	   where 
+	    user_lv_id=#{userLvId} 
+	</update>
+	<update id="updateIsDefault" parameterType="com.bluemobi.po.cas.CasUserLv">
+       update cas_user_lv set
+         is_default = 0
+       where 
+        is_default = 1 
+    </update>
+	
+
+	<delete id="delete" parameterType="map">
+	   delete from 
+	     cas_user_lv 
+	   where 
+	    user_lv_id=#{userLvId} 
+	</delete>
+
+	<select id="selectObject" parameterType="map" resultMap="casUserLvResultMap">
+	   select 
+	    user_lv_id,
+	    user_group_id,
+	    store_id,
+	    name,
+	    is_default,
+	    status,
+	    description,
+	    ctime,
+	    mtime
+	   from cas_user_lv
+	   where 
+	    user_lv_id=#{userLvId} 
+	</select>
+	
+	<select id="selectObjectList" parameterType="map" resultMap="casUserLvResultMap">
+	   select 
+	     user_lv_id,
+	     user_group_id,
+	     store_id,
+	     name,
+	     is_default,
+	     status,
+	     description,
+	     ctime,
+	     mtime
+	   from cas_user_lv
+	   <where>
+	     <if test="userLvId != null">
+	        user_lv_id=#{userLvId}
+	     </if>
+	     <if test="userGroupId != null">
+	        and user_group_id=#{userGroupId}
+	     </if>
+	     <if test="storeId != null">
+	        and store_id=#{storeId}
+	     </if>
+	     <if test="name != null">
+	        and name=#{name}
+	     </if>
+	     <if test="isDefault != null">
+	        and is_default=#{isDefault}
+	     </if>
+	     <if test="status != null">
+	        and status=#{status}
+	     </if>
+	     <if test="description != null">
+	        and description=#{description}
+	     </if>
+	     <if test="ctime != null">
+	        and ctime=#{ctime}
+	     </if>
+	     <if test="mtime != null">
+	        and mtime=#{mtime}
+	     </if>
+	   </where>
+	</select>
+
+	<select id="selectMap" parameterType="map" resultMap="mapResultMap">
+	   select 
+	    user_lv_id,
+	    user_group_id,
+	    store_id,
+	    name,
+	    is_default,
+	    status,
+	    description,
+	    ctime,
+	    mtime
+	   from cas_user_lv
+	   where 
+	    user_lv_id=#{userLvId} 
+	</select>
+
+	<select id="selectMapList" parameterType="map" resultMap="mapResultMap">
+	   select 
+	     user_lv_id,
+	     user_group_id,
+	     store_id,
+	     name,
+	     is_default,
+	     status,
+	     description,
+	     ctime,
+	     mtime
+	   from cas_user_lv
+	   <where>
+	     <if test="userLvId != null">
+	        user_lv_id=#{userLvId}
+	     </if>
+	     <if test="userGroupId != null">
+	        and user_group_id=#{userGroupId}
+	     </if>
+	     <if test="storeId != null">
+	        and store_id=#{storeId}
+	     </if>
+	     <if test="name != null">
+	        and name=#{name}
+	     </if>
+	     <if test="isDefault != null">
+	        and is_default=#{isDefault}
+	     </if>
+	     <if test="status != null">
+	        and status=#{status}
+	     </if>
+	     <if test="description != null">
+	        and description=#{description}
+	     </if>
+	     <if test="ctime != null">
+	        and ctime=#{ctime}
+	     </if>
+	     <if test="mtime != null">
+	        and mtime=#{mtime}
+	     </if>
+	   </where>
+	</select>
+	<sql id="pageCondition">
+	   from cas_user_lv u, cas_user_group g
+       <where>
+          u.user_group_id = g.user_group_id
+         <if test="userLvId != null">
+            and user_lv_id=#{userLvId}
+         </if>
+         <if test="userGroupId != null">
+            and user_group_id=#{userGroupId}
+         </if>
+         <if test="storeId != null">
+            and store_id=#{storeId}
+         </if>
+         <if test="name != null">
+            and name=#{name}
+         </if>
+         <if test="isDefault != null">
+            and is_default=#{isDefault}
+         </if>
+         <if test="status != null">
+            and status=#{status}
+         </if>
+         <if test="description != null">
+            and description=#{description}
+         </if>
+         <if test="ctime != null">
+            and ctime=#{ctime}
+         </if>
+         <if test="mtime != null">
+            and mtime=#{mtime}
+         </if>
+       </where>
+	</sql>
+	<select id="page" parameterType="map" resultMap="pageResultMap">
+	   select 
+	     u.user_lv_id,
+	     u.user_group_id,
+	     u.store_id,
+	     u.name,
+	     u.is_default,
+	     u.status,
+	     u.description,
+	     u.ctime,
+	     u.mtime,
+	     g.group_name
+	   <include refid="pageCondition" />
+       limit #{offset},#{rows}
+	</select>
+	<select id="pageCount" parameterType="map" resultType="int">
+        select count(1)
+        <include refid="pageCondition" />
+    </select>
+</mapper> 

@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+【】对象关系映射 配置 
+ @author AutoCode 309444359@qq.com
+ @date 2015-10-21 14:55:27
+ -->
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.bluemobi.dao.comment.CommentAttachmentDao">
+
+	<resultMap id="commentAttachmentResultMap" type="com.bluemobi.po.comment.CommentAttachment">
+		<id property="commentId" column="comment_id" />
+		<id property="attachmentid" column="attachmentid" />
+		<result property="commentId" column="comment_id" />
+		<result property="attachmentid" column="attachmentid" />
+		<result property="type" column="type" />
+		<result property="type" column="type" />
+		<result property="userid" column="userid" />
+		<result property="userid" column="userid" />
+	</resultMap>
+	<resultMap id="mapResultMap"  type="java.util.HashMap" extends="commentAttachmentResultMap"></resultMap>
+	<resultMap id="pageResultMap"  type="java.util.HashMap" extends="commentAttachmentResultMap"></resultMap>
+	
+	
+	<insert id="insert" parameterType="com.bluemobi.po.comment.CommentAttachment">
+	   insert into comment_attachment (
+	     comment_id,
+	     attachmentid,
+	     type,
+	     userid
+	   )values (
+	     #{commentId},
+	     #{attachmentid},
+	     #{type},
+	     #{userid}
+	   )
+	</insert>
+
+	<update id="update" parameterType="com.bluemobi.po.comment.CommentAttachment">
+		update comment_attachment
+		<set>
+			<if test="commentId != null">
+				comment_id=#{commentId},
+			</if>
+			<if test="attachmentid != null">
+				attachmentid=#{attachmentid},
+			</if>
+			<if test="type != null">
+				type=#{type},
+			</if>
+			<if test="userid != null">
+				userid=#{userid},
+			</if>
+		</set>
+		<where>
+			comment_id=#{commentId} 
+			 andattachmentid=#{attachmentid} 
+		</where>
+	</update>
+
+	<delete id="delete" parameterType="map">
+	   delete from 
+	     comment_attachment 
+	   where 
+	    comment_id=#{commentId} 
+	    and attachmentid=#{attachmentid} 
+	</delete>
+
+	<select id="selectObject" parameterType="map" resultMap="commentAttachmentResultMap">
+	   select 
+	    comment_id,
+	    attachmentid,
+	    type,
+	    userid
+	   from comment_attachment
+	   where 
+	    comment_id=#{commentId} 
+	    and attachmentid=#{attachmentid} 
+	</select>
+	
+	<select id="selectObjectList" parameterType="map" resultMap="commentAttachmentResultMap">
+	   select 
+	     comment_id,
+	     attachmentid,
+	     type,
+	     userid
+	   from comment_attachment
+	   <where>
+	     <if test="commentId != null">
+	        comment_id=#{commentId}
+	     </if>
+	     <if test="attachmentid != null">
+	        and attachmentid=#{attachmentid}
+	     </if>
+	     <if test="type != null">
+	        and type=#{type}
+	     </if>
+	     <if test="userid != null">
+	        and userid=#{userid}
+	     </if>
+	   </where>
+	</select>
+
+	<select id="selectMap" parameterType="map" resultMap="mapResultMap">
+	   select 
+	    comment_id,
+	    attachmentid,
+	    type,
+	    userid
+	   from comment_attachment
+	   where 
+	    comment_id=#{commentId} 
+	    and attachmentid=#{attachmentid} 
+	</select>
+
+	<select id="selectMapList" parameterType="map" resultMap="mapResultMap">
+	   select 
+	     comment_id,
+	     attachmentid,
+	     type,
+	     userid
+	   from comment_attachment
+	   <where>
+	     <if test="commentId != null">
+	        comment_id=#{commentId}
+	     </if>
+	     <if test="attachmentid != null">
+	        and attachmentid=#{attachmentid}
+	     </if>
+	     <if test="type != null">
+	        and type=#{type}
+	     </if>
+	     <if test="userid != null">
+	        and userid=#{userid}
+	     </if>
+	   </where>
+	</select>
+	
+	<select id="page" parameterType="map" resultMap="pageResultMap">
+	   select 
+	     comment_id,
+	     attachmentid,
+	     type,
+	     userid
+	   from comment_attachment
+	   <where>
+	     <if test="commentId != null">
+	        comment_id=#{commentId}
+	     </if>
+	     <if test="attachmentid != null">
+	        and attachmentid=#{attachmentid}
+	     </if>
+	     <if test="type != null">
+	        and type=#{type}
+	     </if>
+	     <if test="userid != null">
+	        and userid=#{userid}
+	     </if>
+	   </where>
+	</select>
+	
+	<insert id="batchInsert" parameterType="map">  
+	    insert into comment_attachment (comment_id, attachmentid, userid)   
+	    values  
+	    <foreach collection="imageIds" item="item" index="index" separator="," >  
+	        (#{commentId},#{item},#{userid})  
+	    </foreach>  
+	</insert>
+	
+</mapper> 

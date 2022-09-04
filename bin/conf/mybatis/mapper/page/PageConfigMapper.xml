@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+【】对象关系映射 配置 
+ @author AutoCode 309444359@qq.com
+ @date 2016-02-24 10:07:21
+ -->
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.bluemobi.dao.page.PageConfigDao">
+
+	<resultMap id="pageConfigResultMap" type="com.bluemobi.po.page.PageConfig">
+	   <id property="id" column="id" />
+       <result property="name" column="name" />
+       <result property="title" column="title" />
+       <result property="value" column="value" />
+       <result property="memo" column="memo" />
+	</resultMap>
+
+	<update id="update" parameterType="com.bluemobi.po.page.PageConfig">
+		update page_config
+		<set>
+			<if test="value != null">
+				value=#{value}
+			</if>
+		</set>
+		<where>
+			id=#{id} 
+		</where>
+	</update>
+
+	<select id="selectObjectList" parameterType="map" resultMap="pageConfigResultMap">
+	   select 
+	     id,
+	     value
+	   from page_config
+	</select>
+
+</mapper> 

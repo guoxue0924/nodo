@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+【】对象关系映射 配置 
+ @author AutoCode 309444359@qq.com
+ @date 2015-10-13 13:59:03
+ -->
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.bluemobi.dao.advert.AdvertBoardDao">
+
+	<resultMap id="advertBoardResultMap" type="com.bluemobi.po.advert.AdvertBoard">
+		<id property="boardId" column="board_id" />
+		<result property="ctime" column="ctime" />
+		<result property="height" column="height" />
+		<result property="memo" column="memo" />
+		<result property="mtime" column="mtime" />
+		<result property="name" column="name" />
+		<result property="pageId" column="page_id" />
+		<result property="sortOrder" column="sort_order" />
+		<result property="status" column="status" />
+		<result property="type" column="type" />
+		<result property="width" column="width" />
+	</resultMap>
+	<resultMap id="mapResultMap"  type="java.util.HashMap" extends="advertBoardResultMap"></resultMap>
+	<resultMap id="pageResultMap"  type="java.util.HashMap" extends="advertBoardResultMap"></resultMap>
+	
+	
+	<insert id="insert" parameterType="com.bluemobi.po.advert.AdvertBoard" useGeneratedKeys="true" keyProperty="boardId">
+	   insert into advert_board (
+	     board_id,
+	     ctime,
+	     height,
+	     memo,
+	     mtime,
+	     name,
+	     page_id,
+	     sort_order,
+	     status,
+	     type,
+	     width
+	   )values (
+	     #{boardId},
+	     #{ctime},
+	     #{height},
+	     #{memo},
+	     #{mtime},
+	     #{name},
+	     #{pageId},
+	     #{sortOrder},
+	     #{status},
+	     #{type},
+	     #{width}
+	   )
+	</insert>
+
+	<update id="update" parameterType="com.bluemobi.po.advert.AdvertBoard">
+		update advert_board
+		<set>
+			<if test="boardId != null">
+				board_id=#{boardId},
+			</if>
+			<if test="ctime != null">
+				ctime=#{ctime},
+			</if>
+			<if test="height != null">
+				height=#{height},
+			</if>
+			<if test="memo != null">
+				memo=#{memo},
+			</if>
+			<if test="mtime != null">
+				mtime=#{mtime},
+			</if>
+			<if test="name != null">
+				name=#{name},
+			</if>
+			<if test="pageId != null">
+				page_id=#{pageId},
+			</if>
+			<if test="sortOrder != null">
+				sort_order=#{sortOrder},
+			</if>
+			<if test="status != null">
+				status=#{status},
+			</if>
+			<if test="type != null">
+				type=#{type},
+			</if>
+			<if test="width != null">
+				width=#{width},
+			</if>
+		</set>
+		<where>
+			board_id=#{boardId} 
+		</where>
+	</update>
+
+	<delete id="delete" parameterType="map">
+	   delete from 
+	     advert_board 
+	   where 
+	    board_id=#{boardId} 
+	</delete>
+
+	<select id="selectObject" parameterType="map" resultMap="advertBoardResultMap">
+	   select 
+	    board_id,
+	    ctime,
+	    height,
+	    memo,
+	    mtime,
+	    name,
+	    page_id,
+	    sort_order,
+	    status,
+	    type,
+	    width
+	   from advert_board
+	   where 
+	    board_id=#{boardId} 
+	</select>
+	
+	<select id="selectObjectList" parameterType="map" resultMap="advertBoardResultMap">
+	   select 
+	     board_id,
+	     ctime,
+	     height,
+	     memo,
+	     mtime,
+	     name,
+	     page_id,
+	     sort_order,
+	     status,
+	     type,
+	     width
+	   from advert_board
+	   <where>
+	     <if test="boardId != null">
+	        board_id=#{boardId}
+	     </if>
+	     <if test="ctime != null">
+	        and ctime=#{ctime}
+	     </if>
+	     <if test="height != null">
+	        and height=#{height}
+	     </if>
+	     <if test="memo != null">
+	        and memo=#{memo}
+	     </if>
+	     <if test="mtime != null">
+	        and mtime=#{mtime}
+	     </if>
+	     <if test="name != null">
+	        and name=#{name}
+	     </if>
+	     <if test="pageId != null">
+	        and page_id=#{pageId}
+	     </if>
+	     <if test="sortOrder != null">
+	        and sort_order=#{sortOrder}
+	     </if>
+	     <if test="status != null">
+	        and status=#{status}
+	     </if>
+	     <if test="type != null">
+	        and type=#{type}
+	     </if>
+	     <if test="width != null">
+	        and width=#{width}
+	     </if>
+	   </where>
+	</select>
+
+	<select id="selectMap" parameterType="map" resultMap="mapResultMap">
+	   select 
+	    board_id,
+	    ctime,
+	    height,
+	    memo,
+	    mtime,
+	    name,
+	    page_id,
+	    sort_order,
+	    status,
+	    type,
+	    width
+	   from advert_board
+	   where 
+	    board_id=#{boardId} 
+	</select>
+
+	<select id="selectMapList" parameterType="map" resultMap="mapResultMap">
+	   select 
+	     board_id,
+	     ctime,
+	     height,
+	     memo,
+	     mtime,
+	     name,
+	     page_id,
+	     sort_order,
+	     status,
+	     type,
+	     width
+	   from advert_board
+	   <where>
+	     <if test="boardId != null">
+	        board_id=#{boardId}
+	     </if>
+	     <if test="ctime != null">
+	        and ctime=#{ctime}
+	     </if>
+	     <if test="height != null">
+	        and height=#{height}
+	     </if>
+	     <if test="memo != null">
+	        and memo=#{memo}
+	     </if>
+	     <if test="mtime != null">
+	        and mtime=#{mtime}
+	     </if>
+	     <if test="name != null">
+	        and name=#{name}
+	     </if>
+	     <if test="pageId != null">
+	        and page_id=#{pageId}
+	     </if>
+	     <if test="sortOrder != null">
+	        and sort_order=#{sortOrder}
+	     </if>
+	     <if test="status != null">
+	        and status=#{status}
+	     </if>
+	     <if test="type != null">
+	        and type=#{type}
+	     </if>
+	     <if test="width != null">
+	        and width=#{width}
+	     </if>
+	   </where>
+	</select>
+	
+	<select id="page" parameterType="map" resultMap="pageResultMap">
+	   select 
+	     board_id,
+	     ctime,
+	     height,
+	     memo,
+	     mtime,
+	     name,
+	     page_id,
+	     sort_order,
+	     status,
+	     type,
+	     width
+	   <include refid="pageCondition" />
+	   limit #{offset},#{rows}
+	</select>
+	
+	<select id="pageCount" parameterType="map" resultType="int">
+        select count(1)
+        <include refid="pageCondition" />
+    </select>
+	
+	<sql id="pageCondition">
+	   from advert_board
+       <where>
+         <if test="key != null">
+            name LIKE CONCAT(CONCAT('%', #{key}), '%')
+         </if>
+         <if test="boardId != null">
+            and board_id=#{boardId}
+         </if>
+         <if test="ctime != null">
+            and ctime=#{ctime}
+         </if>
+         <if test="height != null">
+            and height=#{height}
+         </if>
+         <if test="memo != null">
+            and memo=#{memo}
+         </if>
+         <if test="mtime != null">
+            and mtime=#{mtime}
+         </if>
+         <if test="name != null">
+            and name=#{name}
+         </if>
+         <if test="pageId != null">
+            and page_id=#{pageId}
+         </if>
+         <if test="sortOrder != null">
+            and sort_order=#{sortOrder}
+         </if>
+         <if test="status != null">
+            and status=#{status}
+         </if>
+         <if test="type != null">
+            and type=#{type}
+         </if>
+         <if test="width != null">
+            and width=#{width}
+         </if>
+       </where>
+	</sql>
+	
+</mapper> 

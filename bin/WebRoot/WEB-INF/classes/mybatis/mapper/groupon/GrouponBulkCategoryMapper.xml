@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.bluemobi.dao.groupon.GrouponBulkCategoryDao">
+
+	<resultMap id="grouponBulkCategoryResultMap" type="com.bluemobi.po.groupon.GrouponBulkCategory">
+		<id property="id" column="id" />
+		<result property="bulkId" column="bulk_id" />
+		<result property="categoryId" column="category_id" />
+	</resultMap>
+	<resultMap id="mapResultMap" type="java.util.HashMap" extends="grouponBulkCategoryResultMap"></resultMap>
+	<resultMap id="pageResultMap" type="java.util.HashMap" extends="grouponBulkCategoryResultMap"></resultMap>
+
+
+	<insert id="insert" parameterType="com.bluemobi.po.groupon.GrouponBulkCategory">
+		insert into groupon_bulk_category (
+			bulk_id,
+			category_id
+		) values (
+			#{bulkId},
+			#{categoryId}
+		)
+	</insert>
+	
+	<insert id="batchInsert" parameterType="java.util.List">  
+	    insert into groupon_bulk_category (bulk_id, category_id)   
+	    values  
+	    <foreach collection="list" item="item" index="index" separator="," >  
+	        (#{item.bulkId},#{item.categoryId})  
+	    </foreach>  
+	</insert>  
+
+	<update id="update" parameterType="com.bluemobi.po.groupon.GrouponBulkCategory">
+		update groupon_bulk_category
+		<set>
+			<if test="bulkId != null">
+				bulk_id=#{bulkId},
+			</if>
+			<if test="categoryId != null">
+				category_id=#{categoryId},
+			</if>
+		</set>
+		<where>
+			id=#{id}
+		</where>
+	</update>
+
+	<delete id="delete" parameterType="map">
+		delete from
+			groupon_bulk_category
+		where
+			bulk_id=#{bulkId}
+	</delete>
+
+	<select id="selectObject" parameterType="map" resultMap="grouponBulkCategoryResultMap">
+		select
+			id,
+			bulk_id,
+			category_id,
+		from 
+			groupon_bulk_category
+		where
+			id=#{id}
+	</select>
+
+	<select id="selectObjectList" parameterType="map" resultMap="grouponBulkCategoryResultMap">
+		select
+			id,
+			bulk_id,
+			categroy_id
+		from groupon_bulk_category
+		<where>
+			<if test="bulkId != null">
+				and bulk_id=#{bulkId}
+			</if>
+			<if test="categoryId != null">
+				category_id=#{categoryId}
+			</if>
+		</where>
+	</select>
+
+	<select id="selectMap" parameterType="map" resultMap="mapResultMap">
+		select
+			id,
+			bulk_id,
+			category_id
+		from 
+			groupon_bulk_category
+		where
+			id=#{id}
+	</select>
+
+	<select id="selectMapList" parameterType="map" resultMap="mapResultMap">
+		select
+			id,
+			bulk_id,
+			category_id
+		from 
+			groupon_bulk_category
+		<where>
+			<if test="bulkId != null">
+				and bulk_id=#{bulkId}
+			</if>
+			<if test="categoryId != null">
+				category_id=#{categoryId}
+			</if>
+		</where>
+	</select>
+
+	<select id="page" parameterType="map" resultMap="pageResultMap">
+		select
+			id,
+			bulk_id,
+			category_id
+		from 
+			groupon_bulk_category
+		<where>
+			<if test="bulkId != null">
+				and bulk_id=#{bulkId}
+			</if>
+			<if test="categoryId != null">
+				category_id=#{categoryId}
+			</if>
+		</where>
+	</select>
+
+</mapper> 

@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+【属性资源值表】对象关系映射 配置 
+ @author AutoCode 309444359@qq.com
+ @date 2015-07-30 10:42:29
+ -->
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.bluemobi.dao.trend.TrendPropertyValueDao">
+
+	<resultMap id="trendPropertyValueResultMap" type="com.bluemobi.po.trend.TrendPropertyValue">
+		<id property="propertyValueId" column="property_value_id" />
+		<result property="propertyId" column="property_id" />
+		<result property="propertyValue" column="property_value" />
+		<result property="propertyImage" column="property_image" />
+		<result property="sortOrder" column="sort_order" />
+		<result property="isDefault" column="is_default" />
+		<result property="status" column="status" />
+	</resultMap>
+	<resultMap id="mapResultMap"  type="java.util.HashMap" extends="trendPropertyValueResultMap"></resultMap>
+	<resultMap id="pageResultMap"  type="java.util.HashMap" extends="trendPropertyValueResultMap"></resultMap>
+	
+	
+	<insert id="insert" parameterType="com.bluemobi.po.trend.TrendPropertyValue" useGeneratedKeys="true" keyProperty="propertyValueId">
+	   insert into trend_property_value (
+	     property_value_id,
+	     property_id,
+	     property_value,
+	     property_image,
+	     sort_order,
+	     is_default,
+	     status
+	   )values (
+	     #{propertyValueId},
+	     #{propertyId},
+	     #{propertyValue},
+	     #{propertyImage},
+	     #{sortOrder},
+	     #{isDefault},
+	     #{status}
+	   )
+	</insert>
+
+	<update id="update" parameterType="com.bluemobi.po.trend.TrendPropertyValue">
+	   update trend_property_value
+        <set>
+            <if test="propertyValueId != null">
+                property_value_id=#{propertyValueId},
+            </if>
+            <if test="propertyId != null">
+                property_id=#{propertyId},
+            </if>
+            <if test="propertyValue != null">
+                property_value=#{propertyValue},
+            </if>
+            <if test="propertyImage != null">
+                property_image=#{propertyImage},
+            </if>
+            <if test="sortOrder != null">
+                sort_order=#{sortOrder},
+            </if>
+            <if test="isDefault != null">
+                is_default=#{isDefault},
+            </if>
+            <if test="status != null">
+                status=#{status},
+            </if>
+        </set>
+        <where>
+            property_value_id=#{propertyValueId} 
+        </where>
+	</update>
+
+	<delete id="delete" parameterType="map">
+	   delete from 
+	     trend_property_value 
+	   where 
+	    property_value_id=#{propertyValueId} 
+	</delete>
+
+	<select id="selectObject" parameterType="map" resultMap="trendPropertyValueResultMap">
+	   select 
+	    property_value_id,
+	    property_id,
+	    property_value,
+	    property_image,
+	    sort_order,
+	    is_default,
+	    status
+	   from trend_property_value
+	   where 
+	    property_value_id=#{propertyValueId} 
+	</select>
+	
+	<select id="selectObjectList" parameterType="map" resultMap="trendPropertyValueResultMap">
+	   select 
+	     property_value_id,
+	     property_id,
+	     property_value,
+	     property_image,
+	     sort_order,
+	     is_default,
+	     status
+	   from trend_property_value
+	   <where>
+	     <if test="propertyValueId != null">
+	        property_value_id=#{propertyValueId}
+	     </if>
+	     <if test="propertyId != null">
+	        and property_id=#{propertyId}
+	     </if>
+	     <if test="propertyValue != null">
+	        and property_value=#{propertyValue}
+	     </if>
+	     <if test="propertyImage != null">
+	        and property_image=#{propertyImage}
+	     </if>
+	     <if test="sortOrder != null">
+	        and sort_order=#{sortOrder}
+	     </if>
+	     <if test="isDefault != null">
+	        and is_default=#{isDefault}
+	     </if>
+	     <if test="status != null">
+	        and status=#{status}
+	     </if>
+	   </where>
+	   order by sort_order ASC
+	</select>
+
+	<select id="selectMap" parameterType="map" resultMap="mapResultMap">
+	   select 
+	    property_value_id,
+	    property_id,
+	    property_value,
+	    property_image,
+	    sort_order,
+	    is_default,
+	    status
+	   from trend_property_value
+	   where 
+	    property_value_id=#{propertyValueId} 
+	</select>
+
+	<select id="selectMapList" parameterType="map" resultMap="mapResultMap">
+	   select 
+	     property_value_id,
+	     property_id,
+	     property_value,
+	     property_image,
+	     sort_order,
+	     is_default,
+	     status
+	   from trend_property_value
+	   <where>
+	     <if test="propertyValueId != null">
+	        property_value_id=#{propertyValueId}
+	     </if>
+	     <if test="propertyId != null">
+	        and property_id=#{propertyId}
+	     </if>
+	     <if test="propertyValue != null">
+	        and property_value=#{propertyValue}
+	     </if>
+	     <if test="propertyImage != null">
+	        and property_image=#{propertyImage}
+	     </if>
+	     <if test="sortOrder != null">
+	        and sort_order=#{sortOrder}
+	     </if>
+	     <if test="isDefault != null">
+	        and is_default=#{isDefault}
+	     </if>
+	     <if test="status != null">
+	        and status=#{status}
+	     </if>
+	   </where>
+	</select>
+	
+	<select id="page" parameterType="map" resultMap="pageResultMap">
+	   select 
+	     property_value_id,
+	     property_id,
+	     property_value,
+	     property_image,
+	     sort_order,
+	     is_default,
+	     status
+	   <include refid="pageCondition" />
+        limit #{offset},#{rows}
+	</select>
+	
+	<select id="pageCount" parameterType="map" resultType="int">
+        select count(1)
+        <include refid="pageCondition" />
+    </select>
+	
+	<sql id="pageCondition">
+	   from trend_property_value
+       <where>
+         <if test="propertyValueId != null">
+            property_value_id=#{propertyValueId}
+         </if>
+         <if test="propertyId != null">
+            and property_id=#{propertyId}
+         </if>
+         <if test="propertyValue != null">
+            and property_value=#{propertyValue}
+         </if>
+         <if test="propertyImage != null">
+            and property_image=#{propertyImage}
+         </if>
+         <if test="sortOrder != null">
+            and sort_order=#{sortOrder}
+         </if>
+         <if test="isDefault != null">
+            and is_default=#{isDefault}
+         </if>
+         <if test="status != null">
+            and status=#{status}
+         </if>
+       </where>
+	</sql>
+	
+	<insert id="insertTrendPropertyValues" parameterType="java.util.List">
+          insert into trend_property_value 
+              (
+                  property_value_id,
+                  property_id,
+                  property_value,
+                  property_image,
+                  sort_order,
+                  is_default,
+                  status
+              ) 
+          values
+          <foreach collection="list" item="item" index="index" separator=",">
+              (
+                  #{item.propertyValueId},
+                  #{item.propertyId},
+                  #{item.propertyValue},
+                  #{item.propertyImage},
+                  #{item.sortOrder},
+                  #{item.isDefault},
+                  #{item.status}
+              )
+          </foreach>
+    </insert>
+    
+    <update id="updateTrendPropertyValues" parameterType="java.util.List">
+        <foreach collection="list" item="item" index="index" separator=";">
+                update trend_property_value 
+                <set>
+		            <if test="item.propertyId != null">
+		                property_id=#{item.propertyId},
+		            </if>
+		            <if test="item.propertyValue != null">
+		                property_value=#{item.propertyValue},
+		            </if>
+		            <if test="item.propertyImage != null">
+		                property_image=#{item.propertyImage},
+		            </if>
+		            <if test="item.sortOrder != null">
+		                sort_order=#{item.sortOrder},
+		            </if>
+		            <if test="item.isDefault != null">
+		                is_default=#{item.isDefault},
+		            </if>
+		            <if test="item.status != null">
+		                status=#{item.status},
+		            </if>
+                </set>
+                <where>
+                property_value_id=#{item.propertyValueId} 
+                </where>
+         </foreach>
+    </update>
+	
+</mapper> 

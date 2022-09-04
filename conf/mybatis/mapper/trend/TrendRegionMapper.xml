@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+【】对象关系映射 配置 
+ @author AutoCode 309444359@qq.com
+ @date 2015-07-17 11:22:42
+ -->
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.bluemobi.dao.trend.TrendRegionDao">
+
+	<resultMap id="trendRegionResultMap" type="com.bluemobi.po.trend.TrendRegion">
+		<id property="regionId" column="region_id" />
+		<result property="pack" column="pack" />
+		<result property="pid" column="pid" />
+		<result property="hid" column="hid" />
+		<result property="grade" column="grade" />
+		<result property="regionName" column="region_name" />
+		<result property="enName" column="en_name" />
+		<result property="p1" column="p_1" />
+		<result property="p2" column="p_2" />
+		<result property="sortOrder" column="sort_order" />
+		<result property="status" column="status" />
+		<!-- add by guoxue 2016/06/22 begin  -->
+		<result property="expressFee" column="express_fee" />
+		<!-- add by guoxue 2016/06/22 end 以下相关快递费的字段全部修改 -->
+	</resultMap>
+	<resultMap id="mapResultMap"  type="java.util.HashMap" extends="trendRegionResultMap"></resultMap>
+	<resultMap id="pageResultMap"  type="java.util.HashMap" extends="trendRegionResultMap"></resultMap>
+	
+	
+	<insert id="insert" parameterType="com.bluemobi.po.trend.TrendRegion" useGeneratedKeys="true" keyProperty="regionId">
+	   insert into trend_region (
+	     region_id,
+	     pack,
+	     pid,
+	     hid,
+	     grade,
+	     region_name,
+	     en_name,
+	     p_1,
+	     p_2,
+	     sort_order,
+	     status,
+	     express_fee
+	   )values (
+	     #{regionId},
+	     #{pack},
+	     #{pid},
+	     #{hid},
+	     #{grade},
+	     #{regionName},
+	     #{enName},
+	     #{p1},
+	     #{p2},
+	     #{sortOrder},
+	     #{status},
+	     #{expressFee}
+	   )
+	</insert>
+
+	<update id="update" parameterType="com.bluemobi.po.trend.TrendRegion">
+	   update trend_region set
+	     region_id=#{regionId},
+	     pack=#{pack},
+	     pid=#{pid},
+	     hid=#{hid},
+	     grade=#{grade},
+	     region_name=#{regionName},
+	     en_name=#{enName},
+	     p_1=#{p1},
+	     p_2=#{p2},
+	     sort_order=#{sortOrder},
+	     status=#{status},
+	     express_fee= #{expressFee}
+	   where 
+	    region_id=#{regionId} 
+	</update>
+
+	<delete id="delete" parameterType="map">
+	   delete from 
+	     trend_region 
+	   where 
+	    region_id=#{regionId} 
+	</delete>
+
+	<select id="selectObject" parameterType="map" resultMap="trendRegionResultMap">
+	   select 
+	    region_id,
+	    pack,
+	    pid,
+	    hid,
+	    grade,
+	    region_name,
+	    en_name,
+	    p_1,
+	    p_2,
+	    sort_order,
+	    status,
+	    express_fee
+	   from trend_region
+	   where 
+	    region_id=#{regionId} 
+	</select>
+	
+	<select id="selectObjectList" parameterType="map" resultMap="trendRegionResultMap">
+	   select 
+	     region_id,
+	     pack,
+	     pid,
+	     hid,
+	     grade,
+	     region_name,
+	     en_name,
+	     p_1,
+	     p_2,
+	     sort_order,
+	     status,
+	     express_fee
+	   from trend_region
+	   <where>
+	     <if test="regionId != null">
+	        region_id=#{regionId}
+	     </if>
+	     <if test="pack != null">
+	        and pack=#{pack}
+	     </if>
+	     <if test="pid != null">
+	        and pid=#{pid}
+	     </if>
+	     <if test="hid != null">
+	        and hid=#{hid}
+	     </if>
+	     <if test="grade != null">
+	        and grade=#{grade}
+	     </if>
+	     <if test="regionName != null">
+	        and region_name=#{regionName}
+	     </if>
+	     <if test="enName != null">
+	        and en_name=#{enName}
+	     </if>
+	     <if test="p1 != null">
+	        and p_1=#{p1}
+	     </if>
+	     <if test="p2 != null">
+	        and p_2=#{p2}
+	     </if>
+	     <if test="sortOrder != null">
+	        and sort_order=#{sortOrder}
+	     </if>
+	     <if test="status != null">
+	        and status=#{status}
+	     </if>
+	     <if test="expressFee != null">
+	        and express_fee=#{expressFee}
+	     </if>
+	   </where>
+	   order by 
+	       sort_order
+	   desc
+	</select>
+
+	<select id="selectMap" parameterType="map" resultMap="mapResultMap">
+	   select 
+	    region_id,
+	    pack,
+	    pid,
+	    hid,
+	    grade,
+	    region_name,
+	    en_name,
+	    p_1,
+	    p_2,
+	    sort_order,
+	    status,
+	    express_fee
+	   from trend_region
+	   where 
+	    region_id=#{regionId} 
+	</select>
+
+	<select id="selectMapList" parameterType="map" resultMap="mapResultMap">
+	   select 
+	     region_id,
+	     pack,
+	     pid,
+	     hid,
+	     grade,
+	     region_name,
+	     en_name,
+	     p_1,
+	     p_2,
+	     sort_order,
+	     status,
+	     express_fee
+	   from trend_region
+	   <where>
+	     <if test="regionId != null">
+	        region_id=#{regionId}
+	     </if>
+	     <if test="pack != null">
+	        and pack=#{pack}
+	     </if>
+	     <if test="pid != null">
+	        and pid=#{pid}
+	     </if>
+	     <if test="hid != null">
+	        and hid=#{hid}
+	     </if>
+	     <if test="grade != null">
+	        and grade=#{grade}
+	     </if>
+	     <if test="regionName != null">
+	        and region_name=#{regionName}
+	     </if>
+	     <if test="enName != null">
+	        and en_name=#{enName}
+	     </if>
+	     <if test="p1 != null">
+	        and p_1=#{p1}
+	     </if>
+	     <if test="p2 != null">
+	        and p_2=#{p2}
+	     </if>
+	     <if test="sortOrder != null">
+	        and sort_order=#{sortOrder}
+	     </if>
+	     <if test="status != null">
+	        and status=#{status}
+	     </if>
+	     <if test="expressFee != null">
+	        and express_fee=#{expressFee}
+	     </if>
+	   </where>
+	   order by 
+           sort_order
+       desc
+	</select>
+	
+	<select id="page" parameterType="map" resultMap="pageResultMap">
+	   select 
+	     region_id,
+	     pack,
+	     pid,
+	     hid,
+	     grade,
+	     region_name,
+	     en_name,
+	     p_1,
+	     p_2,
+	     sort_order,
+	     status,
+	     express_fee
+	   <include refid="pageCondition" />
+	   order by 
+	       sort_order
+	   desc
+       limit #{offset},#{rows}
+	</select>
+	
+	<select id="pageCount" parameterType="map" resultType="int">
+        select count(1)
+        <include refid="pageCondition" />
+    </select>
+	
+	<sql id="pageCondition">
+	   from trend_region
+       <where>
+         <if test="regionId != null">
+            region_id=#{regionId}
+         </if>
+         <if test="pack != null">
+            and pack=#{pack}
+         </if>
+         <if test="pid != null">
+            and pid=#{pid}
+         </if>
+         <if test="hid != null">
+            and hid=#{hid}
+         </if>
+         <if test="grade != null">
+            and grade=#{grade}
+         </if>
+         <if test="regionName != null">
+            and region_name=#{regionName}
+         </if>
+         <if test="enName != null">
+            and en_name=#{enName}
+         </if>
+         <if test="p1 != null">
+            and p_1=#{p1}
+         </if>
+         <if test="p2 != null">
+            and p_2=#{p2}
+         </if>
+         <if test="sortOrder != null">
+            and sort_order=#{sortOrder}
+         </if>
+         <if test="status != null">
+            and status=#{status}
+         </if>
+         <if test="expressFee != null">
+	        and express_fee=#{expressFee}
+	     </if>
+       </where>
+	</sql>
+	
+</mapper> 

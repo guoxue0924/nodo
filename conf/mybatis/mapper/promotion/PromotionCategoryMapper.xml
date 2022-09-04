@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+【优惠促销活动分类】对象关系映射 配置 
+ @author AutoCode 309444359@qq.com
+ @date 2016-01-08 16:25:21
+ -->
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.bluemobi.dao.promotion.PromotionCategoryDao">
+
+	<resultMap id="promotionCategoryResultMap" type="com.bluemobi.po.promotion.PromotionCategory">
+		<id property="categoryId" column="category_id" />
+       <result property="title" column="title" />
+       <result property="templateName" column="template_name" />
+	</resultMap>
+	<resultMap id="mapResultMap"  type="java.util.HashMap" extends="promotionCategoryResultMap"></resultMap>
+	<resultMap id="pageResultMap"  type="java.util.HashMap" extends="promotionCategoryResultMap"></resultMap>
+	
+	
+	<insert id="insert" parameterType="com.bluemobi.po.promotion.PromotionCategory" useGeneratedKeys="true" keyProperty="categoryId" >
+	   insert into promotion_category (
+	     category_id,
+	     template_name,
+	     title
+	   )values (
+	     #{categoryId},
+	     #{templateName},
+	     #{title}
+	   )
+	</insert>
+
+	<update id="update" parameterType="com.bluemobi.po.promotion.PromotionCategory">
+		update promotion_category
+		<set>
+			<if test="categoryId != null">
+				category_id=#{categoryId},
+			</if>
+			<if test="parentId != null">
+				template_name=#{templateName},
+			</if>
+			<if test="title != null">
+				title=#{title},
+			</if>
+		</set>
+		<where>
+			category_id=#{categoryId} 
+		</where>
+	</update>
+
+	<delete id="delete" parameterType="map">
+	   delete from 
+	     promotion_category 
+	   where 
+	    category_id=#{categoryId} 
+	</delete>
+
+	<select id="selectObject" parameterType="map" resultMap="promotionCategoryResultMap">
+	   select 
+	    category_id,
+	    template_name,
+	    title
+	   from promotion_category
+	   where 
+	    category_id=#{categoryId} 
+	</select>
+	
+	<select id="selectObjectList" parameterType="map" resultMap="promotionCategoryResultMap">
+	   select 
+	     category_id,
+	     template_name,
+	     title
+	   from promotion_category
+	   <where>
+	     <if test="categoryId != null">
+	        category_id=#{categoryId}
+	     </if>
+	     <if test="templateName != null">
+	        and template_name=#{templateName}
+	     </if>
+	     <if test="title != null">
+	        and title=#{title}
+	     </if>
+	   </where>
+	</select>
+
+	<select id="selectMap" parameterType="map" resultMap="mapResultMap">
+	   select 
+	    category_id,
+	    template_name,
+	    title
+	   from promotion_category
+	   where 
+	    category_id=#{categoryId} 
+	</select>
+
+	<select id="selectMapList" parameterType="map" resultMap="mapResultMap">
+	   select 
+	     category_id,
+	     template_name,
+	     title
+	   from promotion_category
+	   <where>
+	     <if test="categoryId != null">
+	        category_id=#{categoryId}
+	     </if>
+	     <if test="templateName != null">
+	        and template_name=#{templateName}
+	     </if>
+	     <if test="title != null">
+	        and title=#{title}
+	     </if>
+	   </where>
+	</select>
+	
+	<select id="page" parameterType="map" resultMap="pageResultMap">
+	   select 
+	     category_id,
+	     template_name,
+	     title
+	<include refid="pageCondition" />
+	limit #{offset},#{rows}
+	</select>
+
+	<select id="pageCount" parameterType="map" resultType="int">
+	   select count(1)
+	   <include refid="pageCondition" />
+	</select>
+
+	<sql id="pageCondition">
+	   from promotion_category
+	   <where>
+	     <if test="categoryId != null">
+	        category_id=#{categoryId}
+	     </if>
+	     <if test="templateName != null">
+	        and template_name=#{templateName}
+	     </if>
+	     <if test="title != null">
+	        and title=#{title}
+	     </if>
+	   </where>
+	</sql>
+
+	
+</mapper> 

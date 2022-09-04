@@ -1,0 +1,318 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+【商品品牌表】对象关系映射 配置 
+ @author AutoCode 309444359@qq.com
+ @date 2015-10-22 15:18:56
+ -->
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.bluemobi.dao.goods.GoodsBrandDao">
+
+	<resultMap id="goodsBrandResultMap" type="com.bluemobi.po.goods.GoodsBrand">
+		<id property="brandId" column="brand_id" />
+		<result property="brandName" column="brand_name" />
+		<result property="brandNameEn" column="brand_name_en" />
+		<result property="brandUrl" column="brand_url" />
+		<result property="brandDesc" column="brand_desc" />
+		<result property="brandLogo" column="brand_logo" />
+		<result property="brandKeywords" column="brand_keywords" />
+		<result property="status" column="status" />
+		<result property="sortOrder" column="sort_order" />
+		<result property="ctime" column="ctime" />
+		<result property="mtime" column="mtime" />
+	</resultMap>
+	<resultMap id="mapResultMap"  type="java.util.HashMap" extends="goodsBrandResultMap"></resultMap>
+	<resultMap id="pageResultMap"  type="java.util.HashMap" extends="goodsBrandResultMap"></resultMap>
+	
+	
+	<insert id="insert" parameterType="com.bluemobi.po.goods.GoodsBrand" useGeneratedKeys="true" keyProperty="brandId">
+	   insert into goods_brand (
+	     brand_id,
+	     brand_name,
+	     brand_name_en,
+	     brand_url,
+	     brand_desc,
+	     brand_logo,
+	     brand_keywords,
+	     status,
+	     sort_order,
+	     ctime,
+	     mtime
+	   )values (
+	     #{brandId},
+	     #{brandName},
+	     #{brandNameEn},
+	     #{brandUrl},
+	     #{brandDesc},
+	     #{brandLogo},
+	     #{brandKeywords},
+	     #{status},
+	     #{sortOrder},
+	     #{ctime},
+	     #{mtime}
+	   )
+	</insert>
+
+	<update id="update" parameterType="com.bluemobi.po.goods.GoodsBrand">
+		update goods_brand
+		<set>
+			<if test="brandId != null">
+				brand_id=#{brandId},
+			</if>
+			<if test="brandName != null">
+				brand_name=#{brandName},
+			</if>
+			<if test="brandNameEn != null">
+				brand_name_en=#{brandNameEn},
+			</if>
+			<if test="brandUrl != null">
+				brand_url=#{brandUrl},
+			</if>
+			<if test="brandDesc != null">
+				brand_desc=#{brandDesc},
+			</if>
+			<if test="brandLogo != null">
+				brand_logo=#{brandLogo},
+			</if>
+			<if test="brandKeywords != null">
+				brand_keywords=#{brandKeywords},
+			</if>
+			<if test="status != null">
+				status=#{status},
+			</if>
+			<if test="sortOrder != null">
+				sort_order=#{sortOrder},
+			</if>
+			<if test="ctime != null">
+				ctime=#{ctime},
+			</if>
+			<if test="mtime != null">
+				mtime=#{mtime},
+			</if>
+		</set>
+		<where>
+			brand_id=#{brandId} 
+		</where>
+	</update>
+
+	<delete id="delete" parameterType="map">
+	   delete from 
+	     goods_brand 
+	   where 
+	    brand_id=#{brandId} 
+	</delete>
+
+	<select id="selectObject" parameterType="map" resultMap="goodsBrandResultMap">
+	   select 
+	    brand_id,
+	    brand_name,
+	    brand_name_en,
+	    brand_url,
+	    brand_desc,
+	    brand_logo,
+	    brand_keywords,
+	    status,
+	    sort_order,
+	    ctime,
+	    mtime
+	   from goods_brand
+	   where 
+	    brand_id=#{brandId} 
+	</select>
+	
+	<select id="selectObjectList" parameterType="map" resultMap="goodsBrandResultMap">
+	   select 
+	     brand_id,
+	     brand_name,
+	     brand_name_en,
+	     brand_url,
+	     brand_desc,
+	     brand_logo,
+	     brand_keywords,
+	     status,
+	     sort_order,
+	     ctime,
+	     mtime
+	   from goods_brand
+	   <where>
+	     <if test="brandId != null">
+	        brand_id=#{brandId}
+	     </if>
+	     <if test="brandName != null">
+	        and brand_name=#{brandName}
+	     </if>
+	     <if test="brandNameEn != null">
+	        and brand_name_en=#{brandNameEn}
+	     </if>
+	     <if test="brandUrl != null">
+	        and brand_url=#{brandUrl}
+	     </if>
+	     <if test="brandDesc != null">
+	        and brand_desc=#{brandDesc}
+	     </if>
+	     <if test="brandLogo != null">
+	        and brand_logo=#{brandLogo}
+	     </if>
+	     <if test="brandKeywords != null">
+	        and brand_keywords=#{brandKeywords}
+	     </if>
+	     <if test="status != null">
+	        and status=#{status}
+	     </if>
+	     <if test="sortOrder != null">
+	        and sort_order=#{sortOrder}
+	     </if>
+	     <if test="ctime != null">
+	        and ctime=#{ctime}
+	     </if>
+	     <if test="mtime != null">
+	        and mtime=#{mtime}
+	     </if>
+	   </where>
+	</select>
+
+	<select id="selectMap" parameterType="map" resultMap="mapResultMap">
+	   select 
+	    brand_id,
+	    brand_name,
+	    brand_name_en,
+	    brand_url,
+	    brand_desc,
+	    brand_logo,
+	    brand_keywords,
+	    status,
+	    sort_order,
+	    ctime,
+	    mtime
+	   from goods_brand
+	   where 
+	    brand_id=#{brandId} 
+	</select>
+
+	<select id="selectMapList" parameterType="map" resultMap="mapResultMap">
+	   select 
+	     brand_id,
+	     brand_name,
+	     brand_name_en,
+	     brand_url,
+	     brand_desc,
+	     brand_logo,
+	     brand_keywords,
+	     status,
+	     sort_order,
+	     ctime,
+	     mtime
+	   from goods_brand
+	   <where>
+	     <if test="brandId != null">
+	        brand_id=#{brandId}
+	     </if>
+	     <if test="brandName != null">
+	        and brand_name=#{brandName}
+	     </if>
+	     <if test="brandNameEn != null">
+	        and brand_name_en=#{brandNameEn}
+	     </if>
+	     <if test="brandUrl != null">
+	        and brand_url=#{brandUrl}
+	     </if>
+	     <if test="brandDesc != null">
+	        and brand_desc=#{brandDesc}
+	     </if>
+	     <if test="brandLogo != null">
+	        and brand_logo=#{brandLogo}
+	     </if>
+	     <if test="brandKeywords != null">
+	        and brand_keywords=#{brandKeywords}
+	     </if>
+	     <if test="status != null">
+	        and status=#{status}
+	     </if>
+	     <if test="sortOrder != null">
+	        and sort_order=#{sortOrder}
+	     </if>
+	     <if test="ctime != null">
+	        and ctime=#{ctime}
+	     </if>
+	     <if test="mtime != null">
+	        and mtime=#{mtime}
+	     </if>
+	   </where>
+	</select>
+	
+	<select id="page" parameterType="map" resultMap="pageResultMap">
+	   select 
+	     brand_id,
+	     brand_name,
+	     brand_name_en,
+	     brand_url,
+	     brand_desc,
+	     brand_logo,
+	     brand_keywords,
+	     status,
+	     sort_order,
+	     ctime,
+	     mtime
+	   <include refid="pageCondition" />
+        limit #{offset},#{rows}
+	</select>
+	
+	<select id="pageCount" parameterType="map" resultType="int">
+        select count(1)
+        <include refid="pageCondition" />
+    </select>
+	
+	<sql id="pageCondition">
+	   from goods_brand
+       <where>
+         <if test="key != null">
+            brand_name LIKE CONCAT(CONCAT('%', #{key}), '%')
+         </if>
+         <if test="brandId != null">
+            and brand_id=#{brandId}
+         </if>
+         <if test="brandName != null">
+            and brand_name=#{brandName}
+         </if>
+         <if test="brandNameEn != null">
+            and brand_name_en=#{brandNameEn}
+         </if>
+         <if test="brandUrl != null">
+            and brand_url=#{brandUrl}
+         </if>
+         <if test="brandDesc != null">
+            and brand_desc=#{brandDesc}
+         </if>
+         <if test="brandLogo != null">
+            and brand_logo=#{brandLogo}
+         </if>
+         <if test="brandKeywords != null">
+            and brand_keywords=#{brandKeywords}
+         </if>
+         <if test="status != null">
+            and status=#{status}
+         </if>
+         <if test="sortOrder != null">
+            and sort_order=#{sortOrder}
+         </if>
+         <if test="ctime != null">
+            and ctime=#{ctime}
+         </if>
+         <if test="mtime != null">
+            and mtime=#{mtime}
+         </if>
+       </where>
+	</sql>
+	
+	<delete id="deleteByIds" parameterType="map">
+       delete from 
+          goods_brand 
+       where 
+          brand_id in  
+	    <foreach collection="brandIds" item = "brandId" open="(" separator="," close=")">
+	          #{brandId}  
+	    </foreach>  
+    </delete>
+	
+</mapper> 

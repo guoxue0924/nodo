@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+【】对象关系映射 配置 
+ @author AutoCode 309444359@qq.com
+ @date 2016-02-24 10:07:22
+ -->
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.bluemobi.dao.page.PageGroupDao">
+
+	<resultMap id="pageGroupResultMap" type="com.bluemobi.po.page.PageGroup">
+		<id property="groupId" column="group_id" />
+       <result property="folder" column="folder" />
+       <result property="groupName" column="group_name" />
+       <result property="moveable" column="moveable" />
+	</resultMap>
+	<resultMap id="mapResultMap"  type="java.util.HashMap" extends="pageGroupResultMap"></resultMap>
+	<resultMap id="pageResultMap"  type="java.util.HashMap" extends="pageGroupResultMap"></resultMap>
+	
+	
+	<insert id="insert" parameterType="com.bluemobi.po.page.PageGroup" useGeneratedKeys="true" keyProperty="groupId" >
+	   insert into page_group (
+	     folder,
+	     group_name,
+	     moveable
+	   )values (
+	     #{folder},
+	     #{groupName},
+	     #{moveable}
+	   )
+	</insert>
+
+	<update id="update" parameterType="com.bluemobi.po.page.PageGroup">
+		update page_group
+		<set>
+			<if test="groupName != null">
+				group_name=#{groupName},
+			</if>
+			<if test="moveable != null">
+				moveable=#{moveable},
+			</if>
+		</set>
+		<where>
+			group_id=#{groupId} 
+		</where>
+	</update>
+
+	<delete id="delete" parameterType="map">
+	   delete from 
+	     page_group 
+	   where 
+	    group_id=#{groupId} 
+	</delete>
+
+	<select id="selectObject" parameterType="map" resultMap="pageGroupResultMap">
+	   select 
+	    group_id,
+	    folder,
+	    group_name,
+	    moveable
+	   from page_group
+	   where 
+	    group_id=#{groupId} 
+	</select>
+	
+	<select id="selectObjectList" parameterType="map" resultMap="pageGroupResultMap">
+	   select 
+	     group_id,
+	     folder,
+	     group_name,
+	     moveable
+	   from page_group
+	   <where>
+	     <if test="groupId != null">
+	        group_id=#{groupId}
+	     </if>
+	     <if test="folder != null">
+	        and folder=#{folder}
+	     </if>
+	     <if test="groupName != null">
+	        and group_name=#{groupName}
+	     </if>
+	     <if test="moveable != null">
+	        and moveable=#{moveable}
+	     </if>
+	   </where>
+	</select>
+
+	<select id="selectMap" parameterType="map" resultMap="mapResultMap">
+	   select 
+	    group_id,
+	    folder,
+	    group_name,
+	    moveable
+	   from page_group
+	   where 
+	    group_id=#{groupId} 
+	</select>
+
+	<select id="selectMapList" parameterType="map" resultMap="mapResultMap">
+	   select 
+	     group_id,
+	     folder,
+	     group_name,
+	     moveable
+	   from page_group
+	   <where>
+	     <if test="groupId != null">
+	        group_id=#{groupId}
+	     </if>
+	     <if test="folder != null">
+	        and folder=#{folder}
+	     </if>
+	     <if test="groupName != null">
+	        and group_name=#{groupName}
+	     </if>
+	     <if test="moveable != null">
+	        and moveable=#{moveable}
+	     </if>
+	   </where>
+	</select>
+	
+	<select id="page" parameterType="map" resultMap="pageResultMap">
+	   select 
+	     group_id,
+	     folder,
+	     group_name,
+	     moveable
+	<include refid="pageCondition" />
+	limit #{offset},#{rows}
+	</select>
+
+	<select id="pageCount" parameterType="map" resultType="int">
+	   select count(1)
+	   <include refid="pageCondition" />
+	</select>
+
+	<sql id="pageCondition">
+	   from page_group
+	   <where>
+	   	 <if test="key != null">
+	        group_name LIKE CONCAT(CONCAT('%', #{key}), '%')
+	     </if>
+	   </where>
+	</sql>
+
+	<select id="countPageByGroupId" resultType="int">
+	   select count(1) from page_content where group_id = #{groupId}
+	</select>
+	
+</mapper> 

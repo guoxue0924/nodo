@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+【品牌与分类关系表】对象关系映射 配置 
+ @author AutoCode 309444359@qq.com
+ @date 2015-09-24 16:30:48
+ -->
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.bluemobi.dao.goods.GoodsBrandCategoryDao">
+
+	<resultMap id="goodsBrandCategoryResultMap" type="com.bluemobi.po.goods.GoodsBrandCategory">
+		<id property="brandId" column="brand_id" />
+		<id property="categoryId" column="category_id" />
+		<result property="brandId" column="brand_id" />
+		<result property="categoryId" column="category_id" />
+		<result property="sortOrder" column="sort_order" />
+		<result property="sortOrder" column="sort_order" />
+	</resultMap>
+	<resultMap id="mapResultMap"  type="java.util.HashMap" extends="goodsBrandCategoryResultMap">
+		<result property="brandName" column="brand_name" />
+        <result property="brandNameEn" column="brand_name_en" />
+        <result property="brandUrl" column="brand_url" />
+        <result property="brandDesc" column="brand_desc" />
+        <result property="brandLogo" column="brand_logo" />
+        <result property="brandKeywords" column="brand_keywords" />
+        <result property="status" column="status" />
+        <result property="sortOrder" column="sort_order" />
+        <result property="ctime" column="ctime" />
+        <result property="mtime" column="mtime" />
+	</resultMap>
+	<resultMap id="pageResultMap"  type="java.util.HashMap" extends="goodsBrandCategoryResultMap"></resultMap>
+	
+	
+	<insert id="insert" parameterType="com.bluemobi.po.goods.GoodsBrandCategory">
+	   insert into goods_brand_category (
+	     brand_id,
+	     category_id,
+	     sort_order
+	   )values (
+	     #{brandId},
+	     #{categoryId},
+	     #{sortOrder}
+	   )
+	</insert>
+
+	<update id="update" parameterType="com.bluemobi.po.goods.GoodsBrandCategory">
+		update goods_brand_category
+		<set>
+			<if test="brandId != null">
+				brand_id=#{brandId},
+			</if>
+			<if test="categoryId != null">
+				category_id=#{categoryId},
+			</if>
+			<if test="sortOrder != null">
+				sort_order=#{sortOrder},
+			</if>
+		</set>
+		<where>
+			brand_id=#{brandId} 
+			 andcategory_id=#{categoryId} 
+		</where>
+	</update>
+
+	<delete id="delete" parameterType="map">
+	   delete from 
+	     goods_brand_category 
+	   where 
+	    brand_id=#{brandId} 
+	    and category_id=#{categoryId} 
+	</delete>
+
+	<select id="selectObject" parameterType="map" resultMap="goodsBrandCategoryResultMap">
+	   select 
+	    brand_id,
+	    category_id,
+	    sort_order
+	   from goods_brand_category
+	   where 
+	    brand_id=#{brandId} 
+	    and category_id=#{categoryId} 
+	</select>
+	
+	<select id="selectObjectList" parameterType="map" resultMap="goodsBrandCategoryResultMap">
+	   select 
+	     brand_id,
+	     category_id,
+	     sort_order
+	   from goods_brand_category
+	   <where>
+	     <if test="brandId != null">
+	        brand_id=#{brandId}
+	     </if>
+	     <if test="categoryId != null">
+	        and category_id=#{categoryId}
+	     </if>
+	     <if test="sortOrder != null">
+	        and sort_order=#{sortOrder}
+	     </if>
+	   </where>
+	</select>
+
+	<select id="selectMap" parameterType="map" resultMap="mapResultMap">
+	   select 
+	    brand_id,
+	    category_id,
+	    sort_order
+	   from goods_brand_category
+	   where 
+	    brand_id=#{brandId} 
+	    and category_id=#{categoryId} 
+	</select>
+
+	<select id="selectMapList" parameterType="map" resultMap="mapResultMap">
+	   select 
+	     brand_id,
+	     category_id,
+	     sort_order
+	   from goods_brand_category
+	   <where>
+	     <if test="brandId != null">
+	        brand_id=#{brandId}
+	     </if>
+	     <if test="categoryId != null">
+	        and category_id=#{categoryId}
+	     </if>
+	     <if test="sortOrder != null">
+	        and sort_order=#{sortOrder}
+	     </if>
+	   </where>
+	</select>
+	
+	<select id="page" parameterType="map" resultMap="pageResultMap">
+	   select 
+	     brand_id,
+	     category_id,
+	     sort_order
+	   <include refid="pageCondition" />
+        limit #{offset},#{rows}
+	</select>
+	
+	<select id="pageCount" parameterType="map" resultType="int">
+        select count(1)
+        <include refid="pageCondition" />
+    </select>
+    
+    <sql id="pageCondition">
+        from goods_brand_category
+       <where>
+         <if test="brandId != null">
+            brand_id=#{brandId}
+         </if>
+         <if test="categoryId != null">
+            and category_id=#{categoryId}
+         </if>
+         <if test="sortOrder != null">
+            and sort_order=#{sortOrder}
+         </if>
+       </where>
+    </sql>
+	
+	<select id="selectBrandByCategoryId" parameterType="map" resultMap="mapResultMap">
+        select
+            gbc.brand_id,
+            gbc.category_id,
+            gbc.sort_order,
+            gb.brand_name,
+            gb.brand_name_en,
+            gb.brand_url,
+            gb.brand_desc,
+            gb.brand_logo,
+            gb.brand_keywords,
+            gb.status,
+            gb.sort_order,
+            gb.ctime,
+            gb.mtime
+        from 
+            goods_brand_category gbc, goods_brand gb
+        where 
+            gbc.brand_id = gb.brand_id
+	     <if test="categoryId != null">
+	        and gbc.category_id=#{categoryId}
+	     </if>
+	     order by gbc.sort_order asc
+    </select>
+    
+    <delete id="deleteByCategoryIds" parameterType="map">
+       delete from 
+          goods_brand_category 
+       where 
+          category_id in  
+        <foreach collection="categoryIds" item = "categoryId" open="(" separator="," close=")">
+              #{categoryId}  
+        </foreach>  
+    </delete>
+    
+    <delete id="deleteByCategoryList" parameterType="java.util.List">
+       delete from 
+          goods_brand_category 
+       where 
+          category_id in  
+        <foreach collection="list" item = "item" index="index" open="(" separator="," close=")">
+              #{item.categoryId}  
+        </foreach>  
+    </delete>
+    
+    <insert id="insertGoodsBrandCategories" parameterType="java.util.List">
+		  insert into goods_brand_category 
+			  (
+				  brand_id, category_id, sort_order
+			  ) 
+		  values
+		  <foreach collection="list" item="item" index="index" separator=",">
+			  (
+				  #{item.brandId}, #{item.categoryId}, #{item.sortOrder}
+			  )
+		  </foreach>
+    </insert>
+	
+</mapper> 

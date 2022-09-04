@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+【】对象关系映射 配置 
+ @author AutoCode 309444359@qq.com
+ @date 2015-10-13 13:59:03
+ -->
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.bluemobi.dao.advert.AdvertPageDao">
+
+	<resultMap id="advertPageResultMap" type="com.bluemobi.po.advert.AdvertPage">
+		<id property="pageId" column="page_id" />
+		<result property="ctime" column="ctime" />
+		<result property="sortOrder" column="sort_order" />
+		<result property="title" column="title" />
+	</resultMap>
+	<resultMap id="mapResultMap"  type="java.util.HashMap" extends="advertPageResultMap"></resultMap>
+	<resultMap id="pageResultMap"  type="java.util.HashMap" extends="advertPageResultMap"></resultMap>
+	
+	
+	<insert id="insert" parameterType="com.bluemobi.po.advert.AdvertPage" useGeneratedKeys="true" keyProperty="pageId">
+	   insert into advert_page (
+	     page_id,
+	     ctime,
+	     sort_order,
+	     title
+	   )values (
+	     #{pageId},
+	     #{ctime},
+	     #{sortOrder},
+	     #{title}
+	   )
+	</insert>
+
+	<update id="update" parameterType="com.bluemobi.po.advert.AdvertPage">
+		update advert_page
+		<set>
+			<if test="pageId != null">
+				page_id=#{pageId},
+			</if>
+			<if test="ctime != null">
+				ctime=#{ctime},
+			</if>
+			<if test="sortOrder != null">
+				sort_order=#{sortOrder},
+			</if>
+			<if test="title != null">
+				title=#{title},
+			</if>
+		</set>
+		<where>
+			page_id=#{pageId} 
+		</where>
+	</update>
+
+	<delete id="delete" parameterType="map">
+	   delete from 
+	     advert_page 
+	   where 
+	    page_id=#{pageId} 
+	</delete>
+
+	<select id="selectObject" parameterType="map" resultMap="advertPageResultMap">
+	   select 
+	    page_id,
+	    ctime,
+	    sort_order,
+	    title
+	   from advert_page
+	   where 
+	    page_id=#{pageId} 
+	</select>
+	
+	<select id="selectObjectList" parameterType="map" resultMap="advertPageResultMap">
+	   select 
+	     page_id,
+	     ctime,
+	     sort_order,
+	     title
+	   from advert_page
+	   <where>
+	     <if test="pageId != null">
+	        page_id=#{pageId}
+	     </if>
+	     <if test="ctime != null">
+	        and ctime=#{ctime}
+	     </if>
+	     <if test="sortOrder != null">
+	        and sort_order=#{sortOrder}
+	     </if>
+	     <if test="title != null">
+	        and title=#{title}
+	     </if>
+	   </where>
+	</select>
+
+	<select id="selectMap" parameterType="map" resultMap="mapResultMap">
+	   select 
+	    page_id,
+	    ctime,
+	    sort_order,
+	    title
+	   from advert_page
+	   where 
+	    page_id=#{pageId} 
+	</select>
+
+	<select id="selectMapList" parameterType="map" resultMap="mapResultMap">
+	   select 
+	     page_id,
+	     ctime,
+	     sort_order,
+	     title
+	   from advert_page
+	   <where>
+	     <if test="pageId != null">
+	        page_id=#{pageId}
+	     </if>
+	     <if test="ctime != null">
+	        and ctime=#{ctime}
+	     </if>
+	     <if test="sortOrder != null">
+	        and sort_order=#{sortOrder}
+	     </if>
+	     <if test="title != null">
+	        and title=#{title}
+	     </if>
+	   </where>
+	</select>
+	
+	<select id="page" parameterType="map" resultMap="pageResultMap">
+	   select 
+	     page_id,
+	     ctime,
+	     sort_order,
+	     title
+	   <include refid="pageCondition" />
+       limit #{offset},#{rows}
+	</select>
+	
+	<select id="pageCount" parameterType="map" resultType="int">
+        select count(1)
+        <include refid="pageCondition" />
+    </select>
+	
+	<sql id="pageCondition">
+	   from advert_page
+       <where>
+         <if test="key != null">
+            title LIKE CONCAT(CONCAT('%', #{key}), '%')
+         </if>
+         <if test="pageId != null">
+            and page_id=#{pageId}
+         </if>
+         <if test="ctime != null">
+            and ctime=#{ctime}
+         </if>
+         <if test="sortOrder != null">
+            and sort_order=#{sortOrder}
+         </if>
+         <if test="title != null">
+            and title=#{title}
+         </if>
+       </where>
+	</sql>
+	
+</mapper> 

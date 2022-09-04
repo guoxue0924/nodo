@@ -1,0 +1,491 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+【attachment user mapping】对象关系映射 配置 
+ @author AutoCode 309444359@qq.com
+ @date 2015-10-14 10:33:23
+ -->
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.bluemobi.dao.trend.TrendAttachmentDao">
+
+	<resultMap id="trendAttachmentResultMap" type="com.bluemobi.po.trend.TrendAttachment">
+		<id property="attachmentid" column="attachmentid" />
+		<result property="userid" column="userid" />
+		<result property="title" column="title" />
+		<result property="description" column="description" />
+		<result property="label" column="label" />
+		<result property="mediatype" column="mediatype" />
+		<result property="mimetype" column="mimetype" />
+		<result property="suffix" column="suffix" />
+		<result property="imageable" column="imageable" />
+		<result property="imageWidth" column="image_width" />
+		<result property="imageHeight" column="image_height" />
+		<result property="ctime" column="ctime" />
+		<result property="mtime" column="mtime" />
+		<result property="filepath" column="filepath" />
+		<result property="filesize" column="filesize" />
+		<result property="hashcode" column="hashcode" />
+		<result property="status" column="status" />
+		<result property="rev" column="rev" />
+	</resultMap>
+	<resultMap id="mapResultMap"  type="java.util.HashMap" extends="trendAttachmentResultMap"></resultMap>
+	<resultMap id="pageResultMap"  type="java.util.HashMap" extends="trendAttachmentResultMap"></resultMap>
+	
+	
+	<insert id="insert" parameterType="com.bluemobi.po.trend.TrendAttachment" useGeneratedKeys="true" keyProperty="attachmentid">
+	   insert into trend_attachment (
+	     attachmentid,
+	     userid,
+	     title,
+	     description,
+	     label,
+	     mediatype,
+	     mimetype,
+	     suffix,
+	     imageable,
+	     image_width,
+	     image_height,
+	     ctime,
+	     mtime,
+	     filepath,
+	     filesize,
+	     hashcode,
+	     status,
+	     rev
+	   )values (
+	     #{attachmentid},
+	     #{userid},
+	     #{title},
+	     #{description},
+	     #{label},
+	     #{mediatype},
+	     #{mimetype},
+	     #{suffix},
+	     #{imageable},
+	     #{imageWidth},
+	     #{imageHeight},
+	     #{ctime},
+	     #{mtime},
+	     #{filepath},
+	     #{filesize},
+	     #{hashcode},
+	     #{status},
+	     #{rev}
+	   )
+	</insert>
+
+	<update id="update" parameterType="com.bluemobi.po.trend.TrendAttachment">
+		update trend_attachment
+		<set>
+			<if test="attachmentid != null">
+				attachmentid=#{attachmentid},
+			</if>
+			<if test="userid != null">
+				userid=#{userid},
+			</if>
+			<if test="title != null">
+				title=#{title},
+			</if>
+			<if test="description != null">
+				description=#{description},
+			</if>
+			<if test="label != null">
+				label=#{label},
+			</if>
+			<if test="mediatype != null">
+				mediatype=#{mediatype},
+			</if>
+			<if test="mimetype != null">
+				mimetype=#{mimetype},
+			</if>
+			<if test="suffix != null">
+				suffix=#{suffix},
+			</if>
+			<if test="imageable != null">
+				imageable=#{imageable},
+			</if>
+			<if test="imageWidth != null">
+				image_width=#{imageWidth},
+			</if>
+			<if test="imageHeight != null">
+				image_height=#{imageHeight},
+			</if>
+			<if test="ctime != null">
+				ctime=#{ctime},
+			</if>
+			<if test="mtime != null">
+				mtime=#{mtime},
+			</if>
+			<if test="filepath != null">
+				filepath=#{filepath},
+			</if>
+			<if test="filesize != null">
+				filesize=#{filesize},
+			</if>
+			<if test="hashcode != null">
+				hashcode=#{hashcode},
+			</if>
+			<if test="status != null">
+				status=#{status},
+			</if>
+			<if test="rev != null">
+				rev=#{rev},
+			</if>
+		</set>
+		<where>
+			attachmentid=#{attachmentid} 
+		</where>
+	</update>
+
+	<delete id="delete" parameterType="map">
+	   delete from 
+	     trend_attachment 
+	   where 
+	    attachmentid=#{attachmentid} 
+	</delete>
+
+	<select id="selectObject" parameterType="map" resultMap="trendAttachmentResultMap">
+	   select 
+	    attachmentid,
+	    userid,
+	    title,
+	    description,
+	    label,
+	    mediatype,
+	    mimetype,
+	    suffix,
+	    imageable,
+	    image_width,
+	    image_height,
+	    ctime,
+	    mtime,
+	    filepath,
+	    filesize,
+	    hashcode,
+	    status,
+	    rev
+	   from trend_attachment
+	   where 
+	    attachmentid=#{attachmentid} 
+	</select>
+	
+	<select id="selectObjectList" parameterType="map" resultMap="trendAttachmentResultMap">
+	   select 
+	     attachmentid,
+	     userid,
+	     title,
+	     description,
+	     label,
+	     mediatype,
+	     mimetype,
+	     suffix,
+	     imageable,
+	     image_width,
+	     image_height,
+	     ctime,
+	     mtime,
+	     filepath,
+	     filesize,
+	     hashcode,
+	     status,
+	     rev
+	   from trend_attachment
+	   <where>
+	     <if test="attachmentid != null">
+	        attachmentid=#{attachmentid}
+	     </if>
+	     <if test="userid != null">
+	        and userid=#{userid}
+	     </if>
+	     <if test="title != null">
+	        and title=#{title}
+	     </if>
+	     <if test="description != null">
+	        and description=#{description}
+	     </if>
+	     <if test="label != null">
+	        and label=#{label}
+	     </if>
+	     <if test="mediatype != null">
+	        and mediatype=#{mediatype}
+	     </if>
+	     <if test="mimetype != null">
+	        and mimetype=#{mimetype}
+	     </if>
+	     <if test="suffix != null">
+	        and suffix=#{suffix}
+	     </if>
+	     <if test="imageable != null">
+	        and imageable=#{imageable}
+	     </if>
+	     <if test="imageWidth != null">
+	        and image_width=#{imageWidth}
+	     </if>
+	     <if test="imageHeight != null">
+	        and image_height=#{imageHeight}
+	     </if>
+	     <if test="ctime != null">
+	        and ctime=#{ctime}
+	     </if>
+	     <if test="mtime != null">
+	        and mtime=#{mtime}
+	     </if>
+	     <if test="filepath != null">
+	        and filepath=#{filepath}
+	     </if>
+	     <if test="filesize != null">
+	        and filesize=#{filesize}
+	     </if>
+	     <if test="hashcode != null">
+	        and hashcode=#{hashcode}
+	     </if>
+	     <if test="status != null">
+	        and status=#{status}
+	     </if>
+	     <if test="rev != null">
+	        and rev=#{rev}
+	     </if>
+	   </where>
+	</select>
+
+	<select id="selectMap" parameterType="map" resultMap="mapResultMap">
+	   select 
+	    attachmentid,
+	    userid,
+	    title,
+	    description,
+	    label,
+	    mediatype,
+	    mimetype,
+	    suffix,
+	    imageable,
+	    image_width,
+	    image_height,
+	    ctime,
+	    mtime,
+	    filepath,
+	    filesize,
+	    hashcode,
+	    status,
+	    rev
+	   from trend_attachment
+	   where 
+	    attachmentid=#{attachmentid} 
+	</select>
+
+	<select id="selectMapList" parameterType="map" resultMap="mapResultMap">
+	   select 
+	     attachmentid,
+	     userid,
+	     title,
+	     description,
+	     label,
+	     mediatype,
+	     mimetype,
+	     suffix,
+	     imageable,
+	     image_width,
+	     image_height,
+	     ctime,
+	     mtime,
+	     filepath,
+	     filesize,
+	     hashcode,
+	     status,
+	     rev
+	   from trend_attachment
+	   <where>
+	     <if test="attachmentid != null">
+	        attachmentid=#{attachmentid}
+	     </if>
+	     <if test="userid != null">
+	        and userid=#{userid}
+	     </if>
+	     <if test="title != null">
+	        and title=#{title}
+	     </if>
+	     <if test="description != null">
+	        and description=#{description}
+	     </if>
+	     <if test="label != null">
+	        and label=#{label}
+	     </if>
+	     <if test="mediatype != null">
+	        and mediatype=#{mediatype}
+	     </if>
+	     <if test="mimetype != null">
+	        and mimetype=#{mimetype}
+	     </if>
+	     <if test="suffix != null">
+	        and suffix=#{suffix}
+	     </if>
+	     <if test="imageable != null">
+	        and imageable=#{imageable}
+	     </if>
+	     <if test="imageWidth != null">
+	        and image_width=#{imageWidth}
+	     </if>
+	     <if test="imageHeight != null">
+	        and image_height=#{imageHeight}
+	     </if>
+	     <if test="ctime != null">
+	        and ctime=#{ctime}
+	     </if>
+	     <if test="mtime != null">
+	        and mtime=#{mtime}
+	     </if>
+	     <if test="filepath != null">
+	        and filepath=#{filepath}
+	     </if>
+	     <if test="filesize != null">
+	        and filesize=#{filesize}
+	     </if>
+	     <if test="hashcode != null">
+	        and hashcode=#{hashcode}
+	     </if>
+	     <if test="status != null">
+	        and status=#{status}
+	     </if>
+	     <if test="rev != null">
+	        and rev=#{rev}
+	     </if>
+	   </where>
+	</select>
+	
+	<select id="page" parameterType="map" resultMap="pageResultMap">
+	   select 
+	     attachmentid,
+	     userid,
+	     title,
+	     description,
+	     label,
+	     mediatype,
+	     mimetype,
+	     suffix,
+	     imageable,
+	     image_width,
+	     image_height,
+	     ctime,
+	     mtime,
+	     filepath,
+	     filesize,
+	     hashcode,
+	     status,
+	     rev
+	   <include refid="pageCondition" />
+        limit #{offset},#{rows}
+	</select>
+	
+	<select id="pageCount" parameterType="map" resultType="int">
+        select count(1)
+        <include refid="pageCondition" />
+    </select>
+	
+	<sql id="pageCondition">
+	   from trend_attachment
+       <where>
+         <if test="attachmentid != null">
+            attachmentid=#{attachmentid}
+         </if>
+         <if test="userid != null">
+            and userid=#{userid}
+         </if>
+         <if test="title != null">
+            and title=#{title}
+         </if>
+         <if test="description != null">
+            and description=#{description}
+         </if>
+         <if test="label != null">
+            and label=#{label}
+         </if>
+         <if test="mediatype != null">
+            and mediatype=#{mediatype}
+         </if>
+         <if test="mimetype != null">
+            and mimetype=#{mimetype}
+         </if>
+         <if test="suffix != null">
+            and suffix=#{suffix}
+         </if>
+         <if test="imageable != null">
+            and imageable=#{imageable}
+         </if>
+         <if test="imageWidth != null">
+            and image_width=#{imageWidth}
+         </if>
+         <if test="imageHeight != null">
+            and image_height=#{imageHeight}
+         </if>
+         <if test="ctime != null">
+            and ctime=#{ctime}
+         </if>
+         <if test="mtime != null">
+            and mtime=#{mtime}
+         </if>
+         <if test="filepath != null">
+            and filepath=#{filepath}
+         </if>
+         <if test="filesize != null">
+            and filesize=#{filesize}
+         </if>
+         <if test="hashcode != null">
+            and hashcode=#{hashcode}
+         </if>
+         <if test="status != null">
+            and status=#{status}
+         </if>
+         <if test="rev != null">
+            and rev=#{rev}
+         </if>
+       </where>
+	</sql>
+	
+	<!-- 通过MainId和Type查询附件对象集合 -->
+	<select id="selectTrendAttachmentListByMainId" parameterType="map" resultMap="trendAttachmentResultMap">
+	   select 
+            a.*
+       from 
+       trend_attachment a,
+       trend_attachment_group g
+       where 
+       a.attachmentid = g.attachment_id
+       <if test="type != null">
+           and g.type = #{type}
+       </if>
+       <if test="mainId != null">
+           and g.main_id = #{mainId}
+       </if>
+	</select>
+	
+	<select id="selectTrendAttachmentListByIds" parameterType="map" resultMap="trendAttachmentResultMap">
+        select 
+            attachmentid,
+            userid,
+            title,
+            description,
+            label,
+            mediatype,
+            mimetype,
+            suffix,
+            imageable,
+            image_width,
+            image_height,
+            ctime,
+            mtime,
+            filepath,
+            filesize,
+            hashcode,
+            status,
+            rev
+        from trend_attachment
+        <where>
+            attachmentid in 
+            <foreach collection="attachmentids" item="attachmentid" open="(" separator="," close=")">
+                #{attachmentid}
+            </foreach>
+        </where>
+    </select>
+	
+</mapper> 

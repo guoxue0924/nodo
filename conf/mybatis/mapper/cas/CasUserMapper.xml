@@ -1,0 +1,853 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+【用户表】对象关系映射 配置 
+ @author AutoCode 309444359@qq.com
+ @date 2015-08-31 10:23:11
+ -->
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.bluemobi.dao.cas.CasUserDao">
+
+	<resultMap id="casUserResultMap" type="com.bluemobi.po.cas.CasUser">
+		<id property="userid" column="userid" />
+		<result property="userGroupId" column="user_group_id" />
+		<result property="userLvId" column="user_lv_id" />
+		<result property="username" column="username" />
+		<result property="password" column="password" />
+		<result property="freeze" column="freeze" />
+		<result property="thirdid" column="thirdid" />
+		<result property="salt" column="salt" />
+		<result property="encrypt" column="encrypt" />
+		<result property="tel" column="tel" />
+		<result property="phone" column="phone" />
+		<result property="verifiedPhone" column="verifiedPhone" />
+		<result property="email" column="email" />
+		<result property="validateEmailCode" column="validateEmailCode" />
+		<result property="verifiedEmail" column="verifiedEmail" />
+		<result property="nickname" column="nickname" />
+		<result property="realname" column="realname" />
+		<result property="idcard" column="idcard" />
+		<result property="gender" column="gender" />
+		<result property="avatar" column="avatar" />
+		<result property="deviceType" column="device_type" />
+		<result property="deviceNo" column="device_no" />
+		<result property="channelid" column="channelid" />
+		<result property="status" column="status" />
+		<result property="isVerify" column="is_verify" />
+		<result property="isDel" column="is_del" />
+		<result property="lastLoginTime" column="last_login_time" />
+		<result property="lastLoginIp" column="last_login_ip" />
+		<result property="banEtime" column="ban_etime" />
+		<result property="ctime" column="ctime" />
+		<result property="mtime" column="mtime" />
+		<result property="userintegral" column="userintegral"/>
+	</resultMap>
+	<resultMap id="mapResultMap"  type="java.util.HashMap" extends="casUserResultMap">
+		<result property="job" column="job" />
+		<result property="birthday" column="birthday" />
+		<result property="address" column="address" />
+	</resultMap>
+	<resultMap id="pageResultMap"  type="java.util.HashMap" extends="casUserResultMap">
+ 		<result property="name" column="name" />
+ 		<result property="birthday" column="birthday" />
+ 		<result property="regionName" column="region_name" />
+	</resultMap>
+	<resultMap id="mapListResultMap"  type="java.util.HashMap" extends="casUserResultMap"></resultMap>
+	
+	
+	<insert id="insert" parameterType="com.bluemobi.po.cas.CasUser" useGeneratedKeys="true" keyProperty="userid">
+	   insert into cas_user (
+	     userid,
+	     user_group_id,
+	     user_lv_id,
+	     username,
+	     password,
+	     freeze,
+	     thirdid,
+	     salt,
+	     encrypt,
+	     tel,
+	     phone,
+	     verifiedPhone,
+	     email,
+	     validateEmailCode,
+	     verifiedEmail,
+	     nickname,
+	     realname,
+	     idcard,
+	     gender,
+	     avatar,
+	     device_type,
+	     device_no,
+	     channelid,
+	     status,
+	     is_verify,
+	     is_del,
+	     last_login_time,
+	     last_login_ip,
+	     ban_etime,
+	     ctime,
+	     mtime,
+	     userintegral
+	   )values (
+	     #{userid},
+	     #{userGroupId},
+	     #{userLvId},
+	     #{username},
+	     #{password},
+	     #{freeze},
+	     #{thirdid},
+	     #{salt},
+	     #{encrypt},
+	     #{tel},
+	     #{phone},
+	     #{verifiedPhone},
+	     #{email},
+	     #{validateEmailCode},
+	     #{verifiedEmail},
+	     #{nickname},
+	     #{realname},
+	     #{idcard},
+	     #{gender},
+	     #{avatar},
+	     #{deviceType},
+	     #{deviceNo},
+	     #{channelid},
+	     #{status},
+	     #{isVerify},
+	     #{isDel},
+	     #{lastLoginTime},
+	     #{lastLoginIp},
+	     #{banEtime},
+	     #{ctime},
+	     #{mtime},
+	     #{userintegral}
+	   )
+	</insert>
+
+	<update id="update" parameterType="com.bluemobi.po.cas.CasUser">
+		update cas_user 
+		<set>
+			<if test="userid != null">
+                userid=#{userid},
+            </if>
+            <if test="userGroupId != null">
+                user_group_id=#{userGroupId},
+            </if>
+            <if test="userLvId != null">
+                user_lv_id=#{userLvId},
+            </if>
+            <if test="username != null">
+                username=#{username},
+            </if>
+            <if test="password != null">
+                password=#{password},
+            </if>
+            <if test="freeze != null">
+                freeze=#{freeze},
+            </if>
+            <if test="thirdid != null">
+                thirdid=#{thirdid},
+            </if>
+            <if test="salt != null">
+                salt=#{salt},
+            </if>
+            <if test="encrypt != null">
+                encrypt=#{encrypt},
+            </if>
+            <if test="tel != null">
+                tel=#{tel},
+            </if>
+            <if test="phone != null">
+                phone=#{phone},
+            </if>
+            <if test="verifiedPhone != null">
+                verifiedPhone=#{verifiedPhone},
+            </if>
+            <if test="email != null">
+                email=#{email},
+            </if>
+            <if test="validateEmailCode != null">
+                validateEmailCode=#{validateEmailCode},
+            </if>
+            <if test="verifiedEmail != null">
+                verifiedEmail=#{verifiedEmail},
+            </if>
+            <if test="nickname != null">
+                nickname=#{nickname},
+            </if>
+            <if test="realname != null">
+                realname=#{realname},
+            </if>
+            <if test="idcard != null">
+                idcard=#{idcard},
+            </if>
+            <if test="gender != null">
+                gender=#{gender},
+            </if>
+            <if test="avatar != null">
+                avatar=#{avatar},
+            </if>
+            <if test="deviceType != null">
+                device_type=#{deviceType},
+            </if>
+            <if test="deviceNo != null">
+                device_no=#{deviceNo},
+            </if>
+            <if test="channelid != null">
+                channelid=#{channelid},
+            </if>
+            <if test="status != null">
+                status=#{status},
+            </if>
+            <if test="isVerify != null">
+                is_verify=#{isVerify},
+            </if>
+            <if test="isDel != null">
+                is_del=#{isDel},
+            </if>
+            <if test="lastLoginTime != null">
+                last_login_time=#{lastLoginTime},
+            </if>
+            <if test="lastLoginIp != null">
+                last_login_ip=#{lastLoginIp},
+            </if>
+            <if test="banEtime != null">
+                ban_etime=#{banEtime},
+            </if>
+            <if test="ctime != null">
+                ctime=#{ctime},
+            </if>
+            <if test="mtime != null">
+                mtime=#{mtime},
+            </if>
+             <if test="userintegral != null">
+                userintegral=#{userintegral},
+            </if>
+		</set>
+		<where>
+		   		userid=#{userid} 
+		</where>
+	</update>
+	
+     <!-- 保存用户新密码 -->
+	<update id="updateNewPassword" parameterType="com.bluemobi.po.cas.CasUser">
+		update cas_user 
+		<set>
+			<if test="password != null">
+                password=#{password},
+            </if>
+		</set>
+		<where>
+		   		username=#{username} 
+		</where>
+	</update>
+
+	<delete id="delete" parameterType="map">
+	   delete from 
+	     cas_user 
+	   where 
+	    userid=#{userid} 
+	</delete>
+
+	<select id="selectObject" parameterType="map" resultMap="casUserResultMap">
+	   select 
+	    userid,
+	    user_group_id,
+	    user_lv_id,
+	    username,
+	    password,
+	    freeze,
+	    thirdid,
+	    salt,
+	    encrypt,
+	    tel,
+	    phone,
+	    verifiedPhone,
+	    email,
+	    validateEmailCode,
+	    verifiedEmail,
+	    nickname,
+	    realname,
+	    idcard,
+	    gender,
+	    avatar,
+	    device_type,
+	    device_no,
+	    channelid,
+	    status,
+	    is_verify,
+	    is_del,
+	    last_login_time,
+	    last_login_ip,
+	    ban_etime,
+	    ctime,
+	    mtime,
+	    userintegral
+	   from cas_user
+	   <where>
+         <if test="userid != null">
+            userid=#{userid}
+         </if>
+         <if test="userGroupId != null">
+            and user_group_id=#{userGroupId}
+         </if>
+         <if test="userLvId != null">
+            and user_lv_id=#{userLvId}
+         </if>
+         <if test="username != null">
+            and username=#{username}
+         </if>
+         <if test="password != null">
+            and password=#{password}
+         </if>
+         <if test="freeze != null">
+            and freeze=#{freeze}
+         </if>
+         <if test="thirdid != null">
+            and thirdid=#{thirdid}
+         </if>
+         <if test="salt != null">
+            and salt=#{salt}
+         </if>
+         <if test="encrypt != null">
+            and encrypt=#{encrypt}
+         </if>
+         <if test="tel != null">
+            and tel=#{tel}
+         </if>
+         <if test="phone != null">
+            and phone=#{phone}
+         </if>
+         <if test="verifiedPhone != null">
+            and verifiedPhone=#{verifiedPhone}
+         </if>
+         <if test="email != null">
+            and email=#{email}
+         </if>
+         <if test="validateEmailCode != null">
+            and validateEmailCode=#{validateEmailCode}
+         </if>
+         <if test="verifiedEmail != null">
+            and verifiedEmail=#{verifiedEmail}
+         </if>
+         <if test="nickname != null">
+            and nickname=#{nickname}
+         </if>
+         <if test="realname != null">
+            and realname=#{realname}
+         </if>
+         <if test="idcard != null">
+            and idcard=#{idcard}
+         </if>
+         <if test="gender != null">
+            and gender=#{gender}
+         </if>
+         <if test="avatar != null">
+            and avatar=#{avatar}
+         </if>
+         <if test="deviceType != null">
+            and device_type=#{deviceType}
+         </if>
+         <if test="deviceNo != null">
+            and device_no=#{deviceNo}
+         </if>
+         <if test="channelid != null">
+            and channelid=#{channelid}
+         </if>
+         <if test="status != null">
+            and status=#{status}
+         </if>
+         <if test="isVerify != null">
+            and is_verify=#{isVerify}
+         </if>
+         <if test="isDel != null">
+            and is_del=#{isDel}
+         </if>
+         <if test="lastLoginTime != null">
+            and last_login_time=#{lastLoginTime}
+         </if>
+         <if test="lastLoginIp != null">
+            and last_login_ip=#{lastLoginIp}
+         </if>
+         <if test="banEtime != null">
+            and ban_etime=#{banEtime}
+         </if>
+         <if test="ctime != null">
+            and ctime=#{ctime}
+         </if>
+         <if test="mtime != null">
+            and mtime=#{mtime}
+         </if>
+         <if test="userintegral != null">
+            and userintegral=#{userintegral}
+         </if>
+       </where> 
+	</select>
+	
+	<select id="selectObjectList" parameterType="map" resultMap="casUserResultMap">
+	   select 
+	     userid,
+	     user_group_id,
+	     user_lv_id,
+	     username,
+	     password,
+	     freeze,
+	     thirdid,
+	     salt,
+	     encrypt,
+	     tel,
+	     phone,
+	     verifiedPhone,
+	     email,
+	     validateEmailCode,
+	     verifiedEmail,
+	     nickname,
+	     realname,
+	     idcard,
+	     gender,
+	     avatar,
+	     device_type,
+	     device_no,
+	     channelid,
+	     status,
+	     is_verify,
+	     is_del,
+	     last_login_time,
+	     last_login_ip,
+	     ban_etime,
+	     ctime,
+	     mtime,
+	     userintegral
+	   from cas_user
+	   <where>
+	     <if test="userid != null">
+	        userid=#{userid}
+	     </if>
+	     <if test="userGroupId != null">
+	        and user_group_id=#{userGroupId}
+	     </if>
+	     <if test="userLvId != null">
+	        and user_lv_id=#{userLvId}
+	     </if>
+	     <if test="username != null">
+	        and username=#{username}
+	     </if>
+	     <if test="password != null">
+	        and password=#{password}
+	     </if>
+	     <if test="freeze != null">
+	        and freeze=#{freeze}
+	     </if>
+	     <if test="thirdid != null">
+	        and thirdid=#{thirdid}
+	     </if>
+	     <if test="salt != null">
+	        and salt=#{salt}
+	     </if>
+	     <if test="encrypt != null">
+	        and encrypt=#{encrypt}
+	     </if>
+	     <if test="tel != null">
+	        and tel=#{tel}
+	     </if>
+	     <if test="phone != null">
+	        and phone=#{phone}
+	     </if>
+	     <if test="verifiedPhone != null">
+	        and verifiedPhone=#{verifiedPhone}
+	     </if>
+	     <if test="email != null">
+	        and email=#{email}
+	     </if>
+	     <if test="validateEmailCode != null">
+	        and validateEmailCode=#{validateEmailCode}
+	     </if>
+	     <if test="verifiedEmail != null">
+	        and verifiedEmail=#{verifiedEmail}
+	     </if>
+	     <if test="nickname != null">
+	        and nickname=#{nickname}
+	     </if>
+	     <if test="realname != null">
+	        and realname=#{realname}
+	     </if>
+	     <if test="idcard != null">
+	        and idcard=#{idcard}
+	     </if>
+	     <if test="gender != null">
+	        and gender=#{gender}
+	     </if>
+	     <if test="avatar != null">
+	        and avatar=#{avatar}
+	     </if>
+	     <if test="deviceType != null">
+	        and device_type=#{deviceType}
+	     </if>
+	     <if test="deviceNo != null">
+	        and device_no=#{deviceNo}
+	     </if>
+	     <if test="channelid != null">
+	        and channelid=#{channelid}
+	     </if>
+	     <if test="status != null">
+	        and status=#{status}
+	     </if>
+	     <if test="isVerify != null">
+	        and is_verify=#{isVerify}
+	     </if>
+	     <if test="isDel != null">
+	        and is_del=#{isDel}
+	     </if>
+	     <if test="lastLoginTime != null">
+	        and last_login_time=#{lastLoginTime}
+	     </if>
+	     <if test="lastLoginIp != null">
+	        and last_login_ip=#{lastLoginIp}
+	     </if>
+	     <if test="banEtime != null">
+	        and ban_etime=#{banEtime}
+	     </if>
+	     <if test="ctime != null">
+	        and ctime=#{ctime}
+	     </if>
+	     <if test="mtime != null">
+	        and mtime=#{mtime}
+	     </if>
+	  	 <if test="userintegral != null">
+	        and userintegral=#{userintegral}
+	     </if>
+	   </where>
+	</select>
+
+	<select id="selectMap" parameterType="map" resultMap="mapListResultMap">
+	   select 
+	    userid,
+	    user_group_id,
+	    user_lv_id,
+	    username,
+	    password,
+	    freeze,
+	    thirdid,
+	    salt,
+	    encrypt,
+	    tel,
+	    phone,
+	    verifiedPhone,
+	    email,
+	    validateEmailCode,
+	    verifiedEmail,
+	    nickname,
+	    realname,
+	    idcard,
+	    gender,
+	    avatar,
+	    device_type,
+	    device_no,
+	    channelid,
+	    status,
+	    is_verify,
+	    is_del,
+	    last_login_time,
+	    last_login_ip,
+	    ban_etime,
+	    ctime,
+	    mtime,
+	    userintegral
+	    from cas_user
+	   where
+	        userid=#{userid}
+	</select>
+
+	<select id="selectMapList" parameterType="map" resultMap="mapListResultMap">
+	   select 
+	     userid,
+	     user_group_id,
+	     user_lv_id,
+	     username,
+	     password,
+	     freeze,
+	     thirdid,
+	     salt,
+	     encrypt,
+	     tel,
+	     phone,
+	     verifiedPhone,
+	     email,
+	     validateEmailCode,
+	     verifiedEmail,
+	     nickname,
+	     realname,
+	     idcard,
+	     gender,
+	     avatar,
+	     device_type,
+	     device_no,
+	     channelid,
+	     status,
+	     is_verify,
+	     is_del,
+	     last_login_time,
+	     last_login_ip,
+	     ban_etime,
+	     ctime,
+	     mtime,
+	     userintegral
+	   from cas_user
+	   <where>
+	     <if test="userid != null">
+	        userid=#{userid}
+	     </if>
+	     <if test="userGroupId != null">
+	        and user_group_id=#{userGroupId}
+	     </if>
+	     <if test="userLvId != null">
+	        and user_lv_id=#{userLvId}
+	     </if>
+	     <if test="username != null">
+	        and username=#{username}
+	     </if>
+	     <if test="password != null">
+	        and password=#{password}
+	     </if>
+	     <if test="freeze != null">
+	        and freeze=#{freeze}
+	     </if>
+	     <if test="thirdid != null">
+	        and thirdid=#{thirdid}
+	     </if>
+	     <if test="salt != null">
+	        and salt=#{salt}
+	     </if>
+	     <if test="encrypt != null">
+	        and encrypt=#{encrypt}
+	     </if>
+	     <if test="tel != null">
+	        and tel=#{tel}
+	     </if>
+	     <if test="phone != null">
+	        and phone=#{phone}
+	     </if>
+	     <if test="verifiedPhone != null">
+	        and verifiedPhone=#{verifiedPhone}
+	     </if>
+	     <if test="email != null">
+	        and email=#{email}
+	     </if>
+	     <if test="validateEmailCode != null">
+	        and validateEmailCode=#{validateEmailCode}
+	     </if>
+	     <if test="verifiedEmail != null">
+	        and verifiedEmail=#{verifiedEmail}
+	     </if>
+	     <if test="nickname != null">
+	        and nickname=#{nickname}
+	     </if>
+	     <if test="realname != null">
+	        and realname=#{realname}
+	     </if>
+	     <if test="idcard != null">
+	        and idcard=#{idcard}
+	     </if>
+	     <if test="gender != null">
+	        and gender=#{gender}
+	     </if>
+	     <if test="avatar != null">
+	        and avatar=#{avatar}
+	     </if>
+	     <if test="deviceType != null">
+	        and device_type=#{deviceType}
+	     </if>
+	     <if test="deviceNo != null">
+	        and device_no=#{deviceNo}
+	     </if>
+	     <if test="channelid != null">
+	        and channelid=#{channelid}
+	     </if>
+	     <if test="status != null">
+	        and status=#{status}
+	     </if>
+	     <if test="isVerify != null">
+	        and is_verify=#{isVerify}
+	     </if>
+	     <if test="isDel != null">
+	        and is_del=#{isDel}
+	     </if>
+	     <if test="lastLoginTime != null">
+	        and last_login_time=#{lastLoginTime}
+	     </if>
+	     <if test="lastLoginIp != null">
+	        and last_login_ip=#{lastLoginIp}
+	     </if>
+	     <if test="banEtime != null">
+	        and ban_etime=#{banEtime}
+	     </if>
+	     <if test="ctime != null">
+	        and ctime=#{ctime}
+	     </if>
+	     <if test="mtime != null">
+	        and mtime=#{mtime}
+	     </if>
+	     <if test="userintegral != null">
+	        and userintegral=#{userintegral}
+	     </if>
+	   </where>
+	</select>
+	
+	<sql id="pageCondition">
+	    from cas_user cu
+		LEFT  JOIN (SELECT userid ,SUM(point) as point from cas_user_point GROUP BY userid ) cup  ON cu.userid = cup.userid
+       <where>
+           is_del = 0  
+         <if test="key != null">
+            and (
+            username LIKE CONCAT(CONCAT('%', #{key}), '%')
+            or realname LIKE CONCAT(CONCAT('%', #{key}), '%')
+            or phone LIKE CONCAT(CONCAT('%', #{key}), '%')
+            or email LIKE CONCAT(CONCAT('%', #{key}), '%')
+            )
+         </if>
+         <if test="userid != null">
+            and userid=#{userid}
+         </if>
+         <if test="userGroupId != null">
+            and user_group_id=#{userGroupId}
+         </if>
+         <if test="userLvId != null">
+            and user_lv_id=#{userLvId}
+         </if>
+         <if test="username != null">
+            and username=#{username}
+         </if>
+         <if test="password != null">
+            and password=#{password}
+         </if>
+         <if test="freeze != null">
+            and freeze=#{freeze}
+         </if>
+         <if test="thirdid != null">
+            and thirdid=#{thirdid}
+         </if>
+         <if test="salt != null">
+            and salt=#{salt}
+         </if>
+         <if test="encrypt != null">
+            and encrypt=#{encrypt}
+         </if>
+         <if test="tel != null">
+            and tel=#{tel}
+         </if>
+         <if test="phone != null">
+            and phone=#{phone}
+         </if>
+         <if test="verifiedPhone != null">
+            and verifiedPhone=#{verifiedPhone}
+         </if>
+         <if test="email != null">
+            and email=#{email}
+         </if>
+         <if test="validateEmailCode != null">
+            and validateEmailCode=#{validateEmailCode}
+         </if>
+         <if test="verifiedEmail != null">
+            and verifiedEmail=#{verifiedEmail}
+         </if>
+         <if test="nickname != null">
+            and nickname=#{nickname}
+         </if>
+         <if test="realname != null">
+            and realname=#{realname}
+         </if>
+         <if test="idcard != null">
+            and idcard=#{idcard}
+         </if>
+         <if test="gender != null">
+            and gender=#{gender}
+         </if>
+         <if test="avatar != null">
+            and avatar=#{avatar}
+         </if>
+         <if test="deviceType != null">
+            and device_type=#{deviceType}
+         </if>
+         <if test="deviceNo != null">
+            and device_no=#{deviceNo}
+         </if>
+         <if test="channelid != null">
+            and channelid=#{channelid}
+         </if>
+         <if test="status != null">
+            and status=#{status}
+         </if>
+         <if test="isVerify != null">
+            and is_verify=#{isVerify}
+         </if>
+         <if test="isDel != null">
+            and is_del=#{isDel}
+         </if>
+         <if test="lastLoginTime != null">
+            and last_login_time=#{lastLoginTime}
+         </if>
+         <if test="lastLoginIp != null">
+            and last_login_ip=#{lastLoginIp}
+         </if>
+         <if test="banEtime != null">
+            and u.ban_etime=#{banEtime}
+         </if>
+         <if test="ctime != null">
+            and ctime=#{ctime}
+         </if>
+         <if test="mtime != null">
+            and mtime=#{mtime}
+         </if>
+         <if test="userintegral != null">
+	        and userintegral=#{userintegral}
+	     </if>
+       </where>
+	</sql>
+	
+	<select id="pageCount" parameterType="map" resultType="int">
+        select count(1)
+        <include refid="pageCondition" />
+    </select>
+	
+	<select id="page" parameterType="map" resultMap="casUserResultMap">
+	  select 
+	     cu.userid,
+	     cu.user_group_id,
+	     cu.user_lv_id,
+	     cu.username,
+	     cu.password,
+	     cu.freeze,
+	     cu.thirdid,
+	     cu.salt,
+	     cu.encrypt,
+	     cu.tel,
+	     cu.phone,
+	     cu.verifiedPhone,
+	     cu.email,
+	     validateEmailCode,
+	     cu.verifiedEmail,
+	     cu.nickname,
+	     cu.realname,
+	     cu.idcard,
+	     cu.gender,
+	     cu.avatar,
+	     cu.device_type,
+	     cu.device_no,
+	     cu.channelid,
+	     cu.status,
+	     cu.is_verify,
+	     cu.is_del,
+	     cu.last_login_time,
+	     cu.last_login_ip,
+	     cu.ban_etime,
+	     cu.ctime,
+	     cu.mtime,
+		cup.point as userintegral
+	     <include refid="pageCondition" />
+         limit #{offset},#{rows}
+	</select>
+	
+</mapper> 

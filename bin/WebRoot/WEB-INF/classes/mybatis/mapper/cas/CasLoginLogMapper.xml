@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+【用户正常登录日志（归档）】对象关系映射 配置 
+ @author AutoCode 309444359@qq.com
+ @date 2015-08-31 10:23:10
+ -->
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.bluemobi.dao.cas.CasLoginLogDao">
+
+	<resultMap id="casLoginLogResultMap" type="com.bluemobi.po.cas.CasLoginLog">
+		<id property="logid" column="logid" />
+		<result property="userid" column="userid" />
+		<result property="username" column="username" />
+		<result property="sessionid" column="sessionid" />
+		<result property="ip" column="ip" />
+		<result property="ua" column="ua" />
+		<result property="ctime" column="ctime" />
+	</resultMap>
+	<resultMap id="mapResultMap"  type="java.util.HashMap" extends="casLoginLogResultMap"></resultMap>
+	<resultMap id="pageResultMap"  type="java.util.HashMap" extends="casLoginLogResultMap"></resultMap>
+	
+	
+	<insert id="insert" parameterType="com.bluemobi.po.cas.CasLoginLog">
+	   insert into cas_login_log (
+	     logid,
+	     userid,
+	     username,
+	     sessionid,
+	     ip,
+	     ua,
+	     ctime
+	   )values (
+	     #{logid},
+	     #{userid},
+	     #{username},
+	     #{sessionid},
+	     #{ip},
+	     #{ua},
+	     #{ctime}
+	   )
+	</insert>
+
+	<update id="update" parameterType="com.bluemobi.po.cas.CasLoginLog">
+	   update cas_login_log set
+	     logid=#{logid},
+	     userid=#{userid},
+	     username=#{username},
+	     sessionid=#{sessionid},
+	     ip=#{ip},
+	     ua=#{ua},
+	     ctime=#{ctime}
+	   where 
+	    logid=#{logid} 
+	</update>
+
+	<delete id="delete" parameterType="map">
+	   delete from 
+	     cas_login_log 
+	   where 
+	    logid=#{logid} 
+	</delete>
+
+	<select id="selectObject" parameterType="map" resultMap="casLoginLogResultMap">
+	   select 
+	    logid,
+	    userid,
+	    username,
+	    sessionid,
+	    ip,
+	    ua,
+	    ctime
+	   from cas_login_log
+	   where 
+	    logid=#{logid} 
+	</select>
+	
+	<select id="selectObjectList" parameterType="map" resultMap="casLoginLogResultMap">
+	   select 
+	     logid,
+	     userid,
+	     username,
+	     sessionid,
+	     ip,
+	     ua,
+	     ctime
+	   from cas_login_log
+	   <where>
+	     <if test="logid != null">
+	        logid=#{logid}
+	     </if>
+	     <if test="userid != null">
+	        and userid=#{userid}
+	     </if>
+	     <if test="username != null">
+	        and username=#{username}
+	     </if>
+	     <if test="sessionid != null">
+	        and sessionid=#{sessionid}
+	     </if>
+	     <if test="ip != null">
+	        and ip=#{ip}
+	     </if>
+	     <if test="ua != null">
+	        and ua=#{ua}
+	     </if>
+	     <if test="ctime != null">
+	        and ctime=#{ctime}
+	     </if>
+	   </where>
+	</select>
+
+	<select id="selectMap" parameterType="map" resultMap="mapResultMap">
+	   select 
+	    logid,
+	    userid,
+	    username,
+	    sessionid,
+	    ip,
+	    ua,
+	    ctime
+	   from cas_login_log
+	   where 
+	    logid=#{logid} 
+	</select>
+
+	<select id="selectMapList" parameterType="map" resultMap="mapResultMap">
+	   select 
+	     logid,
+	     userid,
+	     username,
+	     sessionid,
+	     ip,
+	     ua,
+	     ctime
+	   from cas_login_log
+	   <where>
+	     <if test="logid != null">
+	        logid=#{logid}
+	     </if>
+	     <if test="userid != null">
+	        and userid=#{userid}
+	     </if>
+	     <if test="username != null">
+	        and username=#{username}
+	     </if>
+	     <if test="sessionid != null">
+	        and sessionid=#{sessionid}
+	     </if>
+	     <if test="ip != null">
+	        and ip=#{ip}
+	     </if>
+	     <if test="ua != null">
+	        and ua=#{ua}
+	     </if>
+	     <if test="ctime != null">
+	        and ctime=#{ctime}
+	     </if>
+	   </where>
+	</select>
+	
+	<select id="page" parameterType="map" resultMap="pageResultMap">
+	   select 
+	     logid,
+	     userid,
+	     username,
+	     sessionid,
+	     ip,
+	     ua,
+	     ctime
+	   from cas_login_log
+	   <where>
+	     <if test="logid != null">
+	        logid=#{logid}
+	     </if>
+	     <if test="userid != null">
+	        and userid=#{userid}
+	     </if>
+	     <if test="username != null">
+	        and username=#{username}
+	     </if>
+	     <if test="sessionid != null">
+	        and sessionid=#{sessionid}
+	     </if>
+	     <if test="ip != null">
+	        and ip=#{ip}
+	     </if>
+	     <if test="ua != null">
+	        and ua=#{ua}
+	     </if>
+	     <if test="ctime != null">
+	        and ctime=#{ctime}
+	     </if>
+	   </where>
+	</select>
+	
+</mapper> 

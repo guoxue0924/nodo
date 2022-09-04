@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+【订单操作日志表】对象关系映射 配置 
+ @author AutoCode 309444359@qq.com
+ @date 2015-11-17 13:27:05
+ -->
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.bluemobi.dao.bts.BtsOrderLogDao">
+
+	<resultMap id="btsOrderLogResultMap" type="com.bluemobi.po.bts.BtsOrderLog">
+		<id property="logId" column="log_id" />
+       <result property="adminUserid" column="admin_userid" />
+       <result property="type" column="type" />
+       <result property="orderId" column="order_id" />
+       <result property="orderNumber" column="order_number" />
+       <result property="content" column="content" />
+       <result property="remark" column="remark" />
+       <result property="ip" column="ip" />
+       <result property="ctime" column="ctime" />
+	</resultMap>
+	<resultMap id="mapResultMap"  type="java.util.HashMap" extends="btsOrderLogResultMap"></resultMap>
+	<resultMap id="pageResultMap"  type="java.util.HashMap" extends="btsOrderLogResultMap"></resultMap>
+	
+	
+	<insert id="insert" parameterType="com.bluemobi.po.bts.BtsOrderLog">
+	   insert into bts_order_log (
+	     log_id,
+	     admin_userid,
+	     type,
+	     order_id,
+	     order_number,
+	     content,
+	     remark,
+	     ip,
+	     ctime
+	   )values (
+	     #{logId},
+	     #{adminUserid},
+	     #{type},
+	     #{orderId},
+	     #{orderNumber},
+	     #{content},
+	     #{remark},
+	     #{ip},
+	     #{ctime}
+	   )
+	</insert>
+
+	<update id="update" parameterType="com.bluemobi.po.bts.BtsOrderLog">
+		update bts_order_log
+		<set>
+			<if test="logId != null">
+				log_id=#{logId},
+			</if>
+			<if test="adminUserid != null">
+				admin_userid=#{adminUserid},
+			</if>
+			<if test="type != null">
+				type=#{type},
+			</if>
+			<if test="orderId != null">
+				order_id=#{orderId},
+			</if>
+			<if test="orderNumber != null">
+				order_number=#{orderNumber},
+			</if>
+			<if test="content != null">
+				content=#{content},
+			</if>
+			<if test="remark != null">
+				remark=#{remark},
+			</if>
+			<if test="ip != null">
+				ip=#{ip},
+			</if>
+			<if test="ctime != null">
+				ctime=#{ctime},
+			</if>
+		</set>
+		<where>
+			log_id=#{logId} 
+		</where>
+	</update>
+
+	<delete id="delete" parameterType="map">
+	   delete from 
+	     bts_order_log 
+	   where 
+	    log_id=#{logId} 
+	</delete>
+
+	<select id="selectObject" parameterType="map" resultMap="btsOrderLogResultMap">
+	   select 
+	    log_id,
+	    admin_userid,
+	    type,
+	    order_id,
+	    order_number,
+	    content,
+	    remark,
+	    ip,
+	    ctime
+	   from bts_order_log
+	   where 
+	    log_id=#{logId} 
+	</select>
+	
+	<select id="selectObjectList" parameterType="map" resultMap="btsOrderLogResultMap">
+	   select 
+	     log_id,
+	     admin_userid,
+	     type,
+	     order_id,
+	     order_number,
+	     content,
+	     remark,
+	     ip,
+	     ctime
+	   from bts_order_log
+	   <where>
+	     <if test="logId != null">
+	        log_id=#{logId}
+	     </if>
+	     <if test="adminUserid != null">
+	        and admin_userid=#{adminUserid}
+	     </if>
+	     <if test="type != null">
+	        and type=#{type}
+	     </if>
+	     <if test="orderId != null">
+	        and order_id=#{orderId}
+	     </if>
+	     <if test="orderNumber != null">
+	        and order_number=#{orderNumber}
+	     </if>
+	     <if test="content != null">
+	        and content=#{content}
+	     </if>
+	     <if test="remark != null">
+	        and remark=#{remark}
+	     </if>
+	     <if test="ip != null">
+	        and ip=#{ip}
+	     </if>
+	     <if test="ctime != null">
+	        and ctime=#{ctime}
+	     </if>
+	   </where>
+	</select>
+
+	<select id="selectMap" parameterType="map" resultMap="mapResultMap">
+	   select 
+	    log_id,
+	    admin_userid,
+	    type,
+	    order_id,
+	    order_number,
+	    content,
+	    remark,
+	    ip,
+	    ctime
+	   from bts_order_log
+	   where 
+	    log_id=#{logId} 
+	</select>
+
+	<select id="selectMapList" parameterType="map" resultMap="mapResultMap">
+	   select 
+	     log_id,
+	     admin_userid,
+	     type,
+	     order_id,
+	     order_number,
+	     content,
+	     remark,
+	     ip,
+	     ctime
+	   from bts_order_log
+	   <where>
+	     <if test="logId != null">
+	        log_id=#{logId}
+	     </if>
+	     <if test="adminUserid != null">
+	        and admin_userid=#{adminUserid}
+	     </if>
+	     <if test="type != null">
+	        and type=#{type}
+	     </if>
+	     <if test="orderId != null">
+	        and order_id=#{orderId}
+	     </if>
+	     <if test="orderNumber != null">
+	        and order_number=#{orderNumber}
+	     </if>
+	     <if test="content != null">
+	        and content=#{content}
+	     </if>
+	     <if test="remark != null">
+	        and remark=#{remark}
+	     </if>
+	     <if test="ip != null">
+	        and ip=#{ip}
+	     </if>
+	     <if test="ctime != null">
+	        and ctime=#{ctime}
+	     </if>
+	   </where>
+	</select>
+	
+	<select id="page" parameterType="map" resultMap="pageResultMap">
+	   select 
+	     log_id,
+	     admin_userid,
+	     type,
+	     order_id,
+	     order_number,
+	     content,
+	     remark,
+	     ip,
+	     ctime
+	<include refid="pageCondition" />
+	limit #{begin},#{end}
+	</select>
+
+	<select id="pageCount" parameterType="map" resultMap="pageResultMap">
+	   select count(1)
+	   <include refid="pageCondition" />
+	</select>
+
+	<sql id="pageCondition">
+	   from bts_order_log
+	   <where>
+	     <if test="logId != null">
+	        log_id=#{logId}
+	     </if>
+	     <if test="adminUserid != null">
+	        and admin_userid=#{adminUserid}
+	     </if>
+	     <if test="type != null">
+	        and type=#{type}
+	     </if>
+	     <if test="orderId != null">
+	        and order_id=#{orderId}
+	     </if>
+	     <if test="orderNumber != null">
+	        and order_number=#{orderNumber}
+	     </if>
+	     <if test="content != null">
+	        and content=#{content}
+	     </if>
+	     <if test="remark != null">
+	        and remark=#{remark}
+	     </if>
+	     <if test="ip != null">
+	        and ip=#{ip}
+	     </if>
+	     <if test="ctime != null">
+	        and ctime=#{ctime}
+	     </if>
+	   </where>
+	</sql>
+
+	
+</mapper> 

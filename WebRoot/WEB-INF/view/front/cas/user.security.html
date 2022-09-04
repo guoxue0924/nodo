@@ -1,0 +1,74 @@
+{$wrapper_prefix_front|default}
+<div class="nch-breadcrumb-layout">
+    <div class="nch-breadcrumb wrapper"><i class="icon-home"></i>
+        <span><a href="/index.php">首页</a></span><span class="arrow">&gt;</span>
+        <span>我的商城</span><span class="arrow">&gt;</span>
+        <span>账户安全</span>
+    </div>
+</div>
+{include file="cas/template/user.nav.html"}
+<div class="right-layout">
+    <div class="wrap">
+        <div class="tabmenu">
+            <ul class="tab pngFix">
+                <li class="active"><a href="index.php?act=member_security&amp;op=index">账户安全</a></li></ul>
+        </div>
+        <div class="ncm-security-user">
+            <h3>您的账户信息</h3>
+            <div class="user-avatar"><span><img src="http://10.58.137.126/data/upload/shop/common/default_user_portrait.gif"></span></div>
+            <div class="user-intro">
+                <dl>
+                    <dt>登录账号：</dt>
+                    <dd>oojamoo</dd>
+                </dl>
+                <dl>
+                    <dt>绑定邮箱：</dt>
+                    <dd>tes****il.com</dd>
+                </dl>
+                <dl>
+                    <dt>手机号码：</dt>
+                    <dd></dd>
+                </dl>
+                <dl>
+                    <dt>上次登录：</dt>
+                    <dd>2015年12月17日 09:33:04　|　IP地址:10.58.137.126&nbsp;<span>（不是您登录的？请立即<a href="index.php?act=member_security&amp;op=auth&amp;type=modify_pwd">“更改密码”</a>）。</span></dd>
+                </dl>
+            </div>
+        </div>
+        <div class="ncm-security-container">
+            <div class="title">您的安全服务</div>
+            <div class="current low">当前安全等级：<strong>低</strong><span>(建议您开启全部安全设置，以保障账户及资金安全)</span></div>
+
+            <dl id="password" class="yes">
+                <dt><span class="icon"><i></i></span><span class="item">
+        <h4>登录密码</h4>
+        <h6>已设置</h6>
+        </span></dt>
+                <dd><span class="explain">安全性高的密码可以使账号更安全。建议您定期更换密码，且设置一个包含数字和字母，并长度超过6位以上的密码，为保证您的账户安全，只有在您绑定邮箱或手机后才可以修改密码。</span><span class="handle"><a href="index.php?act=member_security&amp;op=auth&amp;type=modify_pwd" class="ncm-btn  ncm-btn-orange">修改密码</a></span></dd>
+            </dl>
+            <dl id="email" class="no">
+                <dt><span class="icon"><i></i></span><span class="item">
+        <h4>邮箱绑定</h4>
+        <h6>未绑定</h6>
+        </span></dt>
+                <dd><span class="explain">进行邮箱验证后，可用于接收敏感操作的身份验证信息，以及订阅更优惠商品的促销邮件。</span><span class="handle"><a href="http://10.58.137.126/shop/index.php?act=member_security&amp;op=auth&amp;type=modify_email" class="ncm-btn ncm-btn-acidblue bd">绑定邮箱</a><a href="index.php?act=member_security&amp;op=auth&amp;type=modify_email" class="ncm-btn ncm-btn-orange jc">修改邮箱</a></span></dd>
+            </dl>
+            <dl id="mobile" class="no">
+                <dt><span class="icon"><i></i></span><span class="item">
+        <h4>手机绑定</h4>
+        <h6>未绑定</h6>
+        </span></dt>
+                <dd><span class="explain">进行手机验证后，可用于接收敏感操作的身份验证信息，以及进行积分消费的验证确认，非常有助于保护您的账号和账户财产安全。</span><span class="handle"><a href="index.php?act=member_security&amp;op=auth&amp;type=modify_mobile" class="ncm-btn ncm-btn-acidblue bd">绑定手机</a><a href="index.php?act=member_security&amp;op=auth&amp;type=modify_mobile" class="ncm-btn ncm-btn-orange jc">修改手机</a></span></dd>
+            </dl>
+            <dl id="paypwd" class="no">
+                <dt><span class="icon"><i></i></span><span class="item">
+        <h4>支付密码</h4>
+        <h6>未设置</h6>
+        </span></dt>
+                <dd><span class="explain">设置支付密码后，在使用账户中余额时，需输入支付密码。</span><span class="handle"><a href="index.php?act=member_security&amp;op=auth&amp;type=modify_paypwd" class="ncm-btn ncm-btn-acidblue bd">设置密码</a><a href="index.php?act=member_security&amp;op=auth&amp;type=modify_paypwd" class="ncm-btn ncm-btn-orange jc">修改密码</a></span></dd>
+            </dl>
+        </div>
+    </div>
+</div>
+<div class="clear"></div>
+</div>

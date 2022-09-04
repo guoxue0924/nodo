@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+@author AutoCode 309444359@qq.com
+@date 2015-12-07 13:30:22
+ -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://code.alibabatech.com/schema/dubbo
+        http://code.alibabatech.com/schema/dubbo/dubbo.xsd
+        ">     
+	
+	
+	<dubbo:application name="web-gate-1" />
+
+    <!-- 使用multicast广播注册中心暴露服务地址 -->
+    <!-- <dubbo:registry address="multicast://224.5.6.7:1234" /> -->
+
+    <!-- 使用zookeeper注册中心暴露服务地址 -->
+    <dubbo:registry address="zookeeper://172.51.97.111:10000" />
+	
+	<!-- 调用服务：【校验token】 -->
+	<dubbo:reference id="sessionService" interface="com.appcore.service.SessionService" />
+
+
+	
+	<!-- 调用服务:【权限组表(角色表)】 -->
+	<dubbo:reference id="adminGroupService" interface="com.bluemobi.service.admin.AdminGroupService" />
+	<!-- 调用服务:【权限组权限表（角色权限表）】 -->
+	<dubbo:reference id="adminGroupPermissionService" interface="com.bluemobi.service.admin.AdminGroupPermissionService" />
+	<!-- 调用服务:【权限表】 -->
+	<dubbo:reference id="adminPermissionService" interface="com.bluemobi.service.admin.AdminPermissionService" />
+	<!-- 调用服务:【用户表】 -->
+	<dubbo:reference id="adminUserService" interface="com.bluemobi.service.admin.AdminUserService" />
+	<!-- 调用服务:【用户权限组表（用户角色表）】 -->
+	<dubbo:reference id="adminUserGroupService" interface="com.bluemobi.service.admin.AdminUserGroupService" />
+	<!-- 调用服务:【】 -->
+	<dubbo:reference id="advertBoardService" interface="com.bluemobi.service.advert.AdvertBoardService" />
+	<!-- 调用服务:【广告表】 -->
+	<dubbo:reference id="advertContentService" interface="com.bluemobi.service.advert.AdvertContentService" />
+	<!-- 调用服务:【】 -->
+	<dubbo:reference id="advertPageService" interface="com.bluemobi.service.advert.AdvertPageService" />
+	<!-- 调用服务:【购物车】 -->
+	<dubbo:reference id="btsCartService" interface="com.bluemobi.service.bts.BtsCartService" />
+	<!-- 调用服务:【订单表】 -->
+	<dubbo:reference id="btsOrderService" interface="com.bluemobi.service.bts.BtsOrderService" />
+	<!-- 调用服务:【订单附件关系表】 -->
+	<dubbo:reference id="btsOrderAttachmentService" interface="com.bluemobi.service.bts.BtsOrderAttachmentService" />
+	<!-- 调用服务:【订单的商品表(即订单详情表)】 -->
+	<dubbo:reference id="btsOrderItemService" interface="com.bluemobi.service.bts.BtsOrderItemService" />
+	<!-- 调用服务:【订单操作日志表】 -->
+	<dubbo:reference id="btsOrderLogService" interface="com.bluemobi.service.bts.BtsOrderLogService" />
+	<!-- 调用服务:【退货流程日志表】 -->
+	<dubbo:reference id="btsOrderRefundService" interface="com.bluemobi.service.bts.BtsOrderRefundService" />
+	<!-- 调用服务:【用于用户各种动作的码表】 -->
+	<dubbo:reference id="casCodeService" interface="com.bluemobi.service.cas.CasCodeService" />
+	<!-- 调用服务:【用户登录失败日志（归档）】 -->
+	<dubbo:reference id="casLoginErrorService" interface="com.bluemobi.service.cas.CasLoginErrorService" />
+	<!-- 调用服务:【用户正常登录日志（归档）】 -->
+	<dubbo:reference id="casLoginLogService" interface="com.bluemobi.service.cas.CasLoginLogService" />
+	<!-- 调用服务:【用户表】 -->
+	<dubbo:reference id="casUserService" interface="com.bluemobi.service.cas.CasUserService" />
+	<!-- 调用服务:【用户不常用详细信息表,禁止联合查询】 -->
+	<dubbo:reference id="casUserDetailService" interface="com.bluemobi.service.cas.CasUserDetailService" />
+	<!-- 调用服务:【】 -->
+	<dubbo:reference id="casUserGroupService" interface="com.bluemobi.service.cas.CasUserGroupService" />
+	<!-- 调用服务:【用户等级表】 -->
+	<dubbo:reference id="casUserLvService" interface="com.bluemobi.service.cas.CasUserLvService" />
+	<!-- 调用服务:【评论附件关系表】 -->
+	<dubbo:reference id="commentAttachmentService" interface="com.bluemobi.service.comment.CommentAttachmentService" />
+	<!-- 调用服务:【】 -->
+	<dubbo:reference id="commentCategoryService" interface="com.bluemobi.service.comment.CommentCategoryService" />
+	<!-- 调用服务:【评论主体表】 -->
+	<dubbo:reference id="commentContentService" interface="com.bluemobi.service.comment.CommentContentService" />
+	<!-- 调用服务:【优惠券主表】 -->
+	<dubbo:reference id="couponCategoryService" interface="com.bluemobi.service.coupon.CouponCategoryService" />
+	<!-- 调用服务:【】 -->
+	<dubbo:reference id="couponListingService" interface="com.bluemobi.service.coupon.CouponListingService" />
+	<!-- 调用服务:【】 -->
+	<dubbo:reference id="couponRelationService" interface="com.bluemobi.service.coupon.CouponRelationService" />
+	<!-- 调用服务:【留言反馈表】 -->
+	<dubbo:reference id="feedbackContentService" interface="com.bluemobi.service.feedback.FeedbackContentService" />
+	<!-- 调用服务:【商品品牌表】 -->
+	<dubbo:reference id="goodsBrandService" interface="com.bluemobi.service.goods.GoodsBrandService" />
+	<!-- 调用服务:【品牌与分类关系表】 -->
+	<dubbo:reference id="goodsBrandCategoryService" interface="com.bluemobi.service.goods.GoodsBrandCategoryService" />
+	<!-- 调用服务:【商品分类表】 -->
+	<dubbo:reference id="goodsCategoryService" interface="com.bluemobi.service.goods.GoodsCategoryService" />
+	<!-- 调用服务:【 商品详细内容，包括商品详情、meta 相关字段等】 -->
+	<dubbo:reference id="goodsContentService" interface="com.bluemobi.service.goods.GoodsContentService" />
+	<!-- 调用服务:【商品主表】 -->
+	<dubbo:reference id="goodsContentSkuService" interface="com.bluemobi.service.goods.GoodsContentSkuService" />
+	<!-- 调用服务:【商品属性表，记录属性和属性值，用于搜索主商品】 -->
+	<dubbo:reference id="goodsPropertyService" interface="com.bluemobi.service.goods.GoodsPropertyService" />
+	<!-- 调用服务:【商品属性与分类关系表】 -->
+	<dubbo:reference id="goodsPropertyCategoryService" interface="com.bluemobi.service.goods.GoodsPropertyCategoryService" />
+	<!-- 调用服务:【团购表】 -->
+	<dubbo:reference id="grouponBulkService" interface="com.bluemobi.service.groupon.GrouponBulkService" />
+	<!-- 调用服务:【团购日志表】 -->
+	<dubbo:reference id="grouponBulkLogService" interface="com.bluemobi.service.groupon.GrouponBulkLogService" />
+	<!-- 调用服务:【团购标签】 -->
+	<dubbo:reference id="grouponCategoryService" interface="com.bluemobi.service.groupon.GrouponCategoryService" />
+	<!-- 调用服务:【抢购表】 -->
+	<dubbo:reference id="grouponGrabService" interface="com.bluemobi.service.groupon.GrouponGrabService" />
+	<!-- 调用服务:【已签约商户表】 -->
+	<dubbo:reference id="storeContentService" interface="com.bluemobi.service.store.StoreContentService" />
+	<!-- 调用服务:【system navigation category】 -->
+	<dubbo:reference id="systemNavigationService" interface="com.bluemobi.service.system.SystemNavigationService" />
+	<!-- 调用服务:【测试用表】 -->
+	<dubbo:reference id="testService" interface="com.bluemobi.service.test.TestService" />
+	<!-- 调用服务:【attachment user mapping】 -->
+	<dubbo:reference id="trendAttachmentService" interface="com.bluemobi.service.trend.TrendAttachmentService" />
+	<!-- 调用服务:【】 -->
+	<dubbo:reference id="trendAttachmentGroupService" interface="com.bluemobi.service.trend.TrendAttachmentGroupService" />
+	<!-- 调用服务:【属性资源表】 -->
+	<dubbo:reference id="trendPropertyService" interface="com.bluemobi.service.trend.TrendPropertyService" />
+	<!-- 调用服务:【属性资源分组表】 -->
+	<dubbo:reference id="trendPropertyGroupService" interface="com.bluemobi.service.trend.TrendPropertyGroupService" />
+	<!-- 调用服务:【商品属性与分组关系表】 -->
+	<dubbo:reference id="trendPropertyToGroupService" interface="com.bluemobi.service.trend.TrendPropertyToGroupService" />
+	<!-- 调用服务:【属性资源值表】 -->
+	<dubbo:reference id="trendPropertyValueService" interface="com.bluemobi.service.trend.TrendPropertyValueService" />
+	<!-- 调用服务:【】 -->
+	<dubbo:reference id="trendRegionService" interface="com.bluemobi.service.trend.TrendRegionService" />
+	<!-- 调用服务:【版本管理】 -->
+	<dubbo:reference id="trendVersionService" interface="com.bluemobi.service.trend.TrendVersionService" />
+
+</beans>

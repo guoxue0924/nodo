@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+【】对象关系映射 配置 
+ @author AutoCode 309444359@qq.com
+ @date 2015-11-17 22:01:28
+ -->
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.bluemobi.dao.admin.AdminUserGroupDao">
+
+	<resultMap id="adminUserGroupResultMap" type="com.bluemobi.po.admin.AdminUserGroup">
+		<id property="userGroupId" column="user_group_id" />
+       <result property="userId" column="user_id" />
+       <result property="groupId" column="group_id" />
+	</resultMap>
+	<resultMap id="mapResultMap"  type="java.util.HashMap" extends="adminUserGroupResultMap"></resultMap>
+	<resultMap id="pageResultMap"  type="java.util.HashMap" extends="adminUserGroupResultMap"></resultMap>
+	
+	
+	<insert id="insert" parameterType="com.bluemobi.po.admin.AdminUserGroup">
+	   insert into admin_user_group (
+	     user_group_id,
+	     user_id,
+	     group_id
+	   )values (
+	     #{userGroupId},
+	     #{userId},
+	     #{groupId}
+	   )
+	</insert>
+
+	<update id="update" parameterType="com.bluemobi.po.admin.AdminUserGroup">
+		update admin_user_group
+		<set>
+			<if test="userGroupId != null">
+				user_group_id=#{userGroupId},
+			</if>
+			<if test="userId != null">
+				user_id=#{userId},
+			</if>
+			<if test="groupId != null">
+				group_id=#{groupId},
+			</if>
+		</set>
+		<where>
+			user_group_id=#{userGroupId} 
+		</where>
+	</update>
+
+	<delete id="delete" parameterType="map">
+	   delete from 
+	     admin_user_group 
+	   where 
+	    user_group_id=#{userGroupId} 
+	</delete>
+	
+	<delete id="deleteAll" parameterType="map">
+       delete from 
+         admin_user_group 
+       where 
+        user_id=#{userId}
+    </delete>
+	
+
+	<select id="selectObject" parameterType="map" resultMap="adminUserGroupResultMap">
+	   select 
+	    user_group_id,
+	    user_id,
+	    group_id
+	   from admin_user_group
+	   where 
+	    user_group_id=#{userGroupId} 
+	</select>
+	
+	<select id="selectObjectList" parameterType="map" resultMap="adminUserGroupResultMap">
+	   select 
+	     user_group_id,
+	     user_id,
+	     group_id
+	   from admin_user_group
+	   <where>
+	     <if test="userGroupId != null">
+	        user_group_id=#{userGroupId}
+	     </if>
+	     <if test="userId != null">
+	        and user_id=#{userId}
+	     </if>
+	     <if test="groupId != null">
+	        and group_id=#{groupId}
+	     </if>
+	   </where>
+	</select>
+
+	<select id="selectMap" parameterType="map" resultMap="mapResultMap">
+	   select 
+	    user_group_id,
+	    user_id,
+	    group_id
+	   from admin_user_group
+	   where 
+	    user_group_id=#{userGroupId} 
+	</select>
+
+	<select id="selectMapList" parameterType="map" resultMap="mapResultMap">
+	   select 
+	     user_group_id,
+	     user_id,
+	     group_id
+	   from admin_user_group
+	   <where>
+	     <if test="userGroupId != null">
+	        user_group_id=#{userGroupId}
+	     </if>
+	     <if test="userId != null">
+	        and user_id=#{userId}
+	     </if>
+	     <if test="groupId != null">
+	        and group_id=#{groupId}
+	     </if>
+	   </where>
+	</select>
+	
+	<select id="page" parameterType="map" resultMap="pageResultMap">
+	   select 
+	     user_group_id,
+	     user_id,
+	     group_id
+	<include refid="pageCondition" />
+	limit #{offset},#{rows}
+	</select>
+
+	<select id="pageCount" parameterType="map" resultType="int">
+	   select count(1)
+	   <include refid="pageCondition" />
+	</select>
+
+	<sql id="pageCondition">
+	   from admin_user_group
+	   <where>
+	     <if test="userGroupId != null">
+	        user_group_id=#{userGroupId}
+	     </if>
+	     <if test="userId != null">
+	        and user_id=#{userId}
+	     </if>
+	     <if test="groupId != null">
+	        and group_id=#{groupId}
+	     </if>
+	   </where>
+	</sql>
+
+	
+</mapper> 

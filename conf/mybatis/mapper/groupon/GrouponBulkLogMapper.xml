@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 【团购日志表】对象关系映射 配置 @author AutoCode 309444359@qq.com @date 2015-10-20 
+	16:51:18 -->
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.bluemobi.dao.groupon.GrouponBulkLogDao">
+
+	<resultMap id="grouponBulkLogResultMap" type="com.bluemobi.po.groupon.GrouponBulkLog">
+		<id property="logId" column="log_id" />
+		<result property="bulkId" column="bulk_id" />
+		<result property="sku" column="sku" />
+		<result property="goodsName" column="goods_name" />
+		<result property="userid" column="userid" />
+		<result property="number" column="number" />
+		<result property="price" column="price" />
+		<result property="integral" column="integral" />
+		<result property="ctime" column="ctime" />
+	</resultMap>
+	<resultMap id="mapResultMap" type="java.util.HashMap"
+		extends="grouponBulkLogResultMap"></resultMap>
+	<resultMap id="pageResultMap" type="java.util.HashMap"
+		extends="grouponBulkLogResultMap"></resultMap>
+
+
+	<insert id="insert" parameterType="com.bluemobi.po.groupon.GrouponBulkLog">
+		insert into groupon_bulk_log (
+		log_id,
+		bulk_id,
+		sku,
+		goods_name,
+		userid,
+		number,
+		price,
+		integral,
+		ctime
+		)values (
+		#{logId},
+		#{bulkId},
+		#{sku},
+		#{goodsName},
+		#{userid},
+		#{number},
+		#{price},
+		#{integral},
+		#{ctime}
+		)
+	</insert>
+
+	<update id="update" parameterType="com.bluemobi.po.groupon.GrouponBulkLog">
+		update groupon_bulk_log
+		<set>
+			<if test="logId != null">
+				log_id=#{logId},
+			</if>
+			<if test="bulkId != null">
+				bulk_id=#{bulkId},
+			</if>
+			<if test="sku != null">
+				sku=#{sku},
+			</if>
+			<if test="goodsName != null">
+				goods_name=#{goodsName},
+			</if>
+			<if test="userid != null">
+				userid=#{userid},
+			</if>
+			<if test="number != null">
+				number=#{number},
+			</if>
+			<if test="price != null">
+				price=#{price},
+			</if>
+			<if test="integral != null">
+				integral=#{integral},
+			</if>
+			<if test="ctime != null">
+				ctime=#{ctime},
+			</if>
+		</set>
+		<where>
+			log_id=#{logId}
+		</where>
+	</update>
+
+	<delete id="delete" parameterType="map">
+		delete from
+		groupon_bulk_log
+		where
+		log_id=#{logId}
+	</delete>
+
+	<select id="selectObject" parameterType="map"
+		resultMap="grouponBulkLogResultMap">
+		select
+		log_id,
+		bulk_id,
+		sku,
+		goods_name,
+		userid,
+		number,
+		price,
+		integral,
+		ctime
+		from groupon_bulk_log
+		where
+		log_id=#{logId}
+	</select>
+
+	<select id="selectObjectList" parameterType="map"
+		resultMap="grouponBulkLogResultMap">
+		select
+		log_id,
+		bulk_id,
+		sku,
+		goods_name,
+		userid,
+		number,
+		price,
+		integral,
+		ctime
+		from groupon_bulk_log
+		<where>
+			<if test="logId != null">
+				log_id=#{logId}
+			</if>
+			<if test="bulkId != null">
+				and bulk_id=#{bulkId}
+			</if>
+			<if test="sku != null">
+				and sku=#{sku}
+			</if>
+			<if test="goodsName != null">
+				and goods_name=#{goodsName}
+			</if>
+			<if test="userid != null">
+				and userid=#{userid}
+			</if>
+			<if test="number != null">
+				and number=#{number}
+			</if>
+			<if test="price != null">
+				and price=#{price}
+			</if>
+			<if test="integral != null">
+				and integral=#{integral}
+			</if>
+			<if test="ctime != null">
+				and ctime=#{ctime}
+			</if>
+		</where>
+	</select>
+
+	<select id="selectMap" parameterType="map" resultMap="mapResultMap">
+		select
+		log_id,
+		bulk_id,
+		sku,
+		goods_name,
+		userid,
+		number,
+		price,
+		integral,
+		ctime
+		from groupon_bulk_log
+		where
+		log_id=#{logId}
+	</select>
+
+	<select id="selectMapList" parameterType="map" resultMap="mapResultMap">
+		select
+		log_id,
+		bulk_id,
+		sku,
+		goods_name,
+		userid,
+		number,
+		price,
+		integral,
+		ctime
+		from groupon_bulk_log
+		<where>
+			<if test="logId != null">
+				log_id=#{logId}
+			</if>
+			<if test="bulkId != null">
+				and bulk_id=#{bulkId}
+			</if>
+			<if test="sku != null">
+				and sku=#{sku}
+			</if>
+			<if test="goodsName != null">
+				and goods_name=#{goodsName}
+			</if>
+			<if test="userid != null">
+				and userid=#{userid}
+			</if>
+			<if test="number != null">
+				and number=#{number}
+			</if>
+			<if test="price != null">
+				and price=#{price}
+			</if>
+			<if test="integral != null">
+				and integral=#{integral}
+			</if>
+			<if test="ctime != null">
+				and ctime=#{ctime}
+			</if>
+		</where>
+	</select>
+
+	<select id="page" parameterType="map" resultMap="pageResultMap">
+		select
+		log_id,
+		bulk_id,
+		sku,
+		goods_name,
+		userid,
+		number,
+		price,
+		integral,
+		ctime
+		from groupon_bulk_log
+		<where>
+			<if test="logId != null">
+				log_id=#{logId}
+			</if>
+			<if test="bulkId != null">
+				and bulk_id=#{bulkId}
+			</if>
+			<if test="sku != null">
+				and sku=#{sku}
+			</if>
+			<if test="goodsName != null">
+				and goods_name=#{goodsName}
+			</if>
+			<if test="userid != null">
+				and userid=#{userid}
+			</if>
+			<if test="number != null">
+				and number=#{number}
+			</if>
+			<if test="price != null">
+				and price=#{price}
+			</if>
+			<if test="integral != null">
+				and integral=#{integral}
+			</if>
+			<if test="ctime != null">
+				and ctime=#{ctime}
+			</if>
+		</where>
+	</select>
+
+</mapper> 

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
+	<!-- 后台管理系统过滤器 -->
+	<bean name="backFilter" class="com.bluemobi.filter.BackFilter">
+	   <property name="staticResourceSuffixList">
+	       <list>
+			   <value>css</value>
+			   <value>js</value>
+			   <value>gif</value>
+			   <value>jpg</value>
+			   <value>png</value>
+			   <value>woff</value>
+			   <value>ttf</value>
+			   <value>eot</value>
+			   <value>svg</value>
+			   <value>otf</value>
+	       </list>
+	   </property>
+	   <property name="visitUrlList">
+	       <list>
+               <value>/back/adminLogin/login</value>
+               <value>/back/adminLogin/code</value>
+           </list>
+	   </property>
+	   <property name="userOpenUrlList">
+	       <list>
+	           <value>/back/admin</value>
+	           <value>/back/adminLogin/logout</value>
+	           <value>/back/panel/navigation/getNavigationById</value>
+               <value>/back/trend/region/getRegionByPid</value>
+               <value>/back/trend/region/getChilds</value>
+	       </list>
+	   </property>
+	</bean>
+	
+	<!-- 前端过滤器，过滤网页端请求 -->
+    <bean name="frontFilter" class="com.bluemobi.filter.FrontFilter">
+       <property name="staticResourceSuffixList">
+           <list>
+               <value>css</value>
+               <value>js</value>
+               <value>gif</value>
+               <value>jpg</value>
+               <value>png</value>
+               <value>woff</value>
+               <value>ttf</value>
+               <value>eot</value>
+               <value>svg</value>
+               <value>otf</value>
+           </list>
+       </property>
+       <property name="visitUrlList">
+           <list>
+               <value>/front/cas/login</value>
+               <value>/front/cas/register</value>
+               <value>/front/cas/code</value>
+               <value>/front/test</value>
+               <value>/front/index/index</value>
+               <value>/front/goodsContent/*</value>
+               <value>/front/cas/sendShortMessage</value>
+           </list>
+       </property>
+       <property name="userOpenUrlList">
+           <list>
+           </list>
+       </property>
+    </bean>
+    
+    <!-- 前端过滤器，过滤手机端请求 -->
+    <bean name="apiFilter" class="com.bluemobi.filter.APIFilter">
+       <property name="staticResourceSuffixList">
+           <list>
+               <value>css</value>
+               <value>js</value>
+               <value>gif</value>
+               <value>jpg</value>
+               <value>png</value>
+               <value>woff</value>
+               <value>ttf</value>
+               <value>eot</value>
+               <value>svg</value>
+               <value>otf</value>
+           </list>
+       </property>
+       <property name="visitUrlList">
+           <list>
+               <value>/api/casUser/login</value>
+               <value>/api/casUser/register</value>
+               <value>/api/GetRegionByPid</value>
+               <value>/api/Cas/SendCode</value>
+               <value>/api/CheckVersion</value>
+               <value>/api/goodsContent/*</value>
+               <value>/api/advertContent/*</value>
+               <value>/api/goodsCategory/*</value>
+               <value>/api/comment/getComments</value>
+           </list>
+       </property>
+       <property name="userOpenUrlList">
+           <list>
+               <!-- <value>/api/casUser</value> -->
+           </list>
+       </property>
+    </bean>
+	
+</beans>

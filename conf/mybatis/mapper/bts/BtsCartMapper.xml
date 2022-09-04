@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+【购物车】对象关系映射 配置 
+ @author AutoCode 309444359@qq.com
+ @date 2015-11-20 10:36:35
+ -->
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.bluemobi.dao.bts.BtsCartDao">
+
+    <resultMap id="btsCartResultMap" type="com.bluemobi.po.bts.BtsCart">
+        <id property="cartId" column="cart_id" />
+       <result property="ctime" column="ctime" />
+       <result property="quantity" column="quantity" />
+       <result property="skuId" column="sku_id" />
+       <result property="userid" column="userid" />
+    </resultMap>
+    <resultMap id="mapResultMap"  type="java.util.HashMap" extends="btsCartResultMap"></resultMap>
+    <resultMap id="pageResultMap"  type="java.util.HashMap" extends="btsCartResultMap"></resultMap>
+    
+    
+    <insert id="insert" parameterType="com.bluemobi.po.bts.BtsCart">
+       insert into bts_cart (
+         cart_id,
+         ctime,
+         quantity,
+         sku_id,
+         userid
+       )values (
+         #{cartId},
+         #{ctime},
+         #{quantity},
+         #{skuId},
+         #{userid}
+       )
+    </insert>
+    
+    <!-- 添加购物车数据 -->
+    <insert id="insertBtsCart" parameterType="com.bluemobi.po.bts.BtsCart">
+       insert into bts_cart (
+         cart_id,
+         ctime,
+         quantity,
+         sku_id,
+         userid
+       )values (
+         #{cartId},
+         #{ctime},
+         #{quantity},
+         #{skuId},
+         #{userid}
+       )
+    </insert>
+
+    <update id="update" parameterType="com.bluemobi.po.bts.BtsCart">
+        update bts_cart
+        <set>
+            <if test="cartId != null">
+                cart_id=#{cartId},
+            </if>
+            <if test="ctime != null">
+                ctime=#{ctime},
+            </if>
+            <if test="quantity != null">
+                quantity=#{quantity},
+            </if>
+            <if test="skuId != null">
+                sku_id=#{skuId},
+            </if>
+            <if test="userid != null">
+                userid=#{userid},
+            </if>
+        </set>
+        <where>
+            cart_id=#{cartId} 
+        </where>
+    </update>
+    
+    <!-- 更新购物车数据 -->
+    <update id="updateBtsCart" parameterType="com.bluemobi.po.bts.BtsCart">
+        update bts_cart
+        <set>
+            <if test="cartId != null">
+                cart_id=#{cartId},
+            </if>
+            <if test="ctime != null">
+                ctime=#{ctime},
+            </if>
+            <if test="quantity != null">
+                quantity=#{quantity},
+            </if>
+            <if test="skuId != null">
+                sku_id=#{skuId},
+            </if>
+            <if test="userid != null">
+                userid=#{userid},
+            </if>
+        </set>
+        <where>
+            cart_id=#{cartId} 
+        </where>
+    </update>
+
+    <delete id="delete" parameterType="map">
+       delete from 
+         bts_cart 
+       where 
+        cart_id=#{cartId} 
+    </delete>
+
+    <select id="selectObject" parameterType="map" resultMap="btsCartResultMap">
+       select 
+        cart_id,
+        ctime,
+        quantity,
+        sku_id,
+        userid
+       from bts_cart
+       where 
+        cart_id=#{cartId} 
+    </select>
+    
+    <select id="selectObjectList" parameterType="map" resultMap="btsCartResultMap">
+       select 
+         cart_id,
+         ctime,
+         quantity,
+         sku_id,
+         userid
+       from bts_cart
+       <where>
+         <if test="cartId != null">
+            cart_id=#{cartId}
+         </if>
+         <if test="ctime != null">
+            and ctime=#{ctime}
+         </if>
+         <if test="quantity != null">
+            and quantity=#{quantity}
+         </if>
+         <if test="skuId != null">
+            and sku_id=#{skuId}
+         </if>
+         <if test="userid != null">
+            and userid=#{userid}
+         </if>
+       </where>
+    </select>
+
+    <select id="selectMap" parameterType="map" resultMap="mapResultMap">
+       select 
+        cart_id,
+        ctime,
+        quantity,
+        sku_id,
+        userid
+       from bts_cart
+       where 
+        cart_id=#{cartId} 
+    </select>
+
+    <select id="selectMapList" parameterType="map" resultMap="mapResultMap">
+       select 
+         cart_id,
+         ctime,
+         quantity,
+         sku_id,
+         userid
+       from bts_cart
+       <where>
+         <if test="cartId != null">
+            cart_id=#{cartId}
+         </if>
+         <if test="ctime != null">
+            and ctime=#{ctime}
+         </if>
+         <if test="quantity != null">
+            and quantity=#{quantity}
+         </if>
+         <if test="skuId != null">
+            and sku_id=#{skuId}
+         </if>
+         <if test="userid != null">
+            and userid=#{userid}
+         </if>
+       </where>
+    </select>
+    
+    <select id="page" parameterType="map" resultMap="pageResultMap">
+       select 
+         cart_id,
+         ctime,
+         quantity,
+         sku_id,
+         userid
+    <include refid="pageCondition" />
+    limit #{offset},#{rows}
+    </select>
+
+    <select id="pageCount" parameterType="map" resultType="int">
+       select count(1)
+       <include refid="pageCondition" />
+    </select>
+
+    <sql id="pageCondition">
+       from bts_cart
+       <where>
+         <if test="cartId != null">
+            cart_id=#{cartId}
+         </if>
+         <if test="ctime != null">
+            and ctime=#{ctime}
+         </if>
+         <if test="quantity != null">
+            and quantity=#{quantity}
+         </if>
+         <if test="skuId != null">
+            and sku_id=#{skuId}
+         </if>
+         <if test="userid != null">
+            and userid=#{userid}
+         </if>
+       </where>
+    </sql>
+    
+<!--     <select id="page" parameterType="map" resultMap="pageResultMap"> -->
+<!--        select  -->
+<!--          cart_id, -->
+<!--          ctime, -->
+<!--          quantity, -->
+<!--          content_id, -->
+<!--          userid -->
+<!--        from bts_cart -->
+<!--        <where> -->
+<!--          <if test="cartId != null"> -->
+<!--             cart_id=#{cartId} -->
+<!--          </if> -->
+<!--          <if test="ctime != null"> -->
+<!--             and ctime=#{ctime} -->
+<!--          </if> -->
+<!--          <if test="quantity != null"> -->
+<!--             and quantity=#{quantity} -->
+<!--          </if> -->
+<!--          <if test="contentId != null"> -->
+<!--             and content_id=#{contentId} -->
+<!--          </if> -->
+<!--          <if test="userid != null"> -->
+<!--             and userid=#{userid} -->
+<!--          </if> -->
+<!--        </where> -->
+<!--     </select> -->
+
+	<delete id="deleteBtsCartByIds" parameterType="map">
+       delete from 
+         bts_cart 
+       where 
+        userid = #{userid}
+        and
+        cart_id in 
+        <foreach collection="cartIds" item="cart_id" open="(" separator="," close=")">
+              #{cart_id}  
+        </foreach>
+    </delete>
+	
+	<select id="selectBtsCartByIds" parameterType="map" resultMap="btsCartResultMap">
+	   select 
+         cart_id,
+         ctime,
+         quantity,
+         sku_id,
+         userid
+       from bts_cart
+       where cart_id in 
+        <foreach collection="cartIds" item="cart_id" open="(" separator="," close=")">
+              #{cart_id}  
+        </foreach>
+	</select>
+	
+</mapper> 

@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+【属性资源分组表】对象关系映射 配置 
+ @author AutoCode 309444359@qq.com
+ @date 2015-07-30 10:42:29
+ -->
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.bluemobi.dao.trend.TrendPropertyGroupDao">
+
+	<resultMap id="trendPropertyGroupResultMap" type="com.bluemobi.po.trend.TrendPropertyGroup">
+		<id property="propertyGroupId" column="property_group_id" />
+		<result property="propertyGroupName" column="property_group_name" />
+		<result property="sortOrder" column="sort_order" />
+	</resultMap>
+	<resultMap id="mapResultMap"  type="java.util.HashMap" extends="trendPropertyGroupResultMap"></resultMap>
+	<resultMap id="pageResultMap"  type="java.util.HashMap" extends="trendPropertyGroupResultMap"></resultMap>
+	
+	
+	<insert id="insert" parameterType="com.bluemobi.po.trend.TrendPropertyGroup" useGeneratedKeys="true" keyProperty="propertyGroupId">
+	   insert into trend_property_group (
+	     property_group_id,
+	     property_group_name,
+	     sort_order
+	   )values (
+	     #{propertyGroupId},
+	     #{propertyGroupName},
+	     #{sortOrder}
+	   )
+	</insert>
+
+	<update id="update" parameterType="com.bluemobi.po.trend.TrendPropertyGroup">
+	   update trend_property_group set
+	     property_group_id=#{propertyGroupId},
+	     property_group_name=#{propertyGroupName},
+	     sort_order=#{sortOrder}
+	   where 
+	    property_group_id=#{propertyGroupId} 
+	</update>
+
+	<delete id="delete" parameterType="map">
+	   delete from 
+	     trend_property_group 
+	   where 
+	    property_group_id=#{propertyGroupId} 
+	</delete>
+
+	<select id="selectObject" parameterType="map" resultMap="trendPropertyGroupResultMap">
+	   select 
+	    property_group_id,
+	    property_group_name,
+	    sort_order
+	   from trend_property_group
+	   where 
+	    property_group_id=#{propertyGroupId} 
+	</select>
+	
+	<select id="selectObjectList" parameterType="map" resultMap="trendPropertyGroupResultMap">
+	   select 
+	     property_group_id,
+	     property_group_name,
+	     sort_order
+	   from trend_property_group
+	   <where>
+	     <if test="propertyGroupId != null">
+	        property_group_id=#{propertyGroupId}
+	     </if>
+	     <if test="propertyGroupName != null">
+	        and property_group_name=#{propertyGroupName}
+	     </if>
+	     <if test="sortOrder != null">
+	        and sort_order=#{sortOrder}
+	     </if>
+	   </where>
+	</select>
+
+	<select id="selectMap" parameterType="map" resultMap="mapResultMap">
+	   select 
+	    property_group_id,
+	    property_group_name,
+	    sort_order
+	   from trend_property_group
+	   where 
+	    property_group_id=#{propertyGroupId} 
+	</select>
+
+	<select id="selectMapList" parameterType="map" resultMap="mapResultMap">
+	   select 
+	     property_group_id,
+	     property_group_name,
+	     sort_order
+	   from trend_property_group
+	   <where>
+	     <if test="propertyGroupId != null">
+	        property_group_id=#{propertyGroupId}
+	     </if>
+	     <if test="propertyGroupName != null">
+	        and property_group_name=#{propertyGroupName}
+	     </if>
+	     <if test="sortOrder != null">
+	        and sort_order=#{sortOrder}
+	     </if>
+	   </where>
+	</select>
+	
+	<select id="page" parameterType="map" resultMap="pageResultMap">
+	   select 
+	     property_group_id,
+	     property_group_name,
+	     sort_order
+	   <include refid="pageCondition" />
+        limit #{offset},#{rows}
+	</select>
+	
+	<select id="pageCount" parameterType="map" resultType="int">
+        select count(1)
+        <include refid="pageCondition" />
+    </select>
+	
+	<sql id="pageCondition">
+	   from trend_property_group
+       <where>
+         <if test="key != null">
+            property_group_name LIKE CONCAT(CONCAT('%', #{key}), '%')
+         </if>
+         <if test="propertyGroupId != null">
+            and property_group_id=#{propertyGroupId}
+         </if>
+         <if test="propertyGroupName != null">
+            and property_group_name=#{propertyGroupName}
+         </if>
+         <if test="sortOrder != null">
+            and sort_order=#{sortOrder}
+         </if>
+       </where>
+	</sql>
+	
+	<delete id="deleteByGroupIds" parameterType="map">
+       delete from 
+          trend_property_group 
+       where 
+          property_group_id in  
+        <foreach collection="propertyGroupIds" item = "propertyGroupId" open="(" separator="," close=")">
+              #{propertyGroupId}  
+        </foreach>   
+    </delete>
+	
+</mapper> 

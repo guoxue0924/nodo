@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+【团购标签】对象关系映射 配置 
+ @author AutoCode 309444359@qq.com
+ @date 2015-10-20 16:51:18
+ -->
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.bluemobi.dao.groupon.GrouponCategoryDao">
+
+	<resultMap id="grouponCategoryResultMap" type="com.bluemobi.po.groupon.GrouponCategory">
+		<id property="categoryId" column="category_id" />
+		<result property="title" column="title" />
+		<result property="parentId" column="parent_id" />
+		<result property="hid" column="hid" />
+		<result property="sortOrder" column="sort_order" />
+		<result property="ctime" column="ctime" />
+	</resultMap>
+	<resultMap id="mapResultMap"  type="java.util.HashMap" extends="grouponCategoryResultMap"></resultMap>
+	<resultMap id="pageResultMap"  type="java.util.HashMap" extends="grouponCategoryResultMap">
+	   <result property="parentTitle" column="p_title" />
+	</resultMap>
+	
+	
+	<insert id="insert" parameterType="com.bluemobi.po.groupon.GrouponCategory" useGeneratedKeys="true" keyProperty="categoryId">
+	   insert into groupon_category (
+	     category_id,
+	     title,
+	     parent_id,
+	     hid,
+	     sort_order,
+	     ctime
+	   )values (
+	     #{categoryId},
+	     #{title},
+	     #{parentId},
+	     #{hid},
+	     #{sortOrder},
+	     #{ctime}
+	   )
+	</insert>
+
+	<update id="update" parameterType="com.bluemobi.po.groupon.GrouponCategory">
+		update groupon_category
+		<set>
+			<if test="categoryId != null">
+				category_id=#{categoryId},
+			</if>
+			<if test="title != null">
+				title=#{title},
+			</if>
+			<if test="parentId != null">
+				parent_id=#{parentId},
+			</if>
+			<if test="hid != null">
+				hid=#{hid},
+			</if>
+			<if test="sortOrder != null">
+				sort_order=#{sortOrder},
+			</if>
+			<if test="ctime != null">
+				ctime=#{ctime},
+			</if>
+		</set>
+		<where>
+			category_id=#{categoryId} 
+		</where>
+	</update>
+
+	<delete id="delete" parameterType="map">
+	   delete from 
+	     groupon_category 
+	   where 
+	    category_id=#{categoryId} 
+	</delete>
+
+	<select id="selectObject" parameterType="map" resultMap="grouponCategoryResultMap">
+	   select 
+	    category_id,
+	    title,
+	    parent_id,
+	    hid,
+	    sort_order,
+	    ctime
+	   from groupon_category
+	   where 
+	    category_id=#{categoryId} 
+	</select>
+	
+	<select id="selectObjectList" parameterType="map" resultMap="grouponCategoryResultMap">
+	   select 
+	     category_id,
+	     title,
+	     parent_id,
+	     hid,
+	     sort_order,
+	     ctime
+	   from groupon_category
+	   <where>
+	     <if test="categoryId != null">
+	        category_id=#{categoryId}
+	     </if>
+	     <if test="title != null">
+	        and title=#{title}
+	     </if>
+	     <if test="parentId != null">
+	        and parent_id=#{parentId}
+	     </if>
+	     <if test="hid != null">
+	        and hid=#{hid}
+	     </if>
+	     <if test="sortOrder != null">
+	        and sort_order=#{sortOrder}
+	     </if>
+	     <if test="ctime != null">
+	        and ctime=#{ctime}
+	     </if>
+	   </where>
+	</select>
+
+	<select id="selectMap" parameterType="map" resultMap="mapResultMap">
+	   select 
+	    category_id,
+	    title,
+	    parent_id,
+	    hid,
+	    sort_order,
+	    ctime
+	   from groupon_category
+	   where 
+	    category_id=#{categoryId} 
+	</select>
+
+	<select id="selectMapList" parameterType="map" resultMap="mapResultMap">
+	   select 
+	     category_id,
+	     title,
+	     parent_id,
+	     hid,
+	     sort_order,
+	     ctime
+	   from groupon_category
+	   <where>
+	     <if test="categoryId != null">
+	        category_id=#{categoryId}
+	     </if>
+	     <if test="title != null">
+	        and title=#{title}
+	     </if>
+	     <if test="parentId != null">
+	        and parent_id=#{parentId}
+	     </if>
+	     <if test="hid != null">
+	        and hid=#{hid}
+	     </if>
+	     <if test="sortOrder != null">
+	        and sort_order=#{sortOrder}
+	     </if>
+	     <if test="ctime != null">
+	        and ctime=#{ctime}
+	     </if>
+	   </where>
+	</select>
+	
+	<sql id="pageCondition">
+	   from groupon_category c left join groupon_category p on c.parent_id = p.category_id
+       <where>
+           1=1
+         <if test="key != null">
+            and c.title LIKE CONCAT(CONCAT('%', #{key}), '%')
+         </if>
+       
+         <if test="categoryId != null">
+            and c.category_id=#{categoryId}
+         </if>
+         <if test="title != null">
+            and c.title=#{title}
+         </if>
+         <if test="parentId != null">
+            and c.parent_id=#{parentId}
+         </if>
+         <if test="hid != null">
+            and c.hid=#{hid}
+         </if>
+         <if test="sortOrder != null">
+            and c.sort_order=#{sortOrder}
+         </if>
+         <if test="ctime != null">
+            and c.ctime=#{ctime}
+         </if>
+       </where>
+	</sql>
+	
+	<select id="pageCount" parameterType="map" resultType="int">
+        select count(1)
+        <include refid="pageCondition" />
+    </select>
+	
+	<select id="page" parameterType="map" resultMap="pageResultMap">
+	   select 
+	     c.category_id,
+	     c.title,
+	     c.parent_id,
+	     c.hid,
+	     c.sort_order,
+	     c.ctime,
+	     IFNULL(p.title,'') as p_title
+	     <include refid="pageCondition" />
+         limit #{offset},#{rows}
+	</select>
+	
+</mapper> 

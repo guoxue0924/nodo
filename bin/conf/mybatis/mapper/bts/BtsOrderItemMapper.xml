@@ -1,0 +1,414 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+【订单的商品表(即订单详情表)】对象关系映射 配置 
+ @author AutoCode 309444359@qq.com
+ @date 2015-11-17 13:27:05
+ -->
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.bluemobi.dao.bts.BtsOrderItemDao">
+
+	<resultMap id="btsOrderItemResultMap" type="com.bluemobi.po.bts.BtsOrderItem">
+	   <id property="itemId" column="item_id" />
+	   <result property="orderId" column="order_id" />
+       <result property="skuId" column="sku_id" />
+       <result property="goodsName" column="goods_name" />
+       <result property="goodsImage" column="goods_image" />
+       <result property="goodsWeight" column="goods_weight" />
+       <result property="goodsLength" column="goods_length" />
+       <result property="goodsWide" column="goods_wide" />
+       <result property="goodsHeight" column="goods_height" />
+       <result property="description" column="description" />
+       <result property="buyPrice" column="buy_price" />
+       <result property="buyNum" column="buy_num" />
+       <result property="isComment" column="is_comment" />
+       <result property="isPackage" column="is_package" />
+       <result property="ctime" column="ctime" />
+	</resultMap>
+	<resultMap id="mapResultMap"  type="java.util.HashMap" extends="btsOrderItemResultMap"></resultMap>
+	<resultMap id="pageResultMap"  type="java.util.HashMap" extends="btsOrderItemResultMap"></resultMap>
+	<resultMap id="itemAndOrderMap"  type="java.util.HashMap">
+		<id property="itemId" column="item_id" />
+		<result property="orderId" column="order_id" />
+        <result property="skuId" column="sku_id" />
+        <result property="goodsName" column="goods_name" />
+        <result property="goodsImage" column="goods_image" />
+        <result property="buyPrice" column="buy_price" />
+        <result property="buyNum" column="buy_num" />
+        <result property="ctime" column="ctime" />
+        <result property="orderNumber" column="order_number" />
+        <result property="totalAmount" column="total_amount" />
+	</resultMap>
+	
+	<insert id="insert" parameterType="com.bluemobi.po.bts.BtsOrderItem" useGeneratedKeys="true" keyProperty="itemId">
+	   insert into bts_order_item (
+	     order_id,
+	     sku_id,
+	     goods_name,
+	     goods_image,
+	     goods_weight,
+	     goods_length,
+	     goods_wide,
+	     goods_height,
+	     description,
+	     buy_price,
+	     buy_num,
+	     is_comment,
+	     is_package,
+	     ctime
+	   )values (
+	     #{orderId},
+	     #{skuId},
+	     #{goodsName},
+	     #{goodsImage},
+	     #{goodsWeight},
+	     #{goodsLength},
+	     #{goodsWide},
+	     #{goodsHeight},
+	     #{description},
+	     #{buyPrice},
+	     #{buyNum},
+	     #{isComment},
+	     #{isPackage},
+	     #{ctime}
+	   )
+	</insert>
+
+	<update id="update" parameterType="com.bluemobi.po.bts.BtsOrderItem">
+		update bts_order_item
+		<set>
+			<if test="itemId != null">
+				item_id=#{itemId},
+			</if>
+			<if test="orderId != null">
+				order_id=#{orderId},
+			</if>
+			<if test="skuId != null">
+				sku_id=#{skuId},
+			</if>
+			<if test="goodsName != null">
+				goods_name=#{goodsName},
+			</if>
+			<if test="goodsImage != null">
+				goods_image=#{goodsImage},
+			</if>
+			<if test="goodsWeight != null">
+				goods_weight=#{goodsWeight},
+			</if>
+			<if test="goodsLength != null">
+				goods_length=#{goodsLength},
+			</if>
+			<if test="goodsWide != null">
+				goods_wide=#{goodsWide},
+			</if>
+			<if test="goodsHeight != null">
+				goods_height=#{goodsHeight},
+			</if>
+			<if test="description != null">
+				description=#{description},
+			</if>
+			<if test="buyPrice != null">
+				buy_price=#{buyPrice},
+			</if>
+			<if test="buyNum != null">
+				buy_num=#{buyNum},
+			</if>
+			<if test="isComment != null">
+				is_comment=#{isComment},
+			</if>
+			<if test="isPackage != null">
+				is_package=#{isPackage},
+			</if>
+			<if test="ctime != null">
+				ctime=#{ctime},
+			</if>
+		</set>
+		<where>
+			item_id=#{itemId} 
+		</where>
+	</update>
+
+	<delete id="delete" parameterType="map">
+	   delete from 
+	     bts_order_item
+	   where 
+	    item_id=#{itemId} 
+	</delete>
+
+	<select id="selectObject" parameterType="map" resultMap="btsOrderItemResultMap">
+	   select 
+	    item_id,
+	    order_id,
+	    sku_id,
+	    goods_name,
+	    goods_image,
+	    goods_weight,
+	    goods_length,
+	    goods_wide,
+	    goods_height,
+	    description,
+	    buy_price,
+	    buy_num,
+	    is_comment,
+	    is_package,
+	    ctime
+	   from bts_order_item
+	   where 
+	    item_id=#{itemId} 
+	</select>
+	
+	<select id="selectObjectList" parameterType="map" resultMap="btsOrderItemResultMap">
+	   select 
+	     item_id,
+	     order_id,
+	     sku_id,
+	     goods_name,
+	     goods_image,
+	     goods_weight,
+	     goods_length,
+	     goods_wide,
+	     goods_height,
+	     description,
+	     buy_price,
+	     buy_num,
+	     is_comment,
+	     is_package,
+	     ctime
+	   from bts_order_item
+	   <where>
+	     <if test="itemId != null">
+	        item_id=#{itemId}
+	     </if>
+	     <if test="orderId != null">
+	        and order_id=#{orderId}
+	     </if>
+	     <if test="skuId != null">
+	        and sku_id=#{skuId}
+	     </if>
+	     <if test="goodsName != null">
+	        and goods_name=#{goodsName}
+	     </if>
+	     <if test="goodsImage != null">
+	        and goods_image=#{goodsImage}
+	     </if>
+	     <if test="goodsWeight != null">
+	        and goods_weight=#{goodsWeight}
+	     </if>
+	     <if test="goodsLength != null">
+	        and goods_length=#{goodsLength}
+	     </if>
+	     <if test="goodsWide != null">
+	        and goods_wide=#{goodsWide}
+	     </if>
+	     <if test="goodsHeight != null">
+	        and goods_height=#{goodsHeight}
+	     </if>
+	     <if test="description != null">
+	        and description=#{description}
+	     </if>
+	     <if test="buyPrice != null">
+	        and buy_price=#{buyPrice}
+	     </if>
+	     <if test="buyNum != null">
+	        and buy_num=#{buyNum}
+	     </if>
+	     <if test="isComment != null">
+	        and is_comment=#{isComment}
+	     </if>
+	     <if test="isPackage != null">
+	        and is_package=#{isPackage}
+	     </if>
+	     <if test="ctime != null">
+	        and ctime=#{ctime}
+	     </if>
+	   </where>
+	</select>
+
+	<select id="selectMap" parameterType="map" resultMap="mapResultMap">
+	   select 
+	    item_id,
+	    order_id,
+	    sku_id,
+	    goods_name,
+	    goods_image,
+	    goods_weight,
+	    goods_length,
+	    goods_wide,
+	    goods_height,
+	    description,
+	    buy_price,
+	    buy_num,
+	    is_comment,
+	    is_package,
+	    ctime
+	   from bts_order_item
+	   where 
+	    item_id=#{itemId} 
+	</select>
+
+	<select id="selectMapList" parameterType="map" resultMap="mapResultMap">
+	   select 
+	     item_id,
+	     order_id,
+	     sku_id,
+	     goods_name,
+	     goods_image,
+	     goods_weight,
+	     goods_length,
+	     goods_wide,
+	     goods_height,
+	     description,
+	     buy_price,
+	     buy_num,
+	     is_comment,
+	     is_package,
+	     ctime
+	   from bts_order_item
+	   <where>
+	     <if test="itemId != null">
+	        item_id=#{itemId}
+	     </if>
+	     <if test="orderId != null">
+	        and order_id=#{orderId}
+	     </if>
+	     <if test="skuId != null">
+	        and sku_id=#{skuId}
+	     </if>
+	     <if test="goodsName != null">
+	        and goods_name=#{goodsName}
+	     </if>
+	     <if test="goodsImage != null">
+	        and goods_image=#{goodsImage}
+	     </if>
+	     <if test="goodsWeight != null">
+	        and goods_weight=#{goodsWeight}
+	     </if>
+	     <if test="goodsLength != null">
+	        and goods_length=#{goodsLength}
+	     </if>
+	     <if test="goodsWide != null">
+	        and goods_wide=#{goodsWide}
+	     </if>
+	     <if test="goodsHeight != null">
+	        and goods_height=#{goodsHeight}
+	     </if>
+	     <if test="description != null">
+	        and description=#{description}
+	     </if>
+	     <if test="buyPrice != null">
+	        and buy_price=#{buyPrice}
+	     </if>
+	     <if test="buyNum != null">
+	        and buy_num=#{buyNum}
+	     </if>
+	     <if test="isComment != null">
+	        and is_comment=#{isComment}
+	     </if>
+	     <if test="isPackage != null">
+	        and is_package=#{isPackage}
+	     </if>
+	     <if test="ctime != null">
+	        and ctime=#{ctime}
+	     </if>
+	   </where>
+	</select>
+	
+	<select id="page" parameterType="map" resultMap="pageResultMap">
+	   select 
+	     item_id,
+	     order_id,
+	     sku_id,
+	     goods_name,
+	     goods_image,
+	     goods_weight,
+	     goods_length,
+	     goods_wide,
+	     goods_height,
+	     description,
+	     buy_price,
+	     buy_num,
+	     is_comment,
+	     is_package,
+	     ctime
+	<include refid="pageCondition" />
+	limit #{begin},#{end}
+	</select>
+
+	<select id="pageCount" parameterType="map" resultMap="pageResultMap">
+	   select count(1)
+	   <include refid="pageCondition" />
+	</select>
+
+	<sql id="pageCondition">
+	   from bts_order_item
+	   <where>
+	     <if test="itemId != null">
+	        item_id=#{itemId}
+	     </if>
+	     <if test="orderId != null">
+	        and order_id=#{orderId}
+	     </if>
+	     <if test="skuId != null">
+	        and sku_id=#{skuId}
+	     </if>
+	     <if test="goodsName != null">
+	        and goods_name=#{goodsName}
+	     </if>
+	     <if test="goodsImage != null">
+	        and goods_image=#{goodsImage}
+	     </if>
+	     <if test="goodsWeight != null">
+	        and goods_weight=#{goodsWeight}
+	     </if>
+	     <if test="goodsLength != null">
+	        and goods_length=#{goodsLength}
+	     </if>
+	     <if test="goodsWide != null">
+	        and goods_wide=#{goodsWide}
+	     </if>
+	     <if test="goodsHeight != null">
+	        and goods_height=#{goodsHeight}
+	     </if>
+	     <if test="description != null">
+	        and description=#{description}
+	     </if>
+	     <if test="buyPrice != null">
+	        and buy_price=#{buyPrice}
+	     </if>
+	     <if test="buyNum != null">
+	        and buy_num=#{buyNum}
+	     </if>
+	     <if test="isComment != null">
+	        and is_comment=#{isComment}
+	     </if>
+	     <if test="isPackage != null">
+	        and is_package=#{isPackage}
+	     </if>
+	     <if test="ctime != null">
+	        and ctime=#{ctime}
+	     </if>
+	   </where>
+	</sql>
+	
+	<select id="getItemForRefund" resultMap="itemAndOrderMap">
+		SELECT
+			i.item_id,
+			o.order_id,
+			i.sku_id,
+			i.goods_name,
+			i.goods_image,
+			i.buy_price,
+			i.buy_num,
+			o.ctime,
+			o.order_number,
+			o.total_amount
+		FROM
+			bts_order o,
+			bts_order_item i
+		WHERE
+			o.order_id = i.order_id
+			and i.item_id = #{itemId}
+	</select>
+	
+</mapper> 

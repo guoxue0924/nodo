@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+【】对象关系映射 配置 
+ @author AutoCode 309444359@qq.com
+ @date 2015-10-21 14:55:27
+ -->
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.bluemobi.dao.comment.CommentCategoryDao">
+
+	<resultMap id="commentCategoryResultMap" type="com.bluemobi.po.comment.CommentCategory">
+		<id property="categoryId" column="category_id" />
+		<result property="hid" column="hid" />
+		<result property="parentId" column="parent_id" />
+		<result property="title" column="title" />
+	</resultMap>
+	<resultMap id="mapResultMap"  type="java.util.HashMap" extends="commentCategoryResultMap"></resultMap>
+	<resultMap id="pageResultMap"  type="java.util.HashMap" extends="commentCategoryResultMap"></resultMap>
+	
+	
+	<insert id="insert" parameterType="com.bluemobi.po.comment.CommentCategory">
+	   insert into comment_category (
+	     category_id,
+	     hid,
+	     parent_id,
+	     title
+	   )values (
+	     #{categoryId},
+	     #{hid},
+	     #{parentId},
+	     #{title}
+	   )
+	</insert>
+
+	<update id="update" parameterType="com.bluemobi.po.comment.CommentCategory">
+		update comment_category
+		<set>
+			<if test="categoryId != null">
+				category_id=#{categoryId},
+			</if>
+			<if test="hid != null">
+				hid=#{hid},
+			</if>
+			<if test="parentId != null">
+				parent_id=#{parentId},
+			</if>
+			<if test="title != null">
+				title=#{title},
+			</if>
+		</set>
+		<where>
+			category_id=#{categoryId} 
+		</where>
+	</update>
+
+	<delete id="delete" parameterType="map">
+	   delete from 
+	     comment_category 
+	   where 
+	    category_id=#{categoryId} 
+	</delete>
+
+	<select id="selectObject" parameterType="map" resultMap="commentCategoryResultMap">
+	   select 
+	    category_id,
+	    hid,
+	    parent_id,
+	    title
+	   from comment_category
+	   where 
+	    category_id=#{categoryId} 
+	</select>
+	
+	<select id="selectObjectList" parameterType="map" resultMap="commentCategoryResultMap">
+	   select 
+	     category_id,
+	     hid,
+	     parent_id,
+	     title
+	   from comment_category
+	   <where>
+	     <if test="categoryId != null">
+	        category_id=#{categoryId}
+	     </if>
+	     <if test="hid != null">
+	        and hid=#{hid}
+	     </if>
+	     <if test="parentId != null">
+	        and parent_id=#{parentId}
+	     </if>
+	     <if test="title != null">
+	        and title=#{title}
+	     </if>
+	   </where>
+	</select>
+
+	<select id="selectMap" parameterType="map" resultMap="mapResultMap">
+	   select 
+	    category_id,
+	    hid,
+	    parent_id,
+	    title
+	   from comment_category
+	   where 
+	    category_id=#{categoryId} 
+	</select>
+
+	<select id="selectMapList" parameterType="map" resultMap="mapResultMap">
+	   select 
+	     category_id,
+	     hid,
+	     parent_id,
+	     title
+	   from comment_category
+	   <where>
+	     <if test="categoryId != null">
+	        category_id=#{categoryId}
+	     </if>
+	     <if test="hid != null">
+	        and hid=#{hid}
+	     </if>
+	     <if test="parentId != null">
+	        and parent_id=#{parentId}
+	     </if>
+	     <if test="title != null">
+	        and title=#{title}
+	     </if>
+	   </where>
+	</select>
+	
+	<select id="page" parameterType="map" resultMap="pageResultMap">
+	   select 
+	     category_id,
+	     hid,
+	     parent_id,
+	     title
+	   from comment_category
+	   <where>
+	     <if test="categoryId != null">
+	        category_id=#{categoryId}
+	     </if>
+	     <if test="hid != null">
+	        and hid=#{hid}
+	     </if>
+	     <if test="parentId != null">
+	        and parent_id=#{parentId}
+	     </if>
+	     <if test="title != null">
+	        and title=#{title}
+	     </if>
+	   </where>
+	</select>
+	
+</mapper> 

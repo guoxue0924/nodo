@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+【】对象关系映射 配置 
+ @author AutoCode 309444359@qq.com
+ @date 2016-02-24 10:07:23
+ -->
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.bluemobi.dao.page.PageContentDao">
+
+	<resultMap id="pageContentResultMap" type="com.bluemobi.po.page.PageContent">
+		<id property="id" column="id" />
+       <result property="groupId" column="group_id" />
+       <result property="title" column="title" />
+       <result property="body" column="body" />
+       <result property="memo" column="memo" />
+       <result property="filePath" column="file_path" />
+       <result property="forwardUrl" column="forward_url" />
+       <result property="pageUrl" column="page_url" />
+       <result property="isShareCommon" column="is_share_common" />
+       <result property="sortOrder" column="sort_order" />
+       <result property="ctime" column="ctime" />
+	</resultMap>
+	<resultMap id="mapResultMap"  type="java.util.HashMap" extends="pageContentResultMap"></resultMap>
+	<resultMap id="pageResultMap"  type="java.util.HashMap" extends="pageContentResultMap">
+		<result property="groupTitle" column="group_title" />
+	</resultMap>
+	
+	
+	<insert id="insert" parameterType="com.bluemobi.po.page.PageContent" useGeneratedKeys="true" keyProperty="id" >
+	   insert into page_content (
+	     group_id,
+	     title,
+	     body,
+	     memo,
+	     file_path,
+	     forward_url,
+	     page_url,
+	     is_share_common,
+	     sort_order,
+	     ctime
+	   )values (
+	     #{groupId},
+	     #{title},
+	     #{body},
+	     #{memo},
+	     #{filePath},
+	     #{forwardUrl},
+	     #{pageUrl},
+	     #{isShareCommon},
+	     #{sortOrder},
+	     #{ctime}
+	   )
+	</insert>
+
+	<update id="update" parameterType="com.bluemobi.po.page.PageContent">
+		update page_content
+		<set>
+			<if test="groupId != null">
+				group_id=#{groupId},
+			</if>
+			<if test="title != null">
+				title=#{title},
+			</if>
+			<if test="body != null">
+				body=#{body},
+			</if>
+			<if test="memo != null">
+				memo=#{memo},
+			</if>
+			<if test="filePath != null">
+				file_path=#{filePath},
+			</if>
+			<if test="forwardUrl != null">
+				forward_url=#{forwardUrl},
+			</if>
+			<if test="pageUrl != null">
+				page_url=#{pageUrl},
+			</if>
+			<if test="isShareCommon != null">
+				is_share_common=#{isShareCommon},
+			</if>
+			<if test="sortOrder != null">
+				sort_order=#{sortOrder},
+			</if>
+			<if test="ctime != null">
+				ctime=#{ctime},
+			</if>
+		</set>
+		<where>
+			id=#{id} 
+		</where>
+	</update>
+
+	<delete id="delete" parameterType="map">
+	   delete from 
+	     page_content 
+	   where 
+	    id=#{id} 
+	</delete>
+
+	<select id="selectObject" parameterType="map" resultMap="pageContentResultMap">
+	   select 
+	    id,
+	    group_id,
+	    title,
+	    body,
+	    memo,
+	    file_path,
+	    forward_url,
+	    page_url,
+	    is_share_common,
+	    sort_order,
+	    ctime
+	   from page_content
+	   where 
+	    id=#{id} 
+	</select>
+	
+	<select id="selectObjectList" parameterType="map" resultMap="pageContentResultMap">
+	   select 
+	     id,
+	     group_id,
+	     title,
+	     body,
+	     memo,
+	     file_path,
+	     forward_url,
+	     page_url,
+	     is_share_common,
+	     sort_order,
+	     ctime
+	   from page_content
+	   <where>
+	     <if test="id != null">
+	        id=#{id}
+	     </if>
+	     <if test="groupId != null">
+	        and group_id=#{groupId}
+	     </if>
+	     <if test="title != null">
+	        and title=#{title}
+	     </if>
+	     <if test="body != null">
+	        and body=#{body}
+	     </if>
+	     <if test="memo != null">
+	        and memo=#{memo}
+	     </if>
+	     <if test="filePath != null">
+	        and file_path=#{filePath}
+	     </if>
+	     <if test="forwardUrl != null">
+	        and forward_url=#{forwardUrl}
+	     </if>
+	     <if test="pageUrl != null">
+	        and page_url=#{pageUrl}
+	     </if>
+	     <if test="isShareCommon != null">
+	        and is_share_common=#{isShareCommon}
+	     </if>
+	     <if test="sortOrder != null">
+	        and sort_order=#{sortOrder}
+	     </if>
+	     <if test="ctime != null">
+	        and ctime=#{ctime}
+	     </if>
+	   </where>
+	</select>
+
+	<select id="selectMap" parameterType="map" resultMap="mapResultMap">
+	   select 
+	    id,
+	    group_id,
+	    title,
+	    body,
+	    memo,
+	    file_path,
+	    forward_url,
+	    page_url,
+	    is_share_common,
+	    sort_order,
+	    ctime
+	   from page_content
+	   where 
+	    id=#{id} 
+	</select>
+
+	<select id="selectMapList" parameterType="map" resultMap="mapResultMap">
+	   select 
+	     id,
+	     group_id,
+	     title,
+	     body,
+	     memo,
+	     file_path,
+	     forward_url,
+	     page_url,
+	     is_share_common,
+	     sort_order,
+	     ctime
+	   from page_content
+	   <where>
+	     <if test="id != null">
+	        id=#{id}
+	     </if>
+	     <if test="groupId != null">
+	        and group_id=#{groupId}
+	     </if>
+	     <if test="title != null">
+	        and title=#{title}
+	     </if>
+	     <if test="body != null">
+	        and body=#{body}
+	     </if>
+	     <if test="memo != null">
+	        and memo=#{memo}
+	     </if>
+	     <if test="filePath != null">
+	        and file_path=#{filePath}
+	     </if>
+	     <if test="forwardUrl != null">
+	        and forward_url=#{forwardUrl}
+	     </if>
+	     <if test="pageUrl != null">
+	        and page_url=#{pageUrl}
+	     </if>
+	     <if test="isShareCommon != null">
+	        and is_share_common=#{isShareCommon}
+	     </if>
+	     <if test="sortOrder != null">
+	        and sort_order=#{sortOrder}
+	     </if>
+	     <if test="ctime != null">
+	        and ctime=#{ctime}
+	     </if>
+	   </where>
+	</select>
+	
+	<select id="page" parameterType="map" resultMap="pageResultMap">
+	   select 
+	   	 pc.id,
+	     pg.group_name AS group_title,
+		 pc.title,
+		 pc.page_url,
+		 pc.ctime
+	<include refid="pageCondition" />
+	limit #{offset},#{rows}
+	</select>
+
+	<select id="pageCount" parameterType="map" resultType="int">
+	   select count(1)
+	   <include refid="pageCondition" />
+	</select>
+
+	<sql id="pageCondition">
+	   from page_content pc JOIN page_group pg
+	   <where>
+	   	 pc.group_id = pg.group_id
+	     <if test="key != null">
+	        pc.title LIKE CONCAT(CONCAT('%', #{key}), '%')
+	     </if>
+	   </where>
+	</sql>
+
+	
+</mapper> 

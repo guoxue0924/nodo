@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+【后台用户】对象关系映射 配置 
+ @author AutoCode 309444359@qq.com
+ @date 2015-07-28 15:14:39
+ -->
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.bluemobi.dao.admin.AdminUserDao">
+
+	<resultMap id="adminUserResultMap" type="com.bluemobi.po.admin.AdminUser">
+		<id property="userid" column="userid" />
+		<result property="username" column="username" />
+		<result property="password" column="password" />
+		<result property="salt" column="salt" />
+		<result property="email" column="email" />
+		<result property="nickname" column="nickname" />
+		<result property="fullname" column="fullname" />
+		<result property="gender" column="gender" />
+		<result property="idcard" column="idcard" />
+		<result property="domain" column="domain" />
+		<result property="ctime" column="ctime" />
+		<result property="mtime" column="mtime" />
+		<result property="status" column="status" />
+		<result property="isOnline" column="is_online" />
+	</resultMap>
+	<resultMap id="mapResultMap"  type="java.util.HashMap" extends="adminUserResultMap"></resultMap>
+	<resultMap id="pageResultMap"  type="java.util.HashMap" extends="adminUserResultMap"></resultMap>
+	
+	
+	<insert id="insert" useGeneratedKeys="true" keyProperty="userid" parameterType="com.bluemobi.po.admin.AdminUser">
+	   insert into admin_user (
+	     userid,
+	     username,
+	     password,
+	     salt,
+	     email,
+	     nickname,
+	     fullname,
+	     gender,
+	     idcard,
+	     domain,
+	     ctime,
+	     mtime,
+	     status,
+	     is_online
+	   )values (
+	     #{userid},
+	     #{username},
+	     #{password},
+	     #{salt},
+	     #{email},
+	     #{nickname},
+	     #{fullname},
+	     #{gender},
+	     #{idcard},
+	     #{domain},
+	     #{ctime},
+	     #{mtime},
+	     #{status},
+	     #{isOnline}
+	   )
+	</insert>
+
+	<update id="update" parameterType="com.bluemobi.po.admin.AdminUser">
+	   update admin_user set
+	     userid=#{userid},
+	     username=#{username},
+	     password=#{password},
+	     salt=#{salt},
+	     email=#{email},
+	     nickname=#{nickname},
+	     fullname=#{fullname},
+	     gender=#{gender},
+	     idcard=#{idcard},
+	     domain=#{domain},
+	     ctime=#{ctime},
+	     mtime=#{mtime},
+	     status=#{status},
+	     is_online=#{isOnline}
+	   where 
+	    userid=#{userid} 
+	</update>
+
+	<delete id="delete" parameterType="map">
+	   delete from 
+	     admin_user 
+	   where 
+	    userid=#{userid} 
+	</delete>
+
+	<select id="selectObject" parameterType="map" resultMap="adminUserResultMap">
+	   select 
+	    userid,
+	    username,
+	    password,
+	    salt,
+	    email,
+	    nickname,
+	    fullname,
+	    gender,
+	    idcard,
+	    domain,
+	    ctime,
+	    mtime,
+	    status,
+	    is_online
+	   from admin_user
+	   where 
+	    userid=#{userid} 
+	</select>
+	
+	<select id="selectObjectList" parameterType="map" resultMap="adminUserResultMap">
+	   select 
+	     userid,
+	     username,
+	     password,
+	     salt,
+	     email,
+	     nickname,
+	     fullname,
+	     gender,
+	     idcard,
+	     domain,
+	     ctime,
+	     mtime,
+	     status,
+	     is_online
+	   from admin_user
+	   <where>
+	     <if test="userid != null">
+	        userid=#{userid}
+	     </if>
+	     <if test="username != null">
+	        and username=#{username}
+	     </if>
+	     <if test="password != null">
+	        and password=#{password}
+	     </if>
+	     <if test="salt != null">
+	        and salt=#{salt}
+	     </if>
+	     <if test="email != null">
+	        and email=#{email}
+	     </if>
+	     <if test="nickname != null">
+	        and nickname=#{nickname}
+	     </if>
+	     <if test="fullname != null">
+	        and fullname=#{fullname}
+	     </if>
+	     <if test="gender != null">
+	        and gender=#{gender}
+	     </if>
+	     <if test="idcard != null">
+	        and idcard=#{idcard}
+	     </if>
+	     <if test="domain != null">
+	        and domain=#{domain}
+	     </if>
+	     <if test="ctime != null">
+	        and ctime=#{ctime}
+	     </if>
+	     <if test="mtime != null">
+	        and mtime=#{mtime}
+	     </if>
+	     <if test="status != null">
+	        and status=#{status}
+	     </if>
+	     <if test="isOnline != null">
+	        and is_online=#{isOnline}
+	     </if>
+	   </where>
+	</select>
+
+	<select id="selectMap" parameterType="map" resultMap="mapResultMap">
+	   select 
+	    userid,
+	    username,
+	    password,
+	    salt,
+	    email,
+	    nickname,
+	    fullname,
+	    gender,
+	    idcard,
+	    domain,
+	    ctime,
+	    mtime,
+	    status,
+	    is_online
+	   from admin_user
+	   where 
+	    userid=#{userid} 
+	</select>
+
+	<select id="selectMapList" parameterType="map" resultMap="mapResultMap">
+	   select 
+	     userid,
+	     username,
+	     password,
+	     salt,
+	     email,
+	     nickname,
+	     fullname,
+	     gender,
+	     idcard,
+	     domain,
+	     ctime,
+	     mtime,
+	     status,
+	     is_online
+	   from admin_user
+	   <where>
+	     <if test="userid != null">
+	        userid=#{userid}
+	     </if>
+	     <if test="username != null">
+	        and username=#{username}
+	     </if>
+	     <if test="password != null">
+	        and password=#{password}
+	     </if>
+	     <if test="salt != null">
+	        and salt=#{salt}
+	     </if>
+	     <if test="email != null">
+	        and email=#{email}
+	     </if>
+	     <if test="nickname != null">
+	        and nickname=#{nickname}
+	     </if>
+	     <if test="fullname != null">
+	        and fullname=#{fullname}
+	     </if>
+	     <if test="gender != null">
+	        and gender=#{gender}
+	     </if>
+	     <if test="idcard != null">
+	        and idcard=#{idcard}
+	     </if>
+	     <if test="domain != null">
+	        and domain=#{domain}
+	     </if>
+	     <if test="ctime != null">
+	        and ctime=#{ctime}
+	     </if>
+	     <if test="mtime != null">
+	        and mtime=#{mtime}
+	     </if>
+	     <if test="status != null">
+	        and status=#{status}
+	     </if>
+	     <if test="isOnline != null">
+	        and is_online=#{isOnline}
+	     </if>
+	   </where>
+	</select>
+	
+	<sql id="pageCondition">
+	  from admin_user
+       <where>
+         <if test="userid != null">
+            userid=#{userid}
+         </if>
+         <if test="username != null">
+            or username LIKE CONCAT(CONCAT('%', #{username}), '%')
+         </if>
+         <if test="password != null">
+            and password=#{password}
+         </if>
+         <if test="salt != null">
+            and salt=#{salt}
+         </if>
+         <if test="email != null">
+            and email=#{email}
+         </if>
+         <if test="nickname != null">
+            or nickname LIKE CONCAT(CONCAT('%', #{nickname}), '%')
+         </if>
+         <if test="fullname != null">
+            or fullname LIKE CONCAT(CONCAT('%', #{fullname}), '%')
+         </if>
+         <if test="gender != null">
+            and gender=#{gender}
+         </if>
+         <if test="idcard != null">
+            and idcard=#{idcard}
+         </if>
+         <if test="domain != null">
+            and domain=#{domain}
+         </if>
+         <if test="ctime != null">
+            and ctime=#{ctime}
+         </if>
+         <if test="mtime != null">
+            and mtime=#{mtime}
+         </if>
+         <if test="status != null">
+            and status=#{status}
+         </if>
+         <if test="isOnline != null">
+            and is_online=#{isOnline}
+         </if>
+       </where>
+	</sql>
+	
+	<select id="page" parameterType="map" resultMap="pageResultMap">
+	   select 
+	     userid,
+	     username,
+	     password,
+	     salt,
+	     email,
+	     nickname,
+	     fullname,
+	     gender,
+	     idcard,
+	     domain,
+	     ctime,
+	     mtime,
+	     status,
+	     is_online
+	 <include refid="pageCondition" />
+	 limit #{offset},#{rows}
+	</select>
+	
+	<select id="pageCount" parameterType="map" resultType="int">
+        select count(1)
+     <include refid="pageCondition" />
+    </select>
+	
+</mapper> 

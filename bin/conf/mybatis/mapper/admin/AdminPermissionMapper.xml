@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+【应用权限表】对象关系映射 配置 
+ @author AutoCode 309444359@qq.com
+ @date 2015-11-17 22:01:27
+ -->
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.bluemobi.dao.admin.AdminPermissionDao">
+
+	<resultMap id="adminPermissionResultMap" type="com.bluemobi.po.admin.AdminPermission">
+		<id property="permissionId" column="permission_id" />
+       <result property="url" column="url" />
+       <result property="navigationId" column="navigation_id" />
+       <result property="permissionName" column="permission_name" />
+       <result property="description" column="description" />
+       <result property="ctime" column="ctime" />
+       <result property="mtime" column="mtime" />
+	</resultMap>
+	<resultMap id="mapResultMap"  type="java.util.HashMap" extends="adminPermissionResultMap"></resultMap>
+	<resultMap id="pageResultMap"  type="java.util.HashMap" extends="adminPermissionResultMap"></resultMap>
+	
+	
+	<insert id="insert" parameterType="com.bluemobi.po.admin.AdminPermission">
+	   insert into admin_permission (
+	     permission_id,
+	     url,
+	     navigation_id,
+	     permission_name,
+	     description,
+	     ctime,
+	     mtime
+	   )values (
+	     #{permissionId},
+	     #{url},
+	     #{navigationId},
+	     #{permissionName},
+	     #{description},
+	     #{ctime},
+	     #{mtime}
+	   )
+	</insert>
+
+	<update id="update" parameterType="com.bluemobi.po.admin.AdminPermission">
+		update admin_permission
+		<set>
+			<if test="permissionId != null">
+				permission_id=#{permissionId},
+			</if>
+			<if test="url != null">
+				url=#{url},
+			</if>
+			<if test="navigationId != null">
+				navigation_id=#{navigationId},
+			</if>
+			<if test="permissionName != null">
+				permission_name=#{permissionName},
+			</if>
+			<if test="description != null">
+				description=#{description},
+			</if>
+			<if test="ctime != null">
+				ctime=#{ctime},
+			</if>
+			<if test="mtime != null">
+				mtime=#{mtime},
+			</if>
+		</set>
+		<where>
+			permission_id=#{permissionId} 
+		</where>
+	</update>
+
+	<delete id="delete" parameterType="map">
+	   delete from 
+	     admin_permission 
+	   where 
+	    permission_id=#{permissionId} 
+	</delete>
+
+	<select id="selectObject" parameterType="map" resultMap="adminPermissionResultMap">
+	   select 
+	    permission_id,
+	    url,
+	    navigation_id,
+	    permission_name,
+	    description,
+	    ctime,
+	    mtime
+	   from admin_permission
+	   where 
+	    permission_id=#{permissionId} 
+	</select>
+	
+	<select id="selectObjectList" parameterType="map" resultMap="adminPermissionResultMap">
+	   select 
+	     permission_id,
+	     url,
+	     navigation_id,
+	     permission_name,
+	     description,
+	     ctime,
+	     mtime
+	   from admin_permission
+	   <where>
+	     <if test="permissionId != null">
+	        permission_id=#{permissionId}
+	     </if>
+	     <if test="url != null">
+	        and url=#{url}
+	     </if>
+	     <if test="navigationId != null">
+	        and navigation_id=#{navigationId}
+	     </if>
+	     <if test="permissionName != null">
+	        and permission_name=#{permissionName}
+	     </if>
+	     <if test="description != null">
+	        and description=#{description}
+	     </if>
+	     <if test="ctime != null">
+	        and ctime=#{ctime}
+	     </if>
+	     <if test="mtime != null">
+	        and mtime=#{mtime}
+	     </if>
+	   </where>
+	</select>
+	
+	<select id="getAdminPermissionById" parameterType="list" resultMap="adminPermissionResultMap">
+       select 
+         permission_id,
+         url,
+         navigation_id,
+         permission_name,
+         description,
+         ctime,
+         mtime
+       from admin_permission
+        where
+         permission_id in  
+         <foreach collection="permissionList" item = "permissionId" open="(" separator="," close=")">
+              #{permissionId}  
+         </foreach> 
+    </select>
+    
+    <select id="getAdminPermissionByNavigationIdList" parameterType="list" resultMap="adminPermissionResultMap">
+       select 
+         p.permission_id,
+         p.url,
+         p.navigation_id,
+         p.permission_name,
+         p.description,
+         p.ctime,
+         p.mtime
+       from admin_permission p, system_navigation n
+        where
+         n.navigation_id = p.navigation_id
+         and n.navigation_id in  
+         <foreach collection="navigationIdList" item = "navigationId" open="(" separator="," close=")">
+              #{navigationId}  
+         </foreach>
+         order by n.sort_order 
+    </select>
+
+	<select id="selectMap" parameterType="map" resultMap="mapResultMap">
+	   select 
+	    permission_id,
+	    url,
+	    navigation_id,
+	    permission_name,
+	    description,
+	    ctime,
+	    mtime
+	   from admin_permission
+	   where 
+	    permission_id=#{permissionId} 
+	</select>
+
+	<select id="selectMapList" parameterType="map" resultMap="mapResultMap">
+	   select 
+	     permission_id,
+	     url,
+	     navigation_id,
+	     permission_name,
+	     description,
+	     ctime,
+	     mtime
+	   from admin_permission
+	   <where>
+	     <if test="permissionId != null">
+	        permission_id=#{permissionId}
+	     </if>
+	     <if test="url != null">
+	        and url=#{url}
+	     </if>
+	     <if test="navigationId != null">
+	        and navigation_id=#{navigationId}
+	     </if>
+	     <if test="permissionName != null">
+	        and permission_name=#{permissionName}
+	     </if>
+	     <if test="description != null">
+	        and description=#{description}
+	     </if>
+	     <if test="ctime != null">
+	        and ctime=#{ctime}
+	     </if>
+	     <if test="mtime != null">
+	        and mtime=#{mtime}
+	     </if>
+	   </where>
+	</select>
+	
+	<select id="page" parameterType="map" resultMap="pageResultMap">
+	   select 
+	     permission_id,
+	     url,
+	     navigation_id,
+	     permission_name,
+	     description,
+	     ctime,
+	     mtime
+	<include refid="pageCondition" />
+	limit #{offset},#{rows}
+	</select>
+
+	<select id="pageCount" parameterType="map" resultType="int">
+	   select count(1)
+	   <include refid="pageCondition" />
+	</select>
+
+	<sql id="pageCondition">
+	   from admin_permission
+	   <where>
+	     <if test="permissionId != null">
+	        permission_id=#{permissionId}
+	     </if>
+	     <if test="url != null">
+	        and url=#{url}
+	     </if>
+	     <if test="navigationId != null">
+	        and navigation_id=#{navigationId}
+	     </if>
+	     <if test="permissionName != null">
+	        and permission_name=#{permissionName}
+	     </if>
+	     <if test="description != null">
+	        and description=#{description}
+	     </if>
+	     <if test="ctime != null">
+	        and ctime=#{ctime}
+	     </if>
+	     <if test="mtime != null">
+	        and mtime=#{mtime}
+	     </if>
+	   </where>
+	</sql>
+	
+	<select id="pageByNavList" parameterType="map" resultMap="pageResultMap">
+       select 
+         permission_id,
+         url,
+         navigation_id,
+         permission_name,
+         description,
+         ctime,
+         mtime
+    <include refid="pageByNavListCondition" />
+    limit #{offset},#{rows}
+    </select>
+
+    <select id="pageByNavListCount" parameterType="map" resultType="int">
+       select count(1)
+       <include refid="pageByNavListCondition" />
+    </select>
+
+    <sql id="pageByNavListCondition">
+       from admin_permission
+       <where>
+         <if test="permissionList != null">
+            navigation_id in  
+         <foreach collection="permissionList" item = "navigationId" open="(" separator="," close=")">
+              #{navigationId}  
+         </foreach> 
+         </if>
+        
+       </where>
+    </sql>
+    
+    
+    <select id="selectAdminPermissionListByUserid" parameterType="int" resultMap="adminPermissionResultMap">
+       select 
+            p.*
+       from
+            admin_user u,
+            admin_user_group ug,
+            admin_group_permission gp,
+            admin_permission p
+       where 
+            u.userid = ug.user_id
+            and ug.group_id = gp.group_id
+            and gp.permission_id = p.permission_id
+            and u.userid = #{userid}
+    </select>
+
+	
+</mapper> 

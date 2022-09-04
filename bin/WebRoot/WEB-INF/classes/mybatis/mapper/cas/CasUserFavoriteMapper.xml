@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+【用户收藏表】对象关系映射 配置 
+ @author AutoCode 309444359@qq.com
+ @date 2016-01-21 16:56:24
+ -->
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.bluemobi.dao.cas.CasUserFavoriteDao">
+
+	<resultMap id="casUserFavoriteResultMap" type="com.bluemobi.po.cas.CasUserFavorite">
+		<id property="favoriteId" column="favorite_id" />
+       <result property="type" column="type" />
+       <result property="content" column="content" />
+       <result property="userid" column="userid" />
+       <result property="specificationid" column="specificationId" />
+       <result property="ctime" column="ctime" />
+	</resultMap>
+	<resultMap id="mapResultMap"  type="java.util.HashMap" extends="casUserFavoriteResultMap"></resultMap>
+	<resultMap id="pageResultMap"  type="java.util.HashMap" extends="casUserFavoriteResultMap"></resultMap>
+	
+	
+	<insert id="insert" parameterType="com.bluemobi.po.cas.CasUserFavorite" useGeneratedKeys="true" keyProperty="favoriteId" >
+	   insert into cas_user_favorite (
+	     favorite_id,
+	     type,
+	     content,
+	     userid,
+	     specificationId,
+	     ctime
+	   )values (
+	     #{favoriteId},
+	     #{type},
+	     #{content},
+	     #{userid},
+	     #{specificationid},
+	     #{ctime}
+	   )
+	</insert>
+
+	<update id="update" parameterType="com.bluemobi.po.cas.CasUserFavorite">
+		update cas_user_favorite
+		<set>
+			<if test="favoriteId != null">
+				favorite_id=#{favoriteId},
+			</if>
+			<if test="type != null">
+				type=#{type},
+			</if>
+			<if test="content != null">
+				content=#{content},
+			</if>
+			<if test="userid != null">
+				userid=#{userid},
+			</if>
+			<if test="specificationid != null">
+				specificationId=#{specificationid},
+			</if>
+			<if test="ctime != null">
+				ctime=#{ctime},
+			</if>
+		</set>
+		<where>
+			favorite_id=#{favoriteId} 
+		</where>
+	</update>
+
+	<delete id="delete" parameterType="map">
+	   delete from 
+	     cas_user_favorite 
+	   where 
+	    favorite_id=#{favoriteId} 
+	</delete>
+	
+	<delete id="deleteMultiple" parameterType="map">
+       delete from 
+         cas_user_favorite 
+       where 
+        favorite_id in  
+        <foreach collection="favoriteIds" item = "favoriteId" open="(" separator="," close=")">
+              #{favoriteId}  
+        </foreach>  
+    </delete>
+
+	<select id="selectObject" parameterType="map" resultMap="casUserFavoriteResultMap">
+	   select 
+	    favorite_id,
+	    type,
+	    content,
+	    userid,
+	    specificationId,
+	    ctime
+	   from cas_user_favorite
+	   where 
+	    favorite_id=#{favoriteId} 
+	</select>
+	
+	<select id="selectObjectList" parameterType="map" resultMap="casUserFavoriteResultMap">
+	   select 
+	     favorite_id,
+	     type,
+	     content,
+	     userid,
+	     specificationId,
+	     ctime
+	   from cas_user_favorite
+	   <where>
+	     <if test="favoriteId != null">
+	        favorite_id=#{favoriteId}
+	     </if>
+	     <if test="type != null">
+	        and type=#{type}
+	     </if>
+	     <if test="content != null">
+	        and content=#{content}
+	     </if>
+	     <if test="userid != null">
+	        and userid=#{userid}
+	     </if>
+	     <if test="specificationid != null">
+	        and specificationId=#{specificationid}
+	     </if>
+	     <if test="ctime != null">
+	        and ctime=#{ctime}
+	     </if>
+	   </where>
+	</select>
+
+	<select id="selectMap" parameterType="map" resultMap="mapResultMap">
+	   select 
+	    favorite_id,
+	    type,
+	    content,
+	    userid,
+	    specificationId,
+	    ctime
+	   from cas_user_favorite
+	   where 
+	    favorite_id=#{favoriteId} 
+	</select>
+
+	<select id="selectMapList" parameterType="map" resultMap="mapResultMap">
+	   select 
+	     favorite_id,
+	     type,
+	     content,
+	     userid,
+	     specificationId,
+	     ctime
+	   from cas_user_favorite
+	   <where>
+	     <if test="favoriteId != null">
+	        favorite_id=#{favoriteId}
+	     </if>
+	     <if test="type != null">
+	        and type=#{type}
+	     </if>
+	     <if test="content != null">
+	        and content=#{content}
+	     </if>
+	     <if test="userid != null">
+	        and userid=#{userid}
+	     </if>
+	     <if test="specificationid != null">
+	        and specificationId=#{specificationid}
+	     </if>
+	     <if test="ctime != null">
+	        and ctime=#{ctime}
+	     </if>
+	   </where>
+	</select>
+	
+	<select id="countsByskuId" parameterType="map" resultType="int">
+       select 
+         COUNT(*)
+       from cas_user_favorite
+       <where>
+         <if test="favoriteId != null">
+            favorite_id=#{favoriteId}
+         </if>
+         <if test="type != null">
+            and type=#{type}
+         </if>
+         <if test="content != null">
+            and content=#{content}
+         </if>
+         <if test="userid != null">
+            and userid=#{userid}
+         </if>
+         <if test="specificationid != null">
+            and specificationId=#{specificationid}
+         </if>
+         <if test="ctime != null">
+            and ctime=#{ctime}
+         </if>
+       </where>
+    </select>
+	
+	<select id="page" parameterType="map" resultMap="pageResultMap">
+	   select 
+	     favorite_id,
+	     type,
+	     content,
+	     userid,
+	     specificationId,
+	     ctime
+	<include refid="pageCondition" />
+	limit #{offset},#{rows}
+	</select>
+
+	<select id="pageCount" parameterType="map" resultType="int">
+	   select count(1)
+	   <include refid="pageCondition" />
+	</select>
+
+	<sql id="pageCondition">
+	   from cas_user_favorite
+	   <where>
+	     <if test="favoriteId != null">
+	        favorite_id=#{favoriteId}
+	     </if>
+	     <if test="type != null">
+	        and type=#{type}
+	     </if>
+	     <if test="content != null">
+	        and content=#{content}
+	     </if>
+	     <if test="userid != null">
+	        and userid=#{userid}
+	     </if>
+	     <if test="specificationid != null">
+	        and specificationId=#{specificationid}
+	     </if>
+	     <if test="ctime != null">
+	        and ctime=#{ctime}
+	     </if>
+	   </where>
+	</sql>
+
+	
+</mapper> 

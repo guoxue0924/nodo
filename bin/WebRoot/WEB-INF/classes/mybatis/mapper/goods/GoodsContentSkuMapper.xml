@@ -1,0 +1,606 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+【商品主表】对象关系映射 配置 
+ @author AutoCode 309444359@qq.com
+ @date 2015-11-03 10:07:24
+ -->
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.bluemobi.dao.goods.GoodsContentSkuDao">
+
+	<resultMap id="goodsContentSkuResultMap" type="com.bluemobi.po.goods.GoodsContentSku">
+		<id property="skuId" column="sku_id" />
+       <result property="contentId" column="content_id" />
+       <result property="sku" column="sku" />
+       <result property="stock" column="stock" />
+       <result property="weight" column="weight" />
+       <result property="length" column="length" />
+       <result property="wide" column="wide" />
+       <result property="height" column="height" />
+       <result property="price" column="price" />
+       <result property="priceMarket" column="price_market" />
+       <result property="priceCost" column="price_cost" />
+       <result property="property" column="property" />
+       <result property="salesVolume" column="sales_volume" />
+       <result property="salesAmount" column="sales_amount" />
+       <result property="rankAverage" column="rank_average" />
+       <result property="viewed" column="viewed" />
+       <result property="rev" column="rev" />
+       <result property="sortOrder" column="sort_order" />
+       <result property="attachmentids" column="attachmentids" />
+       <result property="isShelf" column="is_shelf" />
+       <result property="isDel" column="is_del" />
+       <result property="ctime" column="ctime" />
+       <result property="mtime" column="mtime" />
+	</resultMap>
+	<resultMap id="mapResultMap"  type="java.util.HashMap" extends="goodsContentSkuResultMap"></resultMap>
+	<resultMap id="pageResultMap"  type="java.util.HashMap" extends="goodsContentSkuResultMap"></resultMap>
+	
+	
+	<insert id="insert" parameterType="com.bluemobi.po.goods.GoodsContentSku" useGeneratedKeys="true" keyProperty="skuId">
+	   insert into goods_content_sku (
+         sku_id,
+         content_id,
+         sku,
+         stock,
+         weight,
+         length,
+         wide,
+         height,
+         price,
+         price_market,
+         price_cost,
+         property,
+         sales_volume,
+         sales_amount,
+         rank_average,
+         viewed,
+         rev,
+         sort_order,
+         attachmentids,
+         is_shelf,
+         is_del,
+         ctime,
+         mtime
+       )values (
+         #{skuId},
+         #{contentId},
+         #{sku},
+         #{stock},
+         #{weight},
+         #{length},
+         #{wide},
+         #{height},
+         #{price},
+         #{priceMarket},
+         #{priceCost},
+         #{property},
+         #{salesVolume},
+         #{salesAmount},
+         #{rankAverage},
+         #{viewed},
+         #{rev},
+         #{sortOrder},
+         #{attachmentids},
+         #{isShelf},
+         #{isDel},
+         #{ctime},
+         #{mtime}
+       )
+	</insert>
+
+	<update id="update" parameterType="com.bluemobi.po.goods.GoodsContentSku">
+		update goods_content_sku
+        <set>
+            <if test="skuId != null">
+                sku_id=#{skuId},
+            </if>
+            <if test="contentId != null">
+                content_id=#{contentId},
+            </if>
+            <if test="sku != null">
+                sku=#{sku},
+            </if>
+            <if test="stock != null">
+                stock=#{stock},
+            </if>
+            <if test="weight != null">
+                weight=#{weight},
+            </if>
+            <if test="length != null">
+                length=#{length},
+            </if>
+            <if test="wide != null">
+                wide=#{wide},
+            </if>
+            <if test="height != null">
+                height=#{height},
+            </if>
+            <if test="price != null">
+                price=#{price},
+            </if>
+            <if test="priceMarket != null">
+                price_market=#{priceMarket},
+            </if>
+            <if test="priceCost != null">
+                price_cost=#{priceCost},
+            </if>
+            <if test="property != null">
+                property=#{property},
+            </if>
+            <if test="salesVolume != null">
+                sales_volume=#{salesVolume},
+            </if>
+            <if test="salesAmount != null">
+                sales_amount=#{salesAmount},
+            </if>
+            <if test="rankAverage != null">
+                rank_average=#{rankAverage},
+            </if>
+            <if test="viewed != null">
+                viewed=#{viewed},
+            </if>
+            <if test="rev != null">
+                rev=#{rev},
+            </if>
+            <if test="sortOrder != null">
+                sort_order=#{sortOrder},
+            </if>
+            <if test="attachmentids != null">
+                attachmentids=#{attachmentids},
+            </if>
+            <if test="isShelf != null">
+                is_shelf=#{isShelf},
+            </if>
+            <if test="isDel != null">
+                is_del=#{isDel},
+            </if>
+            <if test="ctime != null">
+                ctime=#{ctime},
+            </if>
+            <if test="mtime != null">
+                mtime=#{mtime},
+            </if>
+        </set>
+        <where>
+            sku_id=#{skuId} 
+        </where>
+	</update>
+
+	<delete id="delete" parameterType="map">
+	   delete from 
+	     goods_content_sku 
+	   where 
+	    sku_id=#{skuId} 
+	</delete>
+
+	<select id="selectObject" parameterType="map" resultMap="goodsContentSkuResultMap">
+	   select 
+        sku_id,
+        content_id,
+        sku,
+        stock,
+        weight,
+        length,
+        wide,
+        height,
+        price,
+        price_market,
+        price_cost,
+        property,
+        sales_volume,
+        sales_amount,
+        rank_average,
+        viewed,
+        rev,
+        sort_order,
+        attachmentids,
+        is_shelf,
+        is_del,
+        ctime,
+        mtime
+       from goods_content_sku
+       where 
+        sku_id=#{skuId} 
+	</select>
+	
+	<select id="selectObjectList" parameterType="map" resultMap="goodsContentSkuResultMap">
+	   select 
+         sku_id,
+         content_id,
+         sku,
+         stock,
+         weight,
+         length,
+         wide,
+         height,
+         price,
+         price_market,
+         price_cost,
+         property,
+         sales_volume,
+         sales_amount,
+         rank_average,
+         viewed,
+         rev,
+         sort_order,
+         attachmentids,
+         is_shelf,
+         is_del,
+         ctime,
+         mtime
+       from goods_content_sku
+       <where>
+         <if test="skuId != null">
+            sku_id=#{skuId}
+         </if>
+         <if test="contentId != null">
+            and content_id=#{contentId}
+         </if>
+         <if test="sku != null">
+            and sku=#{sku}
+         </if>
+         <if test="stock != null">
+            and stock=#{stock}
+         </if>
+         <if test="weight != null">
+            and weight=#{weight}
+         </if>
+         <if test="length != null">
+            and length=#{length}
+         </if>
+         <if test="wide != null">
+            and wide=#{wide}
+         </if>
+         <if test="height != null">
+            and height=#{height}
+         </if>
+         <if test="price != null">
+            and price=#{price}
+         </if>
+         <if test="priceMarket != null">
+            and price_market=#{priceMarket}
+         </if>
+         <if test="priceCost != null">
+            and price_cost=#{priceCost}
+         </if>
+         <if test="property != null">
+            and property=#{property}
+         </if>
+         <if test="salesVolume != null">
+            and sales_volume=#{salesVolume}
+         </if>
+         <if test="salesAmount != null">
+            and sales_amount=#{salesAmount}
+         </if>
+         <if test="rankAverage != null">
+            and rank_average=#{rankAverage}
+         </if>
+         <if test="viewed != null">
+            and viewed=#{viewed}
+         </if>
+         <if test="rev != null">
+            and rev=#{rev}
+         </if>
+         <if test="sortOrder != null">
+            and sort_order=#{sortOrder}
+         </if>
+         <if test="attachmentids != null">
+            and attachmentids=#{attachmentids}
+         </if>
+         <if test="isShelf != null">
+            and is_shelf=#{isShelf}
+         </if>
+         <if test="isDel != null">
+            and is_del=#{isDel}
+         </if>
+         <if test="ctime != null">
+            and ctime=#{ctime}
+         </if>
+         <if test="mtime != null">
+            and mtime=#{mtime}
+         </if>
+       </where>
+	</select>
+
+	<select id="selectMap" parameterType="map" resultMap="mapResultMap">
+	   select 
+        sku_id,
+        content_id,
+        sku,
+        stock,
+        weight,
+        length,
+        wide,
+        height,
+        price,
+        price_market,
+        price_cost,
+        property,
+        sales_volume,
+        sales_amount,
+        rank_average,
+        viewed,
+        rev,
+        sort_order,
+        attachmentids,
+        is_shelf,
+        is_del,
+        ctime,
+        mtime
+       from goods_content_sku
+       where 
+        sku_id=#{skuId} 
+	</select>
+
+	<select id="selectMapList" parameterType="map" resultMap="mapResultMap">
+	   select 
+         sku_id,
+         content_id,
+         sku,
+         stock,
+         weight,
+         length,
+         wide,
+         height,
+         price,
+         price_market,
+         price_cost,
+         property,
+         sales_volume,
+         sales_amount,
+         rank_average,
+         viewed,
+         rev,
+         sort_order,
+         attachmentids,
+         is_shelf,
+         is_del,
+         ctime,
+         mtime
+       from goods_content_sku
+       <where>
+         <if test="skuId != null">
+            sku_id=#{skuId}
+         </if>
+         <if test="contentId != null">
+            and content_id=#{contentId}
+         </if>
+         <if test="sku != null">
+            and sku=#{sku}
+         </if>
+         <if test="stock != null">
+            and stock=#{stock}
+         </if>
+         <if test="weight != null">
+            and weight=#{weight}
+         </if>
+         <if test="length != null">
+            and length=#{length}
+         </if>
+         <if test="wide != null">
+            and wide=#{wide}
+         </if>
+         <if test="height != null">
+            and height=#{height}
+         </if>
+         <if test="price != null">
+            and price=#{price}
+         </if>
+         <if test="priceMarket != null">
+            and price_market=#{priceMarket}
+         </if>
+         <if test="priceCost != null">
+            and price_cost=#{priceCost}
+         </if>
+         <if test="property != null">
+            and property=#{property}
+         </if>
+         <if test="salesVolume != null">
+            and sales_volume=#{salesVolume}
+         </if>
+         <if test="salesAmount != null">
+            and sales_amount=#{salesAmount}
+         </if>
+         <if test="rankAverage != null">
+            and rank_average=#{rankAverage}
+         </if>
+         <if test="viewed != null">
+            and viewed=#{viewed}
+         </if>
+         <if test="rev != null">
+            and rev=#{rev}
+         </if>
+         <if test="sortOrder != null">
+            and sort_order=#{sortOrder}
+         </if>
+         <if test="attachmentids != null">
+            and attachmentids=#{attachmentids}
+         </if>
+         <if test="isShelf != null">
+            and is_shelf=#{isShelf}
+         </if>
+         <if test="isDel != null">
+            and is_del=#{isDel}
+         </if>
+         <if test="ctime != null">
+            and ctime=#{ctime}
+         </if>
+         <if test="mtime != null">
+            and mtime=#{mtime}
+         </if>
+       </where>
+	</select>
+	
+	<select id="page" parameterType="map" resultMap="pageResultMap">
+	   select 
+         sku_id,
+         content_id,
+         sku,
+         stock,
+         weight,
+         length,
+         wide,
+         height,
+         price,
+         price_market,
+         price_cost,
+         property,
+         sales_volume,
+         sales_amount,
+         rank_average,
+         viewed,
+         rev,
+         sort_order,
+         attachmentids,
+         is_shelf,
+         is_del,
+         ctime,
+         mtime
+	<include refid="pageCondition" />
+	order by sort_order desc
+	limit #{offset},#{rows}
+	</select>
+
+	<select id="pageCount" parameterType="map" resultType="int">
+	   select count(1)
+	   <include refid="pageCondition" />
+	</select>
+
+	<sql id="pageCondition">
+	   from goods_content_sku
+	   <where>
+	     <if test="skuId != null">
+            sku_id=#{skuId}
+         </if>
+         <if test="contentId != null">
+            and content_id=#{contentId}
+         </if>
+         <if test="sku != null">
+            and sku=#{sku}
+         </if>
+         <if test="stock != null">
+            and stock=#{stock}
+         </if>
+         <if test="weight != null">
+            and weight=#{weight}
+         </if>
+         <if test="length != null">
+            and length=#{length}
+         </if>
+         <if test="wide != null">
+            and wide=#{wide}
+         </if>
+         <if test="height != null">
+            and height=#{height}
+         </if>
+         <if test="price != null">
+            and price=#{price}
+         </if>
+         <if test="priceMarket != null">
+            and price_market=#{priceMarket}
+         </if>
+         <if test="priceCost != null">
+            and price_cost=#{priceCost}
+         </if>
+         <if test="property != null">
+            and property=#{property}
+         </if>
+         <if test="salesVolume != null">
+            and sales_volume=#{salesVolume}
+         </if>
+         <if test="salesAmount != null">
+            and sales_amount=#{salesAmount}
+         </if>
+         <if test="rankAverage != null">
+            and rank_average=#{rankAverage}
+         </if>
+         <if test="viewed != null">
+            and viewed=#{viewed}
+         </if>
+         <if test="rev != null">
+            and rev=#{rev}
+         </if>
+         <if test="sortOrder != null">
+            and sort_order=#{sortOrder}
+         </if>
+         <if test="attachmentids != null">
+            and attachmentids=#{attachmentids}
+         </if>
+         <if test="isShelf != null">
+            and is_shelf=#{isShelf}
+         </if>
+         <if test="isDel != null">
+            and is_del=#{isDel}
+         </if>
+         <if test="ctime != null">
+            and ctime=#{ctime}
+         </if>
+         <if test="mtime != null">
+            and mtime=#{mtime}
+         </if>
+	   </where>
+	</sql>
+
+    <select id="selectFromCart" parameterType="map" resultMap="goodsContentSkuResultMap">
+        select 
+         sku_id,
+         content_id,
+         sku,
+         stock,
+         weight,
+         length,
+         wide,
+         height,
+         price,
+         price_market,
+         price_cost,
+         property,
+         sales_volume,
+         sales_amount,
+         rank_average,
+         viewed,
+         rev,
+         sort_order,
+         attachmentids,
+         is_shelf,
+         is_del,
+         ctime,
+         mtime
+       from 
+         goods_content_sku
+       where 
+         sku_id in 
+         <foreach collection="skuIds" item="skuId" index="index" open="(" close=")" separator=",">
+            #{skuId}
+         </foreach>
+    </select>
+
+    <delete id="deleteByGoodsContentId" parameterType="map">
+       delete from 
+         goods_content_sku 
+       where 
+        content_id=#{contentId} 
+    </delete>
+    
+    <delete id="deleteByGoodsContentIds" parameterType="map">
+       delete from 
+          goods_content_sku 
+       where 
+          content_id in  
+        <foreach collection="contentIds" item = "contentId" open="(" separator="," close=")">
+              #{contentId}  
+        </foreach>
+    </delete>
+
+    <update id="deleteSkus" parameterType="string">
+        update
+            goods_content_sku s
+        set
+            is_del = 1
+        where
+            sku_id in (#{skuIds});
+    </update>
+	
+</mapper> 

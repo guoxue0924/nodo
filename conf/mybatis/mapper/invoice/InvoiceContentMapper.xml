@@ -1,0 +1,446 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+【发票表】对象关系映射 配置 
+ @author AutoCode 309444359@qq.com
+ @date 2015-12-11 15:44:05
+ -->
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.bluemobi.dao.invoice.InvoiceContentDao">
+
+	<resultMap id="invoiceContentResultMap" type="com.bluemobi.po.invoice.InvoiceContent">
+		<id property="id" column="id" />
+       <result property="userid" column="userid" />
+       <result property="orderId" column="order_id" />
+       <result property="invoiceCode" column="invoice_code" />
+       <result property="invoiceNumber" column="invoice_number" />
+       <result property="machineNumber" column="machine_number" />
+       <result property="identificationNumber" column="identification_number" />
+       <result property="payee" column="payee" />
+       <result property="taxRegisterNumber" column="tax_register_number" />
+       <result property="invoiceDate" column="invoice_date" />
+       <result property="receiver" column="receiver" />
+       <result property="payer" column="payer" />
+       <result property="goodsContentSkuId" column="goods_content_sku_id" />
+       <result property="price" column="price" />
+       <result property="amount" column="amount" />
+       <result property="money" column="money" />
+       <result property="lumpSum" column="lump_sum" />
+       <result property="taxCode" column="tax_code" />
+	</resultMap>
+	<resultMap id="mapResultMap"  type="java.util.HashMap" extends="invoiceContentResultMap"></resultMap>
+	<resultMap id="pageResultMap"  type="java.util.HashMap" extends="invoiceContentResultMap"></resultMap>
+	
+	
+	<insert id="insert" parameterType="com.bluemobi.po.invoice.InvoiceContent" useGeneratedKeys="true" keyProperty="id" >
+	   insert into invoice_content (
+	     id,
+	     userid,
+	     order_id,
+	     invoice_code,
+	     invoice_number,
+	     machine_number,
+	     identification_number,
+	     payee,
+	     tax_register_number,
+	     invoice_date,
+	     receiver,
+	     payer,
+	     goods_content_sku_id,
+	     price,
+	     amount,
+	     money,
+	     lump_sum,
+	     tax_code
+	   )values (
+	     #{id},
+	     #{userid},
+	     #{orderId},
+	     #{invoiceCode},
+	     #{invoiceNumber},
+	     #{machineNumber},
+	     #{identificationNumber},
+	     #{payee},
+	     #{taxRegisterNumber},
+	     #{invoiceDate},
+	     #{receiver},
+	     #{payer},
+	     #{goodsContentSkuId},
+	     #{price},
+	     #{amount},
+	     #{money},
+	     #{lumpSum},
+	     #{taxCode}
+	   )
+	</insert>
+
+	<update id="update" parameterType="com.bluemobi.po.invoice.InvoiceContent">
+		update invoice_content
+		<set>
+			<if test="id != null">
+				id=#{id},
+			</if>
+			<if test="userid != null">
+				userid=#{userid},
+			</if>
+			<if test="orderId != null">
+				order_id=#{orderId},
+			</if>
+			<if test="invoiceCode != null">
+				invoice_code=#{invoiceCode},
+			</if>
+			<if test="invoiceNumber != null">
+				invoice_number=#{invoiceNumber},
+			</if>
+			<if test="machineNumber != null">
+				machine_number=#{machineNumber},
+			</if>
+			<if test="identificationNumber != null">
+				identification_number=#{identificationNumber},
+			</if>
+			<if test="payee != null">
+				payee=#{payee},
+			</if>
+			<if test="taxRegisterNumber != null">
+				tax_register_number=#{taxRegisterNumber},
+			</if>
+			<if test="invoiceDate != null">
+				invoice_date=#{invoiceDate},
+			</if>
+			<if test="receiver != null">
+				receiver=#{receiver},
+			</if>
+			<if test="payer != null">
+				payer=#{payer},
+			</if>
+			<if test="goodsContentSkuId != null">
+				goods_content_sku_id=#{goodsContentSkuId},
+			</if>
+			<if test="price != null">
+				price=#{price},
+			</if>
+			<if test="amount != null">
+				amount=#{amount},
+			</if>
+			<if test="money != null">
+				money=#{money},
+			</if>
+			<if test="lumpSum != null">
+				lump_sum=#{lumpSum},
+			</if>
+			<if test="taxCode != null">
+				tax_code=#{taxCode},
+			</if>
+		</set>
+		<where>
+			id=#{id} 
+		</where>
+	</update>
+
+	<delete id="delete" parameterType="map">
+	   delete from 
+	     invoice_content 
+	   where 
+	    id=#{id} 
+	</delete>
+
+	<select id="selectObject" parameterType="map" resultMap="invoiceContentResultMap">
+	   select 
+	    id,
+	    userid,
+	    order_id,
+	    invoice_code,
+	    invoice_number,
+	    machine_number,
+	    identification_number,
+	    payee,
+	    tax_register_number,
+	    invoice_date,
+	    receiver,
+	    payer,
+	    goods_content_sku_id,
+	    price,
+	    amount,
+	    money,
+	    lump_sum,
+	    tax_code
+	   from invoice_content
+	   where 
+	    id=#{id} 
+	</select>
+	
+	<select id="selectObjectList" parameterType="map" resultMap="invoiceContentResultMap">
+	   select 
+	     id,
+	     userid,
+	     order_id,
+	     invoice_code,
+	     invoice_number,
+	     machine_number,
+	     identification_number,
+	     payee,
+	     tax_register_number,
+	     invoice_date,
+	     receiver,
+	     payer,
+	     goods_content_sku_id,
+	     price,
+	     amount,
+	     money,
+	     lump_sum,
+	     tax_code
+	   from invoice_content
+	   <where>
+	     <if test="id != null">
+	        id=#{id}
+	     </if>
+	     <if test="userid != null">
+	        and userid=#{userid}
+	     </if>
+	     <if test="orderId != null">
+	        and order_id=#{orderId}
+	     </if>
+	     <if test="invoiceCode != null">
+	        and invoice_code=#{invoiceCode}
+	     </if>
+	     <if test="invoiceNumber != null">
+	        and invoice_number=#{invoiceNumber}
+	     </if>
+	     <if test="machineNumber != null">
+	        and machine_number=#{machineNumber}
+	     </if>
+	     <if test="identificationNumber != null">
+	        and identification_number=#{identificationNumber}
+	     </if>
+	     <if test="payee != null">
+	        and payee=#{payee}
+	     </if>
+	     <if test="taxRegisterNumber != null">
+	        and tax_register_number=#{taxRegisterNumber}
+	     </if>
+	     <if test="invoiceDate != null">
+	        and invoice_date=#{invoiceDate}
+	     </if>
+	     <if test="receiver != null">
+	        and receiver=#{receiver}
+	     </if>
+	     <if test="payer != null">
+	        and payer=#{payer}
+	     </if>
+	     <if test="goodsContentSkuId != null">
+	        and goods_content_sku_id=#{goodsContentSkuId}
+	     </if>
+	     <if test="price != null">
+	        and price=#{price}
+	     </if>
+	     <if test="amount != null">
+	        and amount=#{amount}
+	     </if>
+	     <if test="money != null">
+	        and money=#{money}
+	     </if>
+	     <if test="lumpSum != null">
+	        and lump_sum=#{lumpSum}
+	     </if>
+	     <if test="taxCode != null">
+	        and tax_code=#{taxCode}
+	     </if>
+	   </where>
+	</select>
+
+	<select id="selectMap" parameterType="map" resultMap="mapResultMap">
+	   select 
+	    id,
+	    userid,
+	    order_id,
+	    invoice_code,
+	    invoice_number,
+	    machine_number,
+	    identification_number,
+	    payee,
+	    tax_register_number,
+	    invoice_date,
+	    receiver,
+	    payer,
+	    goods_content_sku_id,
+	    price,
+	    amount,
+	    money,
+	    lump_sum,
+	    tax_code
+	   from invoice_content
+	   where 
+	    id=#{id} 
+	</select>
+
+	<select id="selectMapList" parameterType="map" resultMap="mapResultMap">
+	   select 
+	     id,
+	     userid,
+	     order_id,
+	     invoice_code,
+	     invoice_number,
+	     machine_number,
+	     identification_number,
+	     payee,
+	     tax_register_number,
+	     invoice_date,
+	     receiver,
+	     payer,
+	     goods_content_sku_id,
+	     price,
+	     amount,
+	     money,
+	     lump_sum,
+	     tax_code
+	   from invoice_content
+	   <where>
+	     <if test="id != null">
+	        id=#{id}
+	     </if>
+	     <if test="userid != null">
+	        and userid=#{userid}
+	     </if>
+	     <if test="orderId != null">
+	        and order_id=#{orderId}
+	     </if>
+	     <if test="invoiceCode != null">
+	        and invoice_code=#{invoiceCode}
+	     </if>
+	     <if test="invoiceNumber != null">
+	        and invoice_number=#{invoiceNumber}
+	     </if>
+	     <if test="machineNumber != null">
+	        and machine_number=#{machineNumber}
+	     </if>
+	     <if test="identificationNumber != null">
+	        and identification_number=#{identificationNumber}
+	     </if>
+	     <if test="payee != null">
+	        and payee=#{payee}
+	     </if>
+	     <if test="taxRegisterNumber != null">
+	        and tax_register_number=#{taxRegisterNumber}
+	     </if>
+	     <if test="invoiceDate != null">
+	        and invoice_date=#{invoiceDate}
+	     </if>
+	     <if test="receiver != null">
+	        and receiver=#{receiver}
+	     </if>
+	     <if test="payer != null">
+	        and payer=#{payer}
+	     </if>
+	     <if test="goodsContentSkuId != null">
+	        and goods_content_sku_id=#{goodsContentSkuId}
+	     </if>
+	     <if test="price != null">
+	        and price=#{price}
+	     </if>
+	     <if test="amount != null">
+	        and amount=#{amount}
+	     </if>
+	     <if test="money != null">
+	        and money=#{money}
+	     </if>
+	     <if test="lumpSum != null">
+	        and lump_sum=#{lumpSum}
+	     </if>
+	     <if test="taxCode != null">
+	        and tax_code=#{taxCode}
+	     </if>
+	   </where>
+	</select>
+	
+	<select id="page" parameterType="map" resultMap="pageResultMap">
+	   select 
+	     id,
+	     userid,
+	     order_id,
+	     invoice_code,
+	     invoice_number,
+	     machine_number,
+	     identification_number,
+	     payee,
+	     tax_register_number,
+	     invoice_date,
+	     receiver,
+	     payer,
+	     goods_content_sku_id,
+	     price,
+	     amount,
+	     money,
+	     lump_sum,
+	     tax_code
+	<include refid="pageCondition" />
+	limit #{offset},#{rows}
+	</select>
+
+	<select id="pageCount" parameterType="map" resultType="int">
+	   select count(1)
+	   <include refid="pageCondition" />
+	</select>
+
+	<sql id="pageCondition">
+	   from invoice_content
+	   <where>
+	     <if test="id != null">
+	        id=#{id}
+	     </if>
+	     <if test="userid != null">
+	        and userid=#{userid}
+	     </if>
+	     <if test="orderId != null">
+	        and order_id=#{orderId}
+	     </if>
+	     <if test="invoiceCode != null">
+	        and invoice_code=#{invoiceCode}
+	     </if>
+	     <if test="invoiceNumber != null">
+	        and invoice_number=#{invoiceNumber}
+	     </if>
+	     <if test="machineNumber != null">
+	        and machine_number=#{machineNumber}
+	     </if>
+	     <if test="identificationNumber != null">
+	        and identification_number=#{identificationNumber}
+	     </if>
+	     <if test="payee != null">
+	        and payee=#{payee}
+	     </if>
+	     <if test="taxRegisterNumber != null">
+	        and tax_register_number=#{taxRegisterNumber}
+	     </if>
+	     <if test="invoiceDate != null">
+	        and invoice_date=#{invoiceDate}
+	     </if>
+	     <if test="receiver != null">
+	        and receiver=#{receiver}
+	     </if>
+	     <if test="payer != null">
+	        and payer=#{payer}
+	     </if>
+	     <if test="goodsContentSkuId != null">
+	        and goods_content_sku_id=#{goodsContentSkuId}
+	     </if>
+	     <if test="price != null">
+	        and price=#{price}
+	     </if>
+	     <if test="amount != null">
+	        and amount=#{amount}
+	     </if>
+	     <if test="money != null">
+	        and money=#{money}
+	     </if>
+	     <if test="lumpSum != null">
+	        and lump_sum=#{lumpSum}
+	     </if>
+	     <if test="taxCode != null">
+	        and tax_code=#{taxCode}
+	     </if>
+	   </where>
+	</sql>
+
+	
+</mapper> 

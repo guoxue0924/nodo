@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+【管理员分组表】对象关系映射 配置 
+ @author AutoCode 309444359@qq.com
+ @date 2015-11-17 22:01:26
+ -->
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.bluemobi.dao.admin.AdminGroupDao">
+
+	<resultMap id="adminGroupResultMap" type="com.bluemobi.po.admin.AdminGroup">
+		<id property="groupId" column="group_id" />
+       <result property="groupName" column="group_name" />
+       <result property="description" column="description" />
+       <result property="ctime" column="ctime" />
+       <result property="mtime" column="mtime" />
+	</resultMap>
+	<resultMap id="mapResultMap"  type="java.util.HashMap" extends="adminGroupResultMap"></resultMap>
+	<resultMap id="pageResultMap"  type="java.util.HashMap" extends="adminGroupResultMap"></resultMap>
+	
+	
+	<insert id="insert" parameterType="com.bluemobi.po.admin.AdminGroup">
+	   insert into admin_group (
+	     group_id,
+	     group_name,
+	     description,
+	     ctime,
+	     mtime
+	   )values (
+	     #{groupId},
+	     #{groupName},
+	     #{description},
+	     #{ctime},
+	     #{mtime}
+	   )
+	</insert>
+
+	<update id="update" parameterType="com.bluemobi.po.admin.AdminGroup">
+		update admin_group
+		<set>
+			<if test="groupId != null">
+				group_id=#{groupId},
+			</if>
+			<if test="groupName != null">
+				group_name=#{groupName},
+			</if>
+			<if test="description != null">
+				description=#{description},
+			</if>
+			<if test="ctime != null">
+				ctime=#{ctime},
+			</if>
+			<if test="mtime != null">
+				mtime=#{mtime},
+			</if>
+		</set>
+		<where>
+			group_id=#{groupId} 
+		</where>
+	</update>
+
+	<delete id="delete" parameterType="map">
+	   delete from 
+	     admin_group 
+	   where 
+	    group_id=#{groupId} 
+	</delete>
+
+	<select id="selectObject" parameterType="map" resultMap="adminGroupResultMap">
+	   select 
+	    group_id,
+	    group_name,
+	    description,
+	    ctime,
+	    mtime
+	   from admin_group
+	   where 
+	    group_id=#{groupId} 
+	</select>
+	
+	<select id="selectObjectList" parameterType="map" resultMap="adminGroupResultMap">
+	   select 
+	     group_id,
+	     group_name,
+	     description,
+	     ctime,
+	     mtime
+	   from admin_group
+	   <where>
+	     <if test="groupId != null">
+	        group_id=#{groupId}
+	     </if>
+	     <if test="groupName != null">
+	        and group_name=#{groupName}
+	     </if>
+	     <if test="description != null">
+	        and description=#{description}
+	     </if>
+	     <if test="ctime != null">
+	        and ctime=#{ctime}
+	     </if>
+	     <if test="mtime != null">
+	        and mtime=#{mtime}
+	     </if>
+	   </where>
+	</select>
+
+	<select id="selectMap" parameterType="map" resultMap="mapResultMap">
+	   select 
+	    group_id,
+	    group_name,
+	    description,
+	    ctime,
+	    mtime
+	   from admin_group
+	   where 
+	    group_id=#{groupId} 
+	</select>
+
+	<select id="selectMapList" parameterType="map" resultMap="mapResultMap">
+	   select 
+	     group_id,
+	     group_name,
+	     description,
+	     ctime,
+	     mtime
+	   from admin_group
+	   <where>
+	     <if test="groupId != null">
+	        group_id=#{groupId}
+	     </if>
+	     <if test="groupName != null">
+	        and group_name=#{groupName}
+	     </if>
+	     <if test="description != null">
+	        and description=#{description}
+	     </if>
+	     <if test="ctime != null">
+	        and ctime=#{ctime}
+	     </if>
+	     <if test="mtime != null">
+	        and mtime=#{mtime}
+	     </if>
+	   </where>
+	</select>
+	
+	<select id="page" parameterType="map" resultMap="pageResultMap">
+	   select 
+	     group_id,
+	     group_name,
+	     description,
+	     ctime,
+	     mtime
+	<include refid="pageCondition" />
+	limit #{offset},#{rows}
+	</select>
+
+	<select id="pageCount" parameterType="map" resultType="int">
+	   select count(1)
+	   <include refid="pageCondition" />
+	</select>
+
+	<sql id="pageCondition">
+	   from admin_group
+	   <where>
+	     <if test="groupId != null">
+	        group_id=#{groupId}
+	     </if>
+	     <if test="groupName != null">
+	        and group_name=#{groupName}
+	     </if>
+	     <if test="description != null">
+	        and description=#{description}
+	     </if>
+	     <if test="ctime != null">
+	        and ctime=#{ctime}
+	     </if>
+	     <if test="mtime != null">
+	        and mtime=#{mtime}
+	     </if>
+	   </where>
+	</sql>
+
+	
+</mapper> 

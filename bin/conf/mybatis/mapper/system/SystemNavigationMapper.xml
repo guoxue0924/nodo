@@ -1,0 +1,440 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+@author AutoCode 309444359@qq.com
+@date 2015-07-16 17:15:49
+ -->
+<!--【system navigation category】对象关系映射 配置 -->
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.bluemobi.dao.system.SystemNavigationDao">
+
+	<resultMap id="systemNavigationResultMap" type="com.bluemobi.po.system.SystemNavigation">
+		<id property="navigationId" column="navigation_id" />
+		<result property="parentId" column="parent_id" />
+		<result property="hid" column="hid" />
+		<result property="title" column="title" />
+		<result property="link" column="link" />
+		<result property="loadType" column="load_type" />
+		<result property="description" column="description" />
+		<result property="icon" column="icon" />
+		<result property="iconBg" column="icon_bg" />
+		<result property="sortOrder" column="sort_order" />
+		<result property="status" column="status" />
+		<result property="ctime" column="ctime" />
+		<result property="mtime" column="mtime" />
+	</resultMap>
+	<resultMap id="pageResultMap"  type="java.util.HashMap" extends="systemNavigationResultMap"></resultMap>
+	<resultMap id="mapResultMap"  type="java.util.HashMap" extends="systemNavigationResultMap"></resultMap>
+
+	<insert id="insert" parameterType="com.bluemobi.po.system.SystemNavigation" keyProperty="navigationId" useGeneratedKeys="true">
+	
+	   insert into system_navigation (
+	     navigation_id,
+	     parent_id,
+	     hid,
+	     title,
+	     link,
+	     load_type,
+	     description,
+	     icon,
+	     icon_bg,
+	     sort_order,
+	     status,
+	     ctime,
+	     mtime
+	   )values (
+	     #{navigationId},
+	     #{parentId},
+	     #{hid},
+	     #{title},
+	     #{link},
+	     #{loadType},
+	     #{description},
+	     #{icon},
+	     #{iconBg},
+	     #{sortOrder},
+	     #{status},
+	     #{ctime},
+	     #{mtime}
+	   )
+	</insert>
+
+	<update id="update" parameterType="com.bluemobi.po.system.SystemNavigation">
+	   update system_navigation set
+	     navigation_id=#{navigationId},
+	     parent_id=#{parentId},
+	     hid=#{hid},
+	     title=#{title},
+	     link=#{link},
+	     load_type=#{loadType},
+	     description=#{description},
+	     icon=#{icon},
+	     icon_bg=#{iconBg},
+	     sort_order=#{sortOrder},
+	     status=#{status},
+	     ctime=#{ctime},
+	     mtime=#{mtime}
+	   where 
+	    navigation_id=#{navigationId} 
+	</update>
+
+	<delete id="delete" parameterType="map">
+	   delete from 
+	     system_navigation 
+	   where 
+	    navigation_id=#{navigationId} 
+	</delete>
+
+	<select id="selectObject" parameterType="map" resultMap="systemNavigationResultMap">
+	   select 
+	    navigation_id,
+	    parent_id,
+	    hid,
+	    title,
+	    link,
+	    load_type,
+	    description,
+	    icon,
+	    icon_bg,
+	    sort_order,
+	    status,
+	    ctime,
+	    mtime
+	   from system_navigation
+	   where 
+	    navigation_id=#{navigationId} 
+	</select>
+	
+	<select id="selectObjectList" resultMap="systemNavigationResultMap">
+	   select 
+	     navigation_id,
+	     parent_id,
+	     hid,
+	     title,
+	     link,
+	     load_type,
+	     description,
+	     icon,
+	     icon_bg,
+	     sort_order,
+	     status,
+	     ctime,
+	     mtime
+	   from system_navigation
+	   <where>
+	     <if test="navigationId != null">
+	        navigation_id=#{navigationId}
+	     </if>
+	     <if test="parentId != null">
+	        and parent_id=#{parentId}
+	     </if>
+	     <if test="hid != null">
+	        and hid=#{hid}
+	     </if>
+	     <if test="title != null">
+	        and title=#{title}
+	     </if>
+	     <if test="link != null">
+	        and link=#{link}
+	     </if>
+	     <if test="loadType != null">
+	        and load_type=#{loadType}
+	     </if>
+	     <if test="description != null">
+	        and description=#{description}
+	     </if>
+	     <if test="icon != null">
+	        and icon=#{icon}
+	     </if>
+	     <if test="iconBg != null">
+	        and icon_bg=#{iconBg}
+	     </if>
+	     <if test="sortOrder != null">
+	        and sort_order=#{sortOrder}
+	     </if>
+	     <if test="status != null">
+	        and status=#{status}
+	     </if>
+	     <if test="ctime != null">
+	        and ctime=#{ctime}
+	     </if>
+	     <if test="mtime != null">
+	        and mtime=#{mtime}
+	     </if>
+        
+	   </where>
+	   order by sort_order
+	</select>
+	
+	<select id="selectObjectListByLinkNull" parameterType="map" resultMap="systemNavigationResultMap">
+	   select 
+	     navigation_id,
+	     parent_id,
+	     hid,
+	     title,
+	     link,
+	     load_type,
+	     description,
+	     icon,
+	     icon_bg,
+	     sort_order,
+	     status,
+	     ctime,
+	     mtime
+	   from system_navigation
+	   <where>
+	     
+	     <if test="link != null">
+	        link!=#{link}
+	     </if>
+	     
+	   </where>
+	</select>
+	
+	<select id="selectObjectListByStatus" parameterType="map" resultMap="systemNavigationResultMap">
+	   select 
+	     navigation_id,
+	     parent_id,
+	     hid,
+	     title,
+	     link,
+	     load_type,
+	     description,
+	     icon,
+	     icon_bg,
+	     sort_order,
+	     status,
+	     ctime,
+	     mtime
+	   from system_navigation
+	   <where>
+	     <if test="status != null">
+	        status != #{status}
+	     </if>
+	   </where>
+	   order by hid, sort_order
+	</select>
+	
+	<select id="selectObjectListByParentId" parameterType="map" resultMap="systemNavigationResultMap">
+       select 
+         navigation_id,
+         parent_id,
+         hid,
+         title,
+         link,
+         load_type,
+         description,
+         icon,
+         icon_bg,
+         sort_order,
+         status,
+         ctime,
+         mtime
+       from system_navigation
+       <where>
+         <if test="parentId != null">
+            parent_id = #{parentId}
+         </if>
+       </where>
+       order by sort_order
+    </select>
+    
+    <select id="selectObjectListLikeByHid" resultMap="systemNavigationResultMap">
+       select 
+         navigation_id,
+         parent_id,
+         hid,
+         title,
+         link,
+         load_type,
+         description,
+         icon,
+         icon_bg,
+         sort_order,
+         status,
+         ctime,
+         mtime
+       from system_navigation
+       <where>
+         <if test="hid != null">
+            hid LIKE CONCAT(CONCAT('%', #{hid}), '%')
+         </if>
+       </where>
+       order by navigation_id
+    </select>
+
+	<select id="selectMap" parameterType="map" resultMap="mapResultMap">
+	   select 
+	    navigation_id,
+	    parent_id,
+	    hid,
+	    title,
+	    link,
+	    load_type,
+	    description,
+	    icon,
+	    icon_bg,
+	    sort_order,
+	    status,
+	    ctime,
+	    mtime
+	   from system_navigation
+	   where 
+	    navigation_id=#{navigationId} 
+	    order by sort_order
+	</select>
+
+	<select id="selectMapList" parameterType="map" resultMap="mapResultMap">
+	   select 
+	     navigation_id,
+	     parent_id,
+	     hid,
+	     title,
+	     link,
+	     load_type,
+	     description,
+	     icon,
+	     icon_bg,
+	     sort_order,
+	     status,
+	     ctime,
+	     mtime
+	   from system_navigation
+	   <where>
+	     <if test="navigationId != null">
+	        navigation_id=#{navigationId}
+	     </if>
+	     <if test="parentId != null">
+	        and parent_id=#{parentId}
+	     </if>
+	     <if test="hid != null">
+	        and hid=#{hid}
+	     </if>
+	     <if test="title != null">
+	        and title=#{title}
+	     </if>
+	     <if test="link != null">
+	        and link=#{link}
+	     </if>
+	     <if test="loadType != null">
+	        and load_type=#{loadType}
+	     </if>
+	     <if test="description != null">
+	        and description=#{description}
+	     </if>
+	     <if test="icon != null">
+	        and icon=#{icon}
+	     </if>
+	     <if test="iconBg != null">
+	        and icon_bg=#{iconBg}
+	     </if>
+	     <if test="sortOrder != null">
+	        and sort_order=#{sortOrder}
+	     </if>
+	     <if test="status != null">
+	        and status=#{status}
+	     </if>
+	     <if test="ctime != null">
+	        and ctime=#{ctime}
+	     </if>
+	     <if test="mtime != null">
+	        and mtime=#{mtime}
+	     </if>
+	   </where>
+	   order by sort_order
+	</select>
+	
+	<select id="page" parameterType="map" resultMap="pageResultMap">
+	   select 
+	     navigation_id,
+	     parent_id,
+	     hid,
+	     title,
+	     link,
+	     load_type,
+	     description,
+	     icon,
+	     icon_bg,
+	     sort_order,
+	     status,
+	     ctime,
+	     mtime
+	   from system_navigation
+	   <where>
+	     <if test="navigationId != null">
+	        navigation_id=#{navigationId}
+	     </if>
+	     <if test="parentId != null">
+	        and parent_id=#{parentId}
+	     </if>
+	     <if test="hid != null">
+	        and hid=#{hid}
+	     </if>
+	     <if test="title != null">
+	        and title=#{title}
+	     </if>
+	     <if test="link != null">
+	        and link=#{link}
+	     </if>
+	     <if test="loadType != null">
+	        and load_type=#{loadType}
+	     </if>
+	     <if test="description != null">
+	        and description=#{description}
+	     </if>
+	     <if test="icon != null">
+	        and icon=#{icon}
+	     </if>
+	     <if test="iconBg != null">
+	        and icon_bg=#{iconBg}
+	     </if>
+	     <if test="sortOrder != null">
+	        and sort_order=#{sortOrder}
+	     </if>
+	     <if test="status != null">
+	        and status=#{status}
+	     </if>
+	     <if test="ctime != null">
+	        and ctime=#{ctime}
+	     </if>
+	     <if test="mtime != null">
+	        and mtime=#{mtime}
+	     </if>
+	   </where>
+	   order by sort_order
+	</select>
+	
+    <select id="selectSecondNavigationsByUserid" parameterType="int" resultMap="systemNavigationResultMap">
+       select 
+            n.*
+       from
+            system_navigation n,
+            admin_user u,
+            admin_user_group ug,
+            admin_group_permission gp,
+            admin_permission p
+       where 
+            u.userid = ug.user_id
+            and ug.group_id = gp.group_id
+            and gp.permission_id = p.permission_id
+            and n.navigation_id = p.navigation_id
+            and n.status = 1
+            and u.userid = #{userid}
+            group by n.navigation_id
+            order by n.sort_order
+    </select>
+    
+	<select id="selectFirstNavigationsBySecondNavigations" parameterType="list" resultMap="systemNavigationResultMap">
+       select 
+            n.* 
+       from 
+            system_navigation n
+        where n.navigation_id in
+        <foreach collection="list" item = "secondNavigation" index="index" open="(" separator="," close=")">
+              #{secondNavigation.parentId}  
+        </foreach>  
+        order by n.sort_order
+    </select>
+	
+</mapper> 

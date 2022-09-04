@@ -1,0 +1,397 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+【退货流程日志表】对象关系映射 配置 
+ @author AutoCode 309444359@qq.com
+ @date 2015-11-17 13:27:05
+ -->
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.bluemobi.dao.bts.BtsOrderRefundDao">
+
+	<resultMap id="btsOrderRefundResultMap" type="com.bluemobi.po.bts.BtsOrderRefund">
+	   <id property="refundId" column="refund_id" />
+       <result property="orderId" column="order_id" />
+       <result property="refundSn" column="refund_sn" />
+       <result property="itemId" column="item_id" />
+       <result property="orderNumber" column="order_number" />
+       <result property="price" column="price" />
+       <result property="reason" column="reason" />
+       <result property="operatorType" column="operator_type" />
+       <result property="operatorUserid" column="operator_userid" />
+       <result property="ip" column="ip" />
+       <result property="ctime" column="ctime" />
+       <result property="status" column="status" />
+       <result property="isDel" column="is_del" />
+	</resultMap>
+	<resultMap id="mapResultMap"  type="java.util.HashMap" extends="btsOrderRefundResultMap"></resultMap>
+	
+	<resultMap id="pageResultMap"  type="com.bluemobi.to.bts.RefundDetailTO" extends="btsOrderRefundResultMap">
+		<result property="goodsName" column="goods_name"/>
+		<result property="number" column="buy_num"/>
+	</resultMap>
+	
+	<resultMap id="detailResultMap"  type="com.bluemobi.to.bts.RefundDetailTO" extends="pageResultMap">
+		<result property="buyPrice" column="buy_price"/>
+		<result property="goodsImage" column="goods_image"/>
+		<result property="username" column="username" />
+		<result property="skuId" column="sku_id" />
+		<result property="totalAmount" column="total_amount" />
+		<collection property="picList" column="filepath" ofType="java.lang.String">
+        	<result column="filepath"/>
+      	</collection>
+	</resultMap>
+	
+	<resultMap id="frontPageResultMap"  type="com.bluemobi.to.bts.RefundPageTO">
+		<id property="refundId" column="refund_id" />
+       	<result property="orderId" column="order_id" />
+       	<result property="refundSn" column="refund_sn" />
+       	<result property="orderNumber" column="order_number" />
+       	<result property="buyNum" column="buy_num" />
+       	<result property="buyPrice" column="buy_price" />
+       	<result property="ctime" column="ctime" />
+       	<result property="status" column="status" />
+       	<result property="skuId" column="sku_id" />
+       	<result property="goodsName" column="goods_name" />
+       	<result property="goodsImage" column="goods_image" />
+	</resultMap>
+	
+	<insert id="insert" parameterType="com.bluemobi.po.bts.BtsOrderRefund" useGeneratedKeys="true" keyColumn="refund_id" keyProperty="refundId">
+	   insert into bts_order_refund (
+	   	 order_id,
+	     refund_sn,
+	     item_id,
+	     order_number,
+	     price,
+	     reason,
+	     operator_type,
+	     operator_userid,
+	     ip,
+	     ctime,
+	     status,
+	     is_del
+	   )values (
+	     #{orderId},
+	     #{refundSn},
+	     #{itemId},
+	     #{orderNumber},
+	     #{price},
+	     #{reason},
+	     #{operatorType},
+	     #{operatorUserid},
+	     #{ip},
+	     #{ctime},
+	     #{status},
+	     #{isDel}
+	   )
+	</insert>
+
+	<update id="update" parameterType="com.bluemobi.po.bts.BtsOrderRefund">
+		update bts_order_refund
+		<set>
+			<if test="refundId != null">
+				refund_id=#{refundId},
+			</if>
+			<if test="refundSn != null">
+				refund_sn=#{refundSn},
+			</if>
+			<if test="itemId != null">
+				item_id=#{itemId},
+			</if>
+			<if test="price != null">
+				price=#{price},
+			</if>
+			<if test="reason != null">
+				reason=#{reason},
+			</if>
+			<if test="operatorType != null">
+				operator_type=#{operatorType},
+			</if>
+			<if test="operatorUserid != null">
+				operator_userid=#{operatorUserid},
+			</if>
+			<if test="ip != null">
+				ip=#{ip},
+			</if>
+			<if test="ctime != null">
+				ctime=#{ctime},
+			</if>
+			<if test="status != null">
+				status=#{status},
+			</if>
+			<if test="isDel != null">
+				is_del=#{isDel},
+			</if>
+		</set>
+		<where>
+			refund_id=#{refundId} 
+		</where>
+	</update>
+
+	<delete id="delete" parameterType="map">
+	   delete from 
+	     bts_order_refund 
+	   where 
+	    refund_id=#{refundId} 
+	</delete>
+
+	<select id="selectObject" parameterType="map" resultMap="btsOrderRefundResultMap">
+	   select 
+	    refund_id,
+	    refund_sn,
+	    item_id,
+	    price,
+	    reason,
+	    operator_type,
+	    operator_userid,
+	    ip,
+	    ctime,
+	    status,
+	    is_del
+	   from bts_order_refund
+	   where 
+	    refund_id=#{refundId} 
+	</select>
+	
+	<select id="selectObjectList" parameterType="map" resultMap="btsOrderRefundResultMap">
+	   select 
+	     refund_id,
+	     refund_sn,
+	     item_id,
+	     price,
+	     reason,
+	     operator_type,
+	     operator_userid,
+	     ip,
+	     ctime,
+	     status,
+	     is_del
+	   from bts_order_refund
+	   <where>
+	     <if test="refundId != null">
+	        refund_id=#{refundId}
+	     </if>
+	     <if test="refundSn != null">
+	        and refund_sn=#{refundSn}
+	     </if>
+	     <if test="itemId != null">
+	        and item_id=#{itemId}
+	     </if>
+	     <if test="price != null">
+	        and price=#{price}
+	     </if>
+	     <if test="reason != null">
+	        and reason=#{reason}
+	     </if>
+	     <if test="operatorType != null">
+	        and operator_type=#{operatorType}
+	     </if>
+	     <if test="operatorUserid != null">
+	        and operator_userid=#{operatorUserid}
+	     </if>
+	     <if test="ip != null">
+	        and ip=#{ip}
+	     </if>
+	     <if test="ctime != null">
+	        and ctime=#{ctime}
+	     </if>
+	     <if test="status != null">
+	        and status=#{status}
+	     </if>
+	     <if test="isDel != null">
+	        and is_del=#{isDel}
+	     </if>
+	   </where>
+	</select>
+
+	<select id="selectMap" parameterType="map" resultMap="mapResultMap">
+	   select 
+	    refund_id,
+	    refund_sn,
+	    item_id,
+	    price,
+	    reason,
+	    operator_type,
+	    operator_userid,
+	    ip,
+	    ctime,
+	    status,
+	    is_del
+	   from bts_order_refund
+	   where 
+	    refund_id=#{refundId} 
+	</select>
+
+	<select id="selectMapList" parameterType="map" resultMap="mapResultMap">
+	   select 
+	     refund_id,
+	     refund_sn,
+	     item_id,
+	     price,
+	     reason,
+	     operator_type,
+	     operator_userid,
+	     ip,
+	     ctime,
+	     status,
+	     is_del
+	   from bts_order_refund
+	   <where>
+	     <if test="refundId != null">
+	        refund_id=#{refundId}
+	     </if>
+	     <if test="refundSn != null">
+	        and refund_sn=#{refundSn}
+	     </if>
+	     <if test="itemId != null">
+	        and item_id=#{itemId}
+	     </if>
+	     <if test="price != null">
+	        and price=#{price}
+	     </if>
+	     <if test="reason != null">
+	        and reason=#{reason}
+	     </if>
+	     <if test="operatorType != null">
+	        and operator_type=#{operatorType}
+	     </if>
+	     <if test="operatorUserid != null">
+	        and operator_userid=#{operatorUserid}
+	     </if>
+	     <if test="ip != null">
+	        and ip=#{ip}
+	     </if>
+	     <if test="ctime != null">
+	        and ctime=#{ctime}
+	     </if>
+	     <if test="status != null">
+	        and status=#{status}
+	     </if>
+	     <if test="isDel != null">
+	        and is_del=#{isDel}
+	     </if>
+	   </where>
+	</select>
+	
+	<select id="page" parameterType="map" resultMap="pageResultMap">
+	   SELECT
+			r.refund_id,
+			r.refund_sn,
+			i.goods_name,
+			i.buy_num,
+			o.order_number,
+			r.reason,
+			r.ctime,
+			r.status
+	<include refid="pageCondition" />
+	limit #{offset},#{rows}
+	</select>
+
+	<select id="pageCount" parameterType="map" resultType="int">
+	   select count(1)
+	   <include refid="pageCondition" />
+	</select>
+
+	<sql id="pageCondition">
+	   FROM
+			bts_order_refund r,
+			bts_order_item i,
+			bts_order o
+	   <where>
+	   	 r.item_id = i.item_id
+		 AND i.order_id = o.order_id
+		 <if test="key != null and key != ''">
+	        and r.refund_sn LIKE CONCAT(CONCAT('%', #{key}), '%')
+	     </if>
+	     <if test="startDate != null">
+	        and r.ctime &gt;=#{startDate}
+	     </if>
+	     <if test="endDate != null">
+	        and r.ctime &lt;=#{endDate}
+	     </if>
+	     <if test="status != null">
+	        and r.status=#{status}
+	     </if>
+	   </where>
+	</sql>
+	
+	<select id="getDetailInfo" resultMap="detailResultMap">
+		SELECT
+			r.refund_id,
+			r.refund_sn,
+			i.goods_name,
+			i.goods_image,
+			i.buy_num,
+			i.buy_price,
+			i.sku_id,
+			o.order_number,
+			o.total_amount,
+			r.reason,
+			r.ctime,
+			r.STATUS,
+			o.userid,
+			u.username,
+			t.filepath
+		FROM
+			bts_order_item i,
+			bts_order o,
+		  cas_user u,
+		  bts_order_refund r left join
+			bts_order_attachment a on r.refund_id = a.refund_id
+			left join trend_attachment t on a.attachmentid = t.attachmentid
+		WHERE
+			r.item_id = i.item_id
+		and o.userid = u.userid
+		AND i.order_id = o.order_id
+		AND r.refund_id = #{refundId}
+	</select>
+	
+	<select id="frontPage" parameterType="map" resultMap="frontPageResultMap">
+	   SELECT
+			r.refund_id,
+			r.refund_sn,
+			o.order_number,
+			i.buy_num,
+			i.buy_price,
+			r.ctime,
+			r.status,
+			i.sku_id,
+			i.goods_name,
+			i.goods_image,
+			o.order_id
+		<include refid="frontPageCondition" />
+			limit #{offset},#{rows}
+	</select>
+
+	<select id="frontPageCount" parameterType="map" resultType="int">
+	   select count(1)
+	   <include refid="frontPageCondition" />
+	</select>
+
+	<sql id="frontPageCondition">
+	   FROM
+			bts_order_refund r,
+			bts_order_item i,
+			bts_order o
+	   <where>
+	   	 r.item_id = i.item_id
+		 AND i.order_id = o.order_id
+		 AND o.userid = #{userid}
+		 <if test="key != null and key != '' and searchType == 1">
+	        and o.order_number LIKE CONCAT(CONCAT('%', #{key}), '%')
+	     </if>
+	     <if test="key != null and key != '' and searchType == 2">
+	        and r.refund_sn LIKE CONCAT(CONCAT('%', #{key}), '%')
+	     </if>
+	     <if test="key != null and key != '' and searchType == 3">
+	        and i.goods_name LIKE CONCAT(CONCAT('%', #{key}), '%')
+	     </if>
+	     <if test="startDate != null">
+	        and r.ctime &gt;=#{startDate}
+	     </if>
+	     <if test="endDate != null">
+	        and r.ctime &lt;=#{endDate}
+	     </if>
+	   </where>
+	</sql>
+</mapper> 

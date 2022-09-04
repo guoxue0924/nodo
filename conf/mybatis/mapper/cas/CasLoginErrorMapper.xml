@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+【用户登录失败日志（归档）】对象关系映射 配置 
+ @author AutoCode 309444359@qq.com
+ @date 2015-08-31 10:23:10
+ -->
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.bluemobi.dao.cas.CasLoginErrorDao">
+
+	<resultMap id="casLoginErrorResultMap" type="com.bluemobi.po.cas.CasLoginError">
+		<id property="id" column="id" />
+		<result property="ip" column="ip" />
+		<result property="sessionid" column="sessionid" />
+		<result property="username" column="username" />
+		<result property="ctime" column="ctime" />
+	</resultMap>
+	<resultMap id="mapResultMap"  type="java.util.HashMap" extends="casLoginErrorResultMap"></resultMap>
+	<resultMap id="pageResultMap"  type="java.util.HashMap" extends="casLoginErrorResultMap"></resultMap>
+	
+	
+	<insert id="insert" parameterType="com.bluemobi.po.cas.CasLoginError">
+	   insert into cas_login_error (
+	     id,
+	     ip,
+	     sessionid,
+	     username,
+	     ctime
+	   )values (
+	     #{id},
+	     #{ip},
+	     #{sessionid},
+	     #{username},
+	     #{ctime}
+	   )
+	</insert>
+
+	<update id="update" parameterType="com.bluemobi.po.cas.CasLoginError">
+	   update cas_login_error set
+	     id=#{id},
+	     ip=#{ip},
+	     sessionid=#{sessionid},
+	     username=#{username},
+	     ctime=#{ctime}
+	   where 
+	    id=#{id} 
+	</update>
+
+	<delete id="delete" parameterType="map">
+	   delete from 
+	     cas_login_error 
+	   where 
+	    id=#{id} 
+	</delete>
+
+	<select id="selectObject" parameterType="map" resultMap="casLoginErrorResultMap">
+	   select 
+	    id,
+	    ip,
+	    sessionid,
+	    username,
+	    ctime
+	   from cas_login_error
+	   where 
+	    id=#{id} 
+	</select>
+	
+	<select id="selectObjectList" parameterType="map" resultMap="casLoginErrorResultMap">
+	   select 
+	     id,
+	     ip,
+	     sessionid,
+	     username,
+	     ctime
+	   from cas_login_error
+	   <where>
+	     <if test="id != null">
+	        id=#{id}
+	     </if>
+	     <if test="ip != null">
+	        and ip=#{ip}
+	     </if>
+	     <if test="sessionid != null">
+	        and sessionid=#{sessionid}
+	     </if>
+	     <if test="username != null">
+	        and username=#{username}
+	     </if>
+	     <if test="ctime != null">
+	        and ctime=#{ctime}
+	     </if>
+	   </where>
+	</select>
+
+	<select id="selectMap" parameterType="map" resultMap="mapResultMap">
+	   select 
+	    id,
+	    ip,
+	    sessionid,
+	    username,
+	    ctime
+	   from cas_login_error
+	   where 
+	    id=#{id} 
+	</select>
+
+	<select id="selectMapList" parameterType="map" resultMap="mapResultMap">
+	   select 
+	     id,
+	     ip,
+	     sessionid,
+	     username,
+	     ctime
+	   from cas_login_error
+	   <where>
+	     <if test="id != null">
+	        id=#{id}
+	     </if>
+	     <if test="ip != null">
+	        and ip=#{ip}
+	     </if>
+	     <if test="sessionid != null">
+	        and sessionid=#{sessionid}
+	     </if>
+	     <if test="username != null">
+	        and username=#{username}
+	     </if>
+	     <if test="ctime != null">
+	        and ctime=#{ctime}
+	     </if>
+	   </where>
+	</select>
+	
+	<select id="page" parameterType="map" resultMap="pageResultMap">
+	   select 
+	     id,
+	     ip,
+	     sessionid,
+	     username,
+	     ctime
+	   from cas_login_error
+	   <where>
+	     <if test="id != null">
+	        id=#{id}
+	     </if>
+	     <if test="ip != null">
+	        and ip=#{ip}
+	     </if>
+	     <if test="sessionid != null">
+	        and sessionid=#{sessionid}
+	     </if>
+	     <if test="username != null">
+	        and username=#{username}
+	     </if>
+	     <if test="ctime != null">
+	        and ctime=#{ctime}
+	     </if>
+	   </where>
+	</select>
+	
+</mapper> 

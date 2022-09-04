@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+【】对象关系映射 配置 
+ @author AutoCode 309444359@qq.com
+ @date 2015-09-11 10:53:21
+ -->
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.bluemobi.dao.cas.CasUserGroupDao">
+
+	<resultMap id="casUserGroupResultMap" type="com.bluemobi.po.cas.CasUserGroup">
+		<id property="userGroupId" column="user_group_id" />
+		<result property="groupName" column="group_name" />
+	</resultMap>
+	<resultMap id="mapResultMap"  type="java.util.HashMap" extends="casUserGroupResultMap"></resultMap>
+	<resultMap id="pageResultMap"  type="java.util.HashMap" extends="casUserGroupResultMap"></resultMap>
+	
+	
+	<insert id="insert" parameterType="com.bluemobi.po.cas.CasUserGroup">
+	   insert into cas_user_group (
+	     user_group_id,
+	     group_name
+	   )values (
+	     #{userGroupId},
+	     #{groupName}
+	   )
+	</insert>
+
+	<update id="update" parameterType="com.bluemobi.po.cas.CasUserGroup">
+	   update cas_user_group set
+	     user_group_id=#{userGroupId},
+	     group_name=#{groupName}
+	   where 
+	    user_group_id=#{userGroupId} 
+	</update>
+
+	<delete id="delete" parameterType="map">
+	   delete from 
+	     cas_user_group 
+	   where 
+	    user_group_id=#{userGroupId} 
+	</delete>
+
+	<select id="selectObject" parameterType="map" resultMap="casUserGroupResultMap">
+	   select 
+	    user_group_id,
+	    group_name
+	   from cas_user_group
+	   where 
+	    user_group_id=#{userGroupId} 
+	</select>
+	
+	<select id="selectObjectList" parameterType="map" resultMap="casUserGroupResultMap">
+	   select 
+	     user_group_id,
+	     group_name
+	   from cas_user_group
+	   <where>
+	     <if test="userGroupId != null">
+	        user_group_id=#{userGroupId}
+	     </if>
+	     <if test="groupName != null">
+	        and group_name=#{groupName}
+	     </if>
+	   </where>
+	</select>
+
+	<select id="selectMap" parameterType="map" resultMap="mapResultMap">
+	   select 
+	    user_group_id,
+	    group_name
+	   from cas_user_group
+	   where 
+	    user_group_id=#{userGroupId} 
+	</select>
+
+	<select id="selectMapList" parameterType="map" resultMap="mapResultMap">
+	   select 
+	     user_group_id,
+	     group_name
+	   from cas_user_group
+	   <where>
+	     <if test="userGroupId != null">
+	        user_group_id=#{userGroupId}
+	     </if>
+	     <if test="groupName != null">
+	        and group_name=#{groupName}
+	     </if>
+	   </where>
+	</select>
+	
+	<sql id="pageCondition">
+	   from cas_user_group
+       <where>
+         <if test="userGroupId != null">
+            user_group_id=#{userGroupId}
+         </if>
+         <if test="groupName != null">
+            and group_name=#{groupName}
+         </if>
+       </where>
+	</sql>
+	<select id="page" parameterType="map" resultMap="pageResultMap">
+	   select 
+	     user_group_id,
+	     group_name
+	   <include refid="pageCondition" />
+	   limit #{offset},#{rows}
+	</select>
+	
+	<select id="pageCount" parameterType="map" resultType="int">
+        select count(1)
+        <include refid="pageCondition" />
+    </select>
+	
+</mapper> 

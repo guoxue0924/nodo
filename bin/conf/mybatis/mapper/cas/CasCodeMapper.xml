@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+【用于用户各种动作的码表】对象关系映射 配置 
+ @author AutoCode 309444359@qq.com
+ @date 2015-08-31 10:23:10
+ -->
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.bluemobi.dao.cas.CasCodeDao">
+
+	<resultMap id="casCodeResultMap" type="com.bluemobi.po.cas.CasCode">
+		<id property="id" column="id" />
+		<result property="userid" column="userid" />
+		<result property="type" column="type" />
+		<result property="action" column="action" />
+		<result property="sendTo" column="send_to" />
+		<result property="code" column="code" />
+		<result property="ctime" column="ctime" />
+		<result property="exptime" column="exptime" />
+	</resultMap>
+	<resultMap id="mapResultMap"  type="java.util.HashMap" extends="casCodeResultMap"></resultMap>
+	<resultMap id="pageResultMap"  type="java.util.HashMap" extends="casCodeResultMap"></resultMap>
+	
+	
+	<insert id="insert" parameterType="com.bluemobi.po.cas.CasCode">
+	   insert into cas_code (
+	     id,
+	     userid,
+	     type,
+	     action,
+	     send_to,
+	     code,
+	     ctime,
+	     exptime
+	   )values (
+	     #{id},
+	     #{userid},
+	     #{type},
+	     #{action},
+	     #{sendTo},
+	     #{code},
+	     #{ctime},
+	     #{exptime}
+	   )
+	</insert>
+
+	<update id="update" parameterType="com.bluemobi.po.cas.CasCode">
+	   update cas_code set
+	     id=#{id},
+	     userid=#{userid},
+	     type=#{type},
+	     action=#{action},
+	     send_to=#{sendTo},
+	     code=#{code},
+	     ctime=#{ctime},
+	     exptime=#{exptime}
+	   where 
+	    id=#{id} 
+	</update>
+
+	<delete id="delete" parameterType="map">
+	   delete from 
+	     cas_code 
+	   where 
+	    id=#{id} 
+	</delete>
+
+	<select id="selectObject" parameterType="map" resultMap="casCodeResultMap">
+	   select 
+	    id,
+	    userid,
+	    type,
+	    action,
+	    send_to,
+	    code,
+	    ctime,
+	    exptime
+	   from cas_code
+	   where 
+	    id=#{id} 
+	</select>
+	
+	<select id="selectObjectList" parameterType="map" resultMap="casCodeResultMap">
+	   select 
+	     id,
+	     userid,
+	     type,
+	     action,
+	     send_to,
+	     code,
+	     ctime,
+	     exptime
+	   from cas_code
+	   <where>
+	     <if test="id != null">
+	        id=#{id}
+	     </if>
+	     <if test="userid != null">
+	        and userid=#{userid}
+	     </if>
+	     <if test="type != null">
+	        and type=#{type}
+	     </if>
+	     <if test="action != null">
+	        and action=#{action}
+	     </if>
+	     <if test="sendTo != null">
+	        and send_to=#{sendTo}
+	     </if>
+	     <if test="code != null">
+	        and code=#{code}
+	     </if>
+	     <if test="ctime != null">
+	        and ctime=#{ctime}
+	     </if>
+	     <if test="exptime != null">
+	        and exptime=#{exptime}
+	     </if>
+	   </where>
+	   order by ctime DESC
+	</select>
+
+	<select id="selectMap" parameterType="map" resultMap="mapResultMap">
+	   select 
+	    id,
+	    userid,
+	    type,
+	    action,
+	    send_to,
+	    code,
+	    ctime,
+	    exptime
+	   from cas_code
+	   where 
+	    id=#{id} 
+	</select>
+
+	<select id="selectMapList" parameterType="map" resultMap="mapResultMap">
+	   select 
+	     id,
+	     userid,
+	     type,
+	     action,
+	     send_to,
+	     code,
+	     ctime,
+	     exptime
+	   from cas_code
+	   <where>
+	     <if test="id != null">
+	        id=#{id}
+	     </if>
+	     <if test="userid != null">
+	        and userid=#{userid}
+	     </if>
+	     <if test="type != null">
+	        and type=#{type}
+	     </if>
+	     <if test="action != null">
+	        and action=#{action}
+	     </if>
+	     <if test="sendTo != null">
+	        and send_to=#{sendTo}
+	     </if>
+	     <if test="code != null">
+	        and code=#{code}
+	     </if>
+	     <if test="ctime != null">
+	        and ctime=#{ctime}
+	     </if>
+	     <if test="exptime != null">
+	        and exptime=#{exptime}
+	     </if>
+	   </where>
+	</select>
+	
+	<sql id="pageCondition">
+	    from cas_code
+       <where>
+         <if test="id != null">
+            id=#{id}
+         </if>
+         <if test="userid != null">
+            and userid=#{userid}
+         </if>
+         <if test="type != null">
+            and type=#{type}
+         </if>
+         <if test="action != null">
+            and action=#{action}
+         </if>
+         <if test="sendTo != null">
+            and send_to=#{sendTo}
+         </if>
+         <if test="code != null">
+            and code=#{code}
+         </if>
+         <if test="ctime != null">
+            and ctime=#{ctime}
+         </if>
+         <if test="exptime != null">
+            and exptime=#{exptime}
+         </if>
+       </where>
+	</sql>
+	<select id="page" parameterType="map" resultMap="pageResultMap">
+	   select 
+	     id,
+	     userid,
+	     type,
+	     action,
+	     send_to,
+	     code,
+	     ctime,
+	     exptime
+	 <include refid="pageCondition" />
+       limit #{offset},#{rows}
+    </select>
+    <select id="pageCount" parameterType="map" resultType="int">
+        select count(1)
+        <include refid="pageCondition" />
+    </select>
+</mapper> 

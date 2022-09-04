@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+【】对象关系映射 配置 
+ @author AutoCode 309444359@qq.com
+ @date 2015-11-17 22:01:27
+ -->
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.bluemobi.dao.admin.AdminGroupPermissionDao">
+
+	<resultMap id="adminGroupPermissionResultMap" type="com.bluemobi.po.admin.AdminGroupPermission">
+		<id property="groupPermissionId" column="group_permission_id" />
+       <result property="groupId" column="group_id" />
+       <result property="permissionId" column="permission_id" />
+	</resultMap>
+	<resultMap id="mapResultMap"  type="java.util.HashMap" extends="adminGroupPermissionResultMap"></resultMap>
+	<resultMap id="pageResultMap"  type="java.util.HashMap" extends="adminGroupPermissionResultMap"></resultMap>
+	
+	
+	<insert id="insert" parameterType="com.bluemobi.po.admin.AdminGroupPermission">
+	   insert into admin_group_permission (
+	     group_permission_id,
+	     group_id,
+	     permission_id
+	   )values (
+	     #{groupPermissionId},
+	     #{groupId},
+	     #{permissionId}
+	   )
+	</insert>
+
+	<update id="update" parameterType="com.bluemobi.po.admin.AdminGroupPermission">
+		update admin_group_permission
+		<set>
+			<if test="groupPermissionId != null">
+				group_permission_id=#{groupPermissionId},
+			</if>
+			<if test="groupId != null">
+				group_id=#{groupId},
+			</if>
+			<if test="permissionId != null">
+				permission_id=#{permissionId},
+			</if>
+		</set>
+		<where>
+			group_permission_id=#{groupPermissionId} 
+		</where>
+	</update>
+
+	<delete id="delete" parameterType="map">
+	   delete from 
+	     admin_group_permission 
+	   where 
+	    group_permission_id=#{groupPermissionId} 
+	</delete>
+	
+	<delete id="deleteByPermission" parameterType="map">
+       delete from 
+         admin_group_permission 
+       where 
+        group_id=#{groupId}
+        and permission_id=#{permissionId}
+    </delete>
+    
+    <delete id="deleteByPermissionId" parameterType="map">
+       delete from 
+         admin_group_permission 
+       where
+         permission_id=#{permissionId}
+    </delete>
+
+	<select id="selectObject" parameterType="map" resultMap="adminGroupPermissionResultMap">
+	   select 
+	    group_permission_id,
+	    group_id,
+	    permission_id
+	   from admin_group_permission
+	   where 
+	    group_permission_id=#{groupPermissionId} 
+	</select>
+	
+	<select id="selectObjectList" parameterType="map" resultMap="adminGroupPermissionResultMap">
+	   select 
+	     group_permission_id,
+	     group_id,
+	     permission_id
+	   from admin_group_permission
+	   <where>
+	     <if test="groupPermissionId != null">
+	        group_permission_id=#{groupPermissionId}
+	     </if>
+	     <if test="groupId != null">
+	        and group_id=#{groupId}
+	     </if>
+	     <if test="permissionId != null">
+	        and permission_id=#{permissionId}
+	     </if>
+	   </where>
+	</select>
+
+	<select id="selectMap" parameterType="map" resultMap="mapResultMap">
+	   select 
+	    group_permission_id,
+	    group_id,
+	    permission_id
+	   from admin_group_permission
+	   where 
+	    group_permission_id=#{groupPermissionId} 
+	</select>
+
+	<select id="selectMapList" parameterType="map" resultMap="mapResultMap">
+	   select 
+	     group_permission_id,
+	     group_id,
+	     permission_id
+	   from admin_group_permission
+	   <where>
+	     <if test="groupPermissionId != null">
+	        group_permission_id=#{groupPermissionId}
+	     </if>
+	     <if test="groupId != null">
+	        and group_id=#{groupId}
+	     </if>
+	     <if test="permissionId != null">
+	        and permission_id=#{permissionId}
+	     </if>
+	   </where>
+	</select>
+	
+	<select id="getGroupPermissionList" parameterType="list" resultMap="adminGroupPermissionResultMap">
+       select 
+         group_permission_id,
+         group_id,
+         permission_id
+       from admin_group_permission
+       where
+         group_id in  
+         <foreach collection="grouplist" item = "groupId" open="(" separator="," close=")">
+              #{groupId}  
+         </foreach> 
+    </select>
+	
+	<select id="page" parameterType="map" resultMap="pageResultMap">
+	   select 
+	     group_permission_id,
+	     group_id,
+	     permission_id
+	<include refid="pageCondition" />
+	limit #{offset},#{rows}
+	</select>
+
+	<select id="pageCount" parameterType="map" resultType="int">
+	   select count(1)
+	   <include refid="pageCondition" />
+	</select>
+
+	<sql id="pageCondition">
+	   from admin_group_permission
+	   <where>
+	     <if test="groupPermissionId != null">
+	        group_permission_id=#{groupPermissionId}
+	     </if>
+	     <if test="groupId != null">
+	        and group_id=#{groupId}
+	     </if>
+	     <if test="permissionId != null">
+	        and permission_id=#{permissionId}
+	     </if>
+	   </where>
+	</sql>
+
+	
+</mapper> 

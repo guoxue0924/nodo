@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+【商品属性与分类关系表】对象关系映射 配置 
+ @author AutoCode 309444359@qq.com
+ @date 2015-10-22 15:18:57
+ -->
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.bluemobi.dao.goods.GoodsPropertyCategoryDao">
+
+	<resultMap id="goodsPropertyCategoryResultMap" type="com.bluemobi.po.goods.GoodsPropertyCategory">
+		<id property="propertyId" column="property_id" />
+		<id property="propertyGroupId" column="property_group_id" />
+		<id property="categoryId" column="category_id" />
+		<result property="propertyId" column="property_id" />
+		<result property="propertyId" column="property_id" />
+		<result property="propertyGroupId" column="property_group_id" />
+		<result property="propertyGroupId" column="property_group_id" />
+		<result property="categoryId" column="category_id" />
+		<result property="categoryId" column="category_id" />
+		<result property="sortOrder" column="sort_order" />
+		<result property="sortOrder" column="sort_order" />
+		<result property="sortOrder" column="sort_order" />
+	</resultMap>
+	<resultMap id="mapResultMap"  type="java.util.HashMap" extends="goodsPropertyCategoryResultMap"></resultMap>
+	<resultMap id="pageResultMap"  type="java.util.HashMap" extends="goodsPropertyCategoryResultMap"></resultMap>
+	
+	
+	<insert id="insert" parameterType="com.bluemobi.po.goods.GoodsPropertyCategory">
+	   insert into goods_property_category (
+	     property_id,
+	     property_group_id,
+	     category_id,
+	     sort_order
+	   )values (
+	     #{propertyId},
+	     #{propertyGroupId},
+	     #{categoryId},
+	     #{sortOrder}
+	   )
+	</insert>
+
+	<update id="update" parameterType="com.bluemobi.po.goods.GoodsPropertyCategory">
+		update goods_property_category
+		<set>
+			<if test="propertyId != null">
+				property_id=#{propertyId},
+			</if>
+			<if test="propertyGroupId != null">
+				property_group_id=#{propertyGroupId},
+			</if>
+			<if test="categoryId != null">
+				category_id=#{categoryId},
+			</if>
+			<if test="sortOrder != null">
+				sort_order=#{sortOrder},
+			</if>
+		</set>
+		<where>
+			property_id=#{propertyId} 
+			 andproperty_group_id=#{propertyGroupId} 
+			 andcategory_id=#{categoryId} 
+		</where>
+	</update>
+
+	<delete id="delete" parameterType="map">
+	   delete from 
+	     goods_property_category 
+	   where 
+	    property_id=#{propertyId} 
+	    and property_group_id=#{propertyGroupId} 
+	    and category_id=#{categoryId} 
+	</delete>
+
+	<select id="selectObject" parameterType="map" resultMap="goodsPropertyCategoryResultMap">
+	   select 
+	    property_id,
+	    property_group_id,
+	    category_id,
+	    sort_order
+	   from goods_property_category
+	   where 
+	    property_id=#{propertyId} 
+	    and property_group_id=#{propertyGroupId} 
+	    and category_id=#{categoryId} 
+	</select>
+	
+	<select id="selectObjectList" parameterType="map" resultMap="goodsPropertyCategoryResultMap">
+	   select 
+	     property_id,
+	     property_group_id,
+	     category_id,
+	     sort_order
+	   from goods_property_category
+	   <where>
+	     <if test="propertyId != null">
+	        property_id=#{propertyId}
+	     </if>
+	     <if test="propertyGroupId != null">
+	        and property_group_id=#{propertyGroupId}
+	     </if>
+	     <if test="categoryId != null">
+	        and category_id=#{categoryId}
+	     </if>
+	     <if test="sortOrder != null">
+	        and sort_order=#{sortOrder}
+	     </if>
+	   </where>
+	</select>
+
+	<select id="selectMap" parameterType="map" resultMap="mapResultMap">
+	   select 
+	    property_id,
+	    property_group_id,
+	    category_id,
+	    sort_order
+	   from goods_property_category
+	   where 
+	    property_id=#{propertyId} 
+	    and property_group_id=#{propertyGroupId} 
+	    and category_id=#{categoryId} 
+	</select>
+
+	<select id="selectMapList" parameterType="map" resultMap="mapResultMap">
+	   select 
+	     property_id,
+	     property_group_id,
+	     category_id,
+	     sort_order
+	   from goods_property_category
+	   <where>
+	     <if test="propertyId != null">
+	        property_id=#{propertyId}
+	     </if>
+	     <if test="propertyGroupId != null">
+	        and property_group_id=#{propertyGroupId}
+	     </if>
+	     <if test="categoryId != null">
+	        and category_id=#{categoryId}
+	     </if>
+	     <if test="sortOrder != null">
+	        and sort_order=#{sortOrder}
+	     </if>
+	   </where>
+	</select>
+	
+	<select id="page" parameterType="map" resultMap="pageResultMap">
+	   select 
+	     property_id,
+	     property_group_id,
+	     category_id,
+	     sort_order
+	   <include refid="pageCondition" />
+        limit #{offset},#{rows}
+	</select>
+	
+	<select id="pageCount" parameterType="map" resultType="int">
+        select count(1)
+        <include refid="pageCondition" />
+    </select>
+	
+	<sql id="pageCondition">
+	   from goods_property_category
+       <where>
+         <if test="propertyId != null">
+            property_id=#{propertyId}
+         </if>
+         <if test="propertyGroupId != null">
+            and property_group_id=#{propertyGroupId}
+         </if>
+         <if test="categoryId != null">
+            and category_id=#{categoryId}
+         </if>
+         <if test="sortOrder != null">
+            and sort_order=#{sortOrder}
+         </if>
+       </where>
+	</sql>
+	
+	<delete id="deleteByCategoryId" parameterType="java.util.List">
+       delete from 
+          goods_property_category 
+       where 
+          category_id in  
+        <foreach collection="list" item = "item" index="index" open="(" separator="," close=")">
+              #{item.categoryId}  
+        </foreach>  
+    </delete>
+    
+    <insert id="insertGoodsPropertyCategories" parameterType="java.util.List">
+          insert into goods_property_category 
+              (
+                  property_id,property_group_id,category_id,sort_order
+              ) 
+          values
+          <foreach collection="list" item="item" index="index" separator=",">
+              (
+                  #{item.propertyId}, #{item.propertyGroupId}, #{item.categoryId}, #{item.sortOrder}
+              )
+          </foreach>
+    </insert>
+	
+</mapper> 

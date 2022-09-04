@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+【ＩＭ消息内容表】对象关系映射 配置 
+ @author AutoCode 309444359@qq.com
+ @date 2016-03-04 11:01:20
+ -->
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.bluemobi.dao.im.ImContentDao">
+
+	<resultMap id="imContentResultMap" type="com.bluemobi.po.im.ImContent">
+		<id property="id" column="id" />
+       <result property="categoryId" column="category_id" />
+       <result property="content" column="content" />
+       <result property="sendUserType" column="send_user_type" />
+       <result property="sendUserid" column="send_userid" />
+       <result property="toUserType" column="to_user_type" />
+       <result property="toUserid" column="to_userid" />
+       <result property="isLock" column="is_lock" />
+       <result property="isRead" column="is_read" />
+       <result property="isDel" column="is_del" />
+       <result property="ctime" column="ctime" />
+       <result property="mtime" column="mtime" />
+	</resultMap>
+	<resultMap id="mapResultMap"  type="java.util.HashMap" extends="imContentResultMap"></resultMap>
+	<resultMap id="pageResultMap"  type="java.util.HashMap" extends="imContentResultMap"></resultMap>
+	
+	<resultMap id="contactResultMap"  type="java.util.HashMap">
+		<id property="userid" column="userid" />
+		<result property="username" column="username" />
+		<result property="nickname" column="nickname" />
+		<result property="gender" column="gender" />
+		<result property="avatar" column="avatar" />
+	</resultMap>
+	
+	
+	<insert id="insert" parameterType="com.bluemobi.po.im.ImContent" useGeneratedKeys="true" keyProperty="id" >
+	   insert into im_content (
+	     category_id,
+	     content,
+	     send_user_type,
+	     send_userid,
+	     to_user_type,
+	     to_userid,
+	     is_lock,
+	     is_read,
+	     is_del,
+	     ctime
+	   )values (
+	     #{categoryId},
+	     #{content},
+	     #{sendUserType},
+	     #{sendUserid},
+	     #{toUserType},
+	     #{toUserid},
+	     #{isLock},
+	     #{isRead},
+	     #{isDel},
+	     #{ctime}
+	   )
+	</insert>
+
+	<update id="update" parameterType="com.bluemobi.po.im.ImContent">
+		update im_content
+		<set>
+			<if test="isLock != null">
+				is_lock=#{isLock},
+			</if>
+			<if test="isRead != null">
+				is_read=#{isRead},
+			</if>
+			<if test="isDel != null">
+				is_del=#{isDel},
+			</if>
+			<if test="mtime != null">
+				mtime=#{mtime},
+			</if>
+		</set>
+		<where>
+			id=#{id} 
+		</where>
+	</update>
+
+	<select id="selectObject" parameterType="map" resultMap="imContentResultMap">
+	   select 
+	    id,
+	    category_id,
+	    content,
+	    send_user_type,
+	    send_userid,
+	    to_user_type,
+	    to_userid,
+	    is_lock,
+	    is_read,
+	    is_del,
+	    ctime,
+	    mtime
+	   from im_content
+	   where 
+	    id=#{id} 
+	</select>
+	
+	<select id="selectObjectList" parameterType="map" resultMap="imContentResultMap">
+	   select 
+	     id,
+	     category_id,
+	     content,
+	     send_user_type,
+	     send_userid,
+	     to_user_type,
+	     to_userid,
+	     is_lock,
+	     is_read,
+	     is_del,
+	     ctime,
+	     mtime
+	   from im_content
+	   <where>
+	     <if test="id != null">
+	        id=#{id}
+	     </if>
+	     <if test="categoryId != null">
+	        and category_id=#{categoryId}
+	     </if>
+	     <if test="content != null">
+	        and content=#{content}
+	     </if>
+	     <if test="sendUserType != null">
+	        and send_user_type=#{sendUserType}
+	     </if>
+	     <if test="sendUserid != null">
+	        and send_userid=#{sendUserid}
+	     </if>
+	     <if test="toUserType != null">
+	        and to_user_type=#{toUserType}
+	     </if>
+	     <if test="toUserid != null">
+	        and to_userid=#{toUserid}
+	     </if>
+	     <if test="isLock != null">
+	        and is_lock=#{isLock}
+	     </if>
+	     <if test="isRead != null">
+	        and is_read=#{isRead}
+	     </if>
+	     <if test="isDel != null">
+	        and is_del=#{isDel}
+	     </if>
+	     <if test="ctime != null">
+	        and ctime=#{ctime}
+	     </if>
+	     <if test="mtime != null">
+	        and mtime=#{mtime}
+	     </if>
+	   </where>
+	</select>
+
+	<select id="selectMap" parameterType="map" resultMap="mapResultMap">
+	   select 
+	    id,
+	    category_id,
+	    content,
+	    send_user_type,
+	    send_userid,
+	    to_user_type,
+	    to_userid,
+	    is_lock,
+	    is_read,
+	    is_del,
+	    ctime,
+	    mtime
+	   from im_content
+	   where 
+	    id=#{id} 
+	</select>
+
+	<select id="selectMapList" parameterType="map" resultMap="mapResultMap">
+	   select 
+	     id,
+	     category_id,
+	     content,
+	     send_user_type,
+	     send_userid,
+	     to_user_type,
+	     to_userid,
+	     is_lock,
+	     is_read,
+	     is_del,
+	     ctime,
+	     mtime
+	   from im_content
+	   <where>
+	     <if test="id != null">
+	        id=#{id}
+	     </if>
+	     <if test="categoryId != null">
+	        and category_id=#{categoryId}
+	     </if>
+	     <if test="content != null">
+	        and content=#{content}
+	     </if>
+	     <if test="sendUserType != null">
+	        and send_user_type=#{sendUserType}
+	     </if>
+	     <if test="sendUserid != null">
+	        and send_userid=#{sendUserid}
+	     </if>
+	     <if test="toUserType != null">
+	        and to_user_type=#{toUserType}
+	     </if>
+	     <if test="toUserid != null">
+	        and to_userid=#{toUserid}
+	     </if>
+	     <if test="isLock != null">
+	        and is_lock=#{isLock}
+	     </if>
+	     <if test="isRead != null">
+	        and is_read=#{isRead}
+	     </if>
+	     <if test="isDel != null">
+	        and is_del=#{isDel}
+	     </if>
+	     <if test="ctime != null">
+	        and ctime=#{ctime}
+	     </if>
+	     <if test="mtime != null">
+	        and mtime=#{mtime}
+	     </if>
+	   </where>
+	</select>
+	
+	<select id="page" parameterType="map" resultMap="pageResultMap">
+	   select 
+	     id,
+	     category_id,
+	     content,
+	     send_user_type,
+	     send_userid,
+	     to_user_type,
+	     to_userid,
+	     is_lock,
+	     is_read,
+	     is_del,
+	     ctime,
+	     mtime
+	<include refid="pageCondition" />
+	limit #{offset},#{rows}
+	</select>
+
+	<select id="pageCount" parameterType="map" resultType="int">
+	   select count(1)
+	   <include refid="pageCondition" />
+	</select>
+
+	<sql id="pageCondition">
+	   from im_content
+	   <where>
+	   	 (send_user_type = '1' AND send_userid='${sendUserId}') OR (to_user_type = '1' AND to_userid='${sendUserId}')
+	   	 and is_del = 0
+	     <if test="categoryId != null">
+	        and category_id=#{categoryId}
+	     </if>
+	     <if test="key != null">
+	        and content LIKE CONCAT(CONCAT('%', #{key}), '%')
+	     </if>
+	     <if test="isRead != null">
+	        and is_read=#{isRead}
+	     </if>
+	   </where>
+	   order by ctime desc
+	</sql>
+	
+	<select id="selectContact" parameterType="map" resultMap="contactResultMap">
+	   SELECT
+			userid,
+			username,
+			nickname,
+			gender,
+			avatar,
+			IFNULL(total, 0) AS total,
+			ctime
+		FROM
+			(
+				SELECT
+					u.userid,
+					u.username,
+					u.nickname,
+					u.gender,
+					u.avatar
+				FROM
+					cas_user u
+				WHERE
+					EXISTS (
+						SELECT DISTINCT
+							(c.send_userid) AS send_userid
+						FROM
+							im_content c
+						WHERE
+							c.send_user_type = 1
+						AND c.is_del = 0
+						AND c.category_id = ${categoryId}
+						AND u.userid = c.send_userid
+					)
+			) t1
+		LEFT JOIN (
+			SELECT
+				i.send_userid,
+				count(1) AS total,
+				max(ctime) AS ctime
+			FROM
+				im_content i
+			WHERE
+				i.is_del = 0
+			AND i.is_read = 0
+			AND i.send_user_type = 1
+			GROUP BY
+				i.send_userid
+		) t2 ON t1.userid = t2.send_userid
+	</select>
+	
+</mapper> 

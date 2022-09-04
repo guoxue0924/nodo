@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+【】对象关系映射 配置 
+ @author AutoCode 309444359@qq.com
+ @date 2016-02-19 15:51:46
+ -->
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.bluemobi.dao.article.ArticleCategoryDao">
+
+	<resultMap id="articleCategoryResultMap" type="com.bluemobi.po.article.ArticleCategory">
+	   <id property="categoryId" column="category_id" />
+       <result property="parentId" column="parent_id" />
+       <result property="title" column="title" />
+       <result property="description" column="description" />
+       <result property="sortOrder" column="sort_order" />
+       <result property="ctime" column="ctime" />
+       <result property="mtime" column="mtime" />
+	</resultMap>
+	<resultMap id="mapResultMap"  type="java.util.HashMap" extends="articleCategoryResultMap"></resultMap>
+	<resultMap id="pageResultMap"  type="java.util.HashMap" extends="articleCategoryResultMap">
+		<result property="parentTitle" column="parent_title" />
+	</resultMap>
+	
+	
+	<insert id="insert" parameterType="com.bluemobi.po.article.ArticleCategory" useGeneratedKeys="true" keyProperty="categoryId" >
+	   insert into article_category (
+	     parent_id,
+	     title,
+	     description,
+	     <if test="sortOrder != null">
+	     	sort_order,
+	     </if>
+	     ctime
+	   )values (
+	     #{parentId},
+	     #{title},
+	     #{description},
+	     <if test="sortOrder != null">
+		     #{sortOrder},
+	     </if>
+	     #{ctime}
+	   )
+	</insert>
+
+	<update id="update" parameterType="com.bluemobi.po.article.ArticleCategory">
+		update article_category
+		<set>
+			<if test="parentId != null">
+				parent_id=#{parentId},
+			</if>
+			<if test="title != null">
+				title=#{title},
+			</if>
+			<if test="description != null">
+				description=#{description},
+			</if>
+			<if test="sortOrder != null">
+				sort_order=#{sortOrder},
+			</if>
+			<if test="ctime != null">
+				ctime=#{ctime},
+			</if>
+			<if test="mtime != null">
+				mtime=#{mtime},
+			</if>
+		</set>
+		<where>
+			category_id=#{categoryId} 
+		</where>
+	</update>
+
+	<delete id="delete" parameterType="map">
+	   delete from 
+	     article_category 
+	   where 
+	    category_id=#{categoryId} 
+	</delete>
+
+	<select id="selectObject" parameterType="map" resultMap="articleCategoryResultMap">
+	   select 
+	    category_id,
+	    parent_id,
+	    title,
+	    description,
+	    sort_order,
+	    ctime,
+	    mtime
+	   from article_category
+	   where 
+	    category_id=#{categoryId} 
+	</select>
+	
+	<select id="selectObjectList" parameterType="map" resultMap="articleCategoryResultMap">
+	   select 
+	     category_id,
+	     parent_id,
+	     title,
+	     description,
+	     sort_order,
+	     ctime,
+	     mtime
+	   from article_category
+	   <where>
+	     <if test="categoryId != null">
+	        category_id!=#{categoryId}
+	     </if>
+	     <if test="title != null">
+	     	title = #{title}
+	     </if>
+	     <if test="parentId != null">
+	     	parent_id = #{parentId}
+	     </if>
+	   </where>
+	</select>
+
+	<select id="selectMap" parameterType="map" resultMap="mapResultMap">
+	   select 
+	    category_id,
+	    parent_id,
+	    title,
+	    description,
+	    sort_order,
+	    ctime,
+	    mtime
+	   from article_category
+	   where 
+	    category_id=#{categoryId} 
+	</select>
+
+	<select id="selectMapList" parameterType="map" resultMap="mapResultMap">
+	   select 
+	     category_id,
+	     parent_id,
+	     title,
+	     description,
+	     sort_order,
+	     ctime,
+	     mtime
+	   from article_category
+	   <where>
+	     <if test="categoryId != null">
+	        category_id=#{categoryId}
+	     </if>
+	     <if test="parentId != null">
+	        and parent_id=#{parentId}
+	     </if>
+	     <if test="title != null">
+	        and title=#{title}
+	     </if>
+	     <if test="description != null">
+	        and description=#{description}
+	     </if>
+	     <if test="sortOrder != null">
+	        and sort_order=#{sortOrder}
+	     </if>
+	     <if test="ctime != null">
+	        and ctime=#{ctime}
+	     </if>
+	     <if test="mtime != null">
+	        and mtime=#{mtime}
+	     </if>
+	   </where>
+	</select>
+	
+	<select id="page" parameterType="map" resultMap="pageResultMap">
+	   select 
+     	c_s.category_id,
+		c_s.title,
+		c_s.sort_order,
+		IFNULL(c_f.title, '')  AS parent_title
+	<include refid="pageCondition" />
+	limit #{offset},#{rows}
+	</select>
+
+	<select id="pageCount" parameterType="map" resultType="int">
+	   select count(1)
+	   <include refid="pageCondition" />
+	</select>
+
+	<sql id="pageCondition">
+	   from article_category c_s
+		LEFT JOIN article_category c_f ON c_s.parent_id = c_f.category_id
+	   <where>
+	     <if test="key != null">
+	        and c_s.title LIKE CONCAT(CONCAT('%', #{key}), '%')
+	     </if>
+	   </where>
+	</sql>
+
+	
+</mapper> 

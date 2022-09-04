@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+【商品分类表】对象关系映射 配置 
+ @author AutoCode 309444359@qq.com
+ @date 2015-10-22 15:18:57
+ -->
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.bluemobi.dao.goods.GoodsCategoryDao">
+
+	<resultMap id="goodsCategoryResultMap" type="com.bluemobi.po.goods.GoodsCategory">
+        <id property="categoryId" column="category_id" />
+        <result property="parentId" column="parent_id" />
+       <result property="categoryName" column="category_name" />
+       <result property="grade" column="grade" />
+       <result property="image" column="image" />
+       <result property="description" column="description" />
+       <result property="sortOrder" column="sort_order" />
+       <result property="status" column="status" />
+       <result property="ctime" column="ctime" />
+       <result property="mtime" column="mtime" />
+	</resultMap>
+	<resultMap id="mapResultMap"  type="java.util.HashMap" extends="goodsCategoryResultMap">
+		<result property="count" column="count" />
+		<result property="parentName" column="parent_name" />
+	</resultMap>
+	<resultMap id="pageResultMap"  type="java.util.HashMap" extends="goodsCategoryResultMap">
+		<result property="parentName" column="parent_name" />
+	</resultMap>
+	
+	
+	<insert id="insert" parameterType="com.bluemobi.po.goods.GoodsCategory" useGeneratedKeys="true" keyProperty="categoryId" >
+       insert into goods_category (
+         category_id,
+         parent_id,
+         category_name,
+         grade,
+         image,
+         description,
+         sort_order,
+         status,
+         ctime,
+         mtime
+       )values (
+         #{categoryId},
+         #{parentId},
+         #{categoryName},
+         #{grade},
+         #{image},
+         #{description},
+         #{sortOrder},
+         #{status},
+         #{ctime},
+         #{mtime}
+       )
+    </insert>
+
+	<update id="update" parameterType="com.bluemobi.po.goods.GoodsCategory">
+        update goods_category
+        <set>
+            <if test="categoryId != null">
+                category_id=#{categoryId},
+            </if>
+            <if test="parentId != null">
+                parent_id=#{parentId},
+            </if>
+            <if test="categoryName != null">
+                category_name=#{categoryName},
+            </if>
+            <if test="grade != null">
+                grade=#{grade},
+            </if>
+            <if test="image != null">
+                image=#{image},
+            </if>
+            <if test="description != null">
+                description=#{description},
+            </if>
+            <if test="sortOrder != null">
+                sort_order=#{sortOrder},
+            </if>
+            <if test="status != null">
+                status=#{status},
+            </if>
+            <if test="ctime != null">
+                ctime=#{ctime},
+            </if>
+            <if test="mtime != null">
+                mtime=#{mtime},
+            </if>
+        </set>
+        <where>
+            category_id=#{categoryId} 
+        </where>
+    </update>
+
+	<delete id="delete" parameterType="map">
+	   delete from 
+	     goods_category 
+	   where 
+	    category_id=#{categoryId} 
+	</delete>
+
+	<select id="selectObject" parameterType="map" resultMap="goodsCategoryResultMap">
+       select 
+        category_id,
+        parent_id,
+        category_name,
+        grade,
+        image,
+        description,
+        sort_order,
+        status,
+        ctime,
+        mtime
+       from goods_category
+       where 
+        category_id=#{categoryId} 
+    </select>
+	
+	<select id="selectObjectList" parameterType="map" resultMap="goodsCategoryResultMap">
+       select 
+         category_id,
+         parent_id,
+         category_name,
+         grade,
+         image,
+         description,
+         sort_order,
+         status,
+         ctime,
+         mtime
+       from goods_category
+       <where>
+         <if test="categoryId != null">
+            category_id=#{categoryId}
+         </if>
+         <if test="parentId != null">
+            and parent_id=#{parentId}
+         </if>
+         <if test="categoryName != null">
+            and category_name=#{categoryName}
+         </if>
+         <if test="grade != null">
+            and grade=#{grade}
+         </if>
+         <if test="image != null">
+            and image=#{image}
+         </if>
+         <if test="description != null">
+            and description=#{description}
+         </if>
+         <if test="sortOrder != null">
+            and sort_order=#{sortOrder}
+         </if>
+         <if test="status != null">
+            and status=#{status}
+         </if>
+         <if test="ctime != null">
+            and ctime=#{ctime}
+         </if>
+         <if test="mtime != null">
+            and mtime=#{mtime}
+         </if>
+       </where>
+    </select>
+
+	<select id="selectMap" parameterType="map" resultMap="mapResultMap">
+		select 
+            t.category_id,
+            t.parent_id,
+            t.category_name,
+            t.grade,
+            t.image,
+            t.description,
+            t.sort_order,
+            t.status,
+            t.ctime,
+            t.mtime,
+            '顶级分类' parent_name 
+        from goods_category t 
+        where t.parent_id = 0 
+        <if test="categoryId != null">
+            and t.category_id=#{categoryId} 
+         </if>
+        union all 
+		select
+			t.category_id,
+            t.parent_id,
+            t.category_name,
+            t.grade,
+            t.image,
+            t.description,
+            t.sort_order,
+            t.status,
+            t.ctime,
+            t.mtime,
+			p.category_name  parent_name
+		from 
+		    goods_category t, goods_category p
+		where
+		    t.parent_id = p.category_id
+		<if test="categoryId != null">
+		    and t.category_id=#{categoryId} 
+         </if>
+	</select>
+
+	<select id="selectMapList" parameterType="map" resultMap="mapResultMap">
+	   select 
+	     category_id,
+         parent_id,
+         category_name,
+         grade,
+         image,
+         description,
+         sort_order,
+         status,
+         ctime,
+         mtime
+	   from goods_category
+	   <where>
+	     <if test="categoryId != null">
+            category_id=#{categoryId}
+         </if>
+         <if test="parentId != null">
+            and parent_id=#{parentId}
+         </if>
+         <if test="categoryName != null">
+            and category_name=#{categoryName}
+         </if>
+         <if test="grade != null">
+            and grade=#{grade}
+         </if>
+         <if test="image != null">
+            and image=#{image}
+         </if>
+         <if test="description != null">
+            and description=#{description}
+         </if>
+         <if test="sortOrder != null">
+            and sort_order=#{sortOrder}
+         </if>
+         <if test="status != null">
+            and status=#{status}
+         </if>
+         <if test="ctime != null">
+            and ctime=#{ctime}
+         </if>
+         <if test="mtime != null">
+            and mtime=#{mtime}
+         </if>
+	   </where>
+	</select>
+	
+	<select id="page" parameterType="map" resultMap="pageResultMap">
+	   (select 
+           t.category_id,
+            t.parent_id,
+            t.category_name,
+            t.grade,
+            t.image,
+            t.description,
+            t.sort_order,
+            t.status,
+            t.ctime,
+            t.mtime,
+           '顶级分类' parent_name 
+       <include refid="pageCondition1" />)
+       union all 
+	   (select 
+            t.category_id,
+            t.parent_id,
+            t.category_name,
+            t.grade,
+            t.image,
+            t.description,
+            t.sort_order,
+            t.status,
+            t.ctime,
+            t.mtime,
+	     p.category_name as parent_name
+	   <include refid="pageCondition2" />)
+        limit #{offset},#{rows}
+	</select>
+	
+	<select id="pageCount" parameterType="map" resultType="int">
+	   SELECT
+	    (
+	        SELECT
+	            count(1)
+	            <include refid="pageCondition1" />
+	    ) + (
+	        SELECT
+	            count(1)
+	        <include refid="pageCondition2" />
+	    ) AS sum_count;
+    </select>
+	
+	<sql id="pageCondition1">
+	   from 
+           goods_category t 
+       where 
+           t.parent_id = 0 
+           <if test="key != null">
+              and t.category_name LIKE CONCAT(CONCAT('%', #{key}), '%')
+           </if>
+	</sql>
+	
+	<sql id="pageCondition2">
+	   from 
+           goods_category t, goods_category p
+       <where>
+            t.parent_id = p.category_id 
+         <if test="key != null">
+            and t.category_name LIKE CONCAT(CONCAT('%', #{key}), '%')
+         </if>
+         <if test="categoryId != null">
+            and t.category_id=#{categoryId}
+         </if>
+         <if test="parentId != null">
+            and t.parent_id=#{parentId}
+         </if>
+         <if test="categoryName != null">
+            and t.category_name=#{categoryName}
+         </if>
+         <if test="description != null">
+            and t.description=#{description}
+         </if>
+         <if test="status != null">
+            and t.status=#{status}
+         </if>
+         <if test="sortOrder != null">
+            and t.sort_order=#{sortOrder}
+         </if>
+         <if test="ctime != null">
+            and t.ctime=#{ctime}
+         </if>
+         <if test="mtime != null">
+            and t.mtime=#{mtime}
+         </if>
+         <if test="image != null">
+            and t.image=#{image}
+         </if>
+         <if test="grade != null">
+            and t.grade=#{grade}
+         </if>
+       </where>
+	</sql>
+	
+	<delete id="deleteByIds" parameterType="map">
+       delete from 
+          goods_category 
+       where 
+          category_id in  
+        <foreach collection="categoryIds" item = "categoryId" open="(" separator="," close=")">
+              #{categoryId}  
+        </foreach>  
+    </delete>
+	
+	<select id="selectCountByParentIds" parameterType="map" resultMap="mapResultMap">
+        select count(1) as count
+            from goods_category 
+        where 
+        parent_id in 
+        <foreach collection="categoryIds" item = "categoryId" open="(" separator="," close=")">
+              #{categoryId}
+        </foreach>
+    </select>
+    
+</mapper> 

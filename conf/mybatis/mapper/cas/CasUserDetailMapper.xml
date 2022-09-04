@@ -1,0 +1,384 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+【用户不常用详细信息表,禁止联合查询】对象关系映射 配置 
+ @author AutoCode 309444359@qq.com
+ @date 2015-08-31 10:23:11
+ -->
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.bluemobi.dao.cas.CasUserDetailDao">
+
+	<resultMap id="casUserDetailResultMap" type="com.bluemobi.po.cas.CasUserDetail">
+		<id property="userid" column="userid" />
+		<result property="birthday" column="birthday" />
+		<result property="job" column="job" />
+		<result property="signature" column="signature" />
+		<result property="regionId" column="region_id" />
+		<result property="regionName" column="region_name" />
+		<result property="address" column="address" />
+		<result property="zipcode" column="zipcode" />
+		<result property="source" column="source" />
+		<result property="qa" column="qa" />
+		<result property="userSn" column="user_sn" />
+		<result property="companyName" column="company_name" />
+		<result property="remarkType" column="remark_type" />
+		<result property="remark" column="remark" />
+		<result property="invitationCode" column="invitation_code" />
+		<result property="longitude" column="longitude" />
+		<result property="latitude" column="latitude" />
+	</resultMap>
+	<resultMap id="mapResultMap"  type="java.util.HashMap" extends="casUserDetailResultMap"></resultMap>
+	<resultMap id="pageResultMap"  type="java.util.HashMap" extends="casUserDetailResultMap"></resultMap>
+	
+	
+	<insert id="insert" parameterType="com.bluemobi.po.cas.CasUserDetail">
+	   insert into cas_user_detail (
+	     userid,
+	     birthday,
+	     job,
+	     signature,
+	     region_id,
+	     region_name,
+	     address,
+	     zipcode,
+	     source,
+	     qa,
+	     user_sn,
+	     company_name,
+	     remark_type,
+	     remark,
+	     invitation_code,
+	     longitude,
+	     latitude
+	   )values (
+	     #{userid},
+	     #{birthday},
+	     #{job},
+	     #{signature},
+	     #{regionId},
+	     #{regionName},
+	     #{address},
+	     #{zipcode},
+	     #{source},
+	     #{qa},
+	     #{userSn},
+	     #{companyName},
+	     #{remarkType},
+	     #{remark},
+	     #{invitationCode},
+	     #{longitude},
+	     #{latitude}
+	   )
+	</insert>
+
+	<update id="update" parameterType="com.bluemobi.po.cas.CasUserDetail">
+	   update cas_user_detail set
+	     userid=#{userid},
+	     birthday=#{birthday},
+	     job=#{job},
+	     signature=#{signature},
+	     region_id=#{regionId},
+	     region_name=#{regionName},
+	     address=#{address},
+	     zipcode=#{zipcode},
+	     source=#{source},
+	     qa=#{qa},
+	     user_sn=#{userSn},
+	     company_name=#{companyName},
+	     remark_type=#{remarkType},
+	     remark=#{remark},
+	     invitation_code=#{invitationCode},
+	     longitude=#{longitude},
+	     latitude=#{latitude}
+	   where 
+	    userid=#{userid} 
+	</update>
+
+	<delete id="delete" parameterType="map">
+	   delete from 
+	     cas_user_detail 
+	   where 
+	    userid=#{userid} 
+	</delete>
+
+	<select id="selectObject" parameterType="map" resultMap="casUserDetailResultMap">
+	   select 
+	    userid,
+	    birthday,
+	    job,
+	    signature,
+	    region_id,
+	    region_name,
+	    address,
+	    zipcode,
+	    source,
+	    qa,
+	    user_sn,
+	    company_name,
+	    remark_type,
+	    remark,
+	    invitation_code,
+	    longitude,
+	    latitude
+	   from cas_user_detail
+	   where 
+	    userid=#{userid} 
+	</select>
+	
+	<select id="selectObjectList" parameterType="map" resultMap="casUserDetailResultMap">
+	   select 
+	     userid,
+	     birthday,
+	     job,
+	     signature,
+	     region_id,
+	     region_name,
+	     address,
+	     zipcode,
+	     source,
+	     qa,
+	     user_sn,
+	     company_name,
+	     remark_type,
+	     remark,
+	     invitation_code,
+	     longitude,
+	     latitude
+	   from cas_user_detail
+	   <where>
+	     <if test="userid != null">
+	        userid=#{userid}
+	     </if>
+	     <if test="birthday != null">
+	        and birthday=#{birthday}
+	     </if>
+	     <if test="job != null">
+	        and job=#{job}
+	     </if>
+	     <if test="signature != null">
+	        and signature=#{signature}
+	     </if>
+	     <if test="regionId != null">
+	        and region_id=#{regionId}
+	     </if>
+	     <if test="regionName != null">
+	        and region_name=#{regionName}
+	     </if>
+	     <if test="address != null">
+	        and address=#{address}
+	     </if>
+	     <if test="zipcode != null">
+	        and zipcode=#{zipcode}
+	     </if>
+	     <if test="source != null">
+	        and source=#{source}
+	     </if>
+	     <if test="qa != null">
+	        and qa=#{qa}
+	     </if>
+	     <if test="userSn != null">
+	        and user_sn=#{userSn}
+	     </if>
+	     <if test="companyName != null">
+	        and company_name=#{companyName}
+	     </if>
+	     <if test="remarkType != null">
+	        and remark_type=#{remarkType}
+	     </if>
+	     <if test="remark != null">
+	        and remark=#{remark}
+	     </if>
+	     <if test="invitationCode != null">
+	        and invitation_code=#{invitationCode}
+	     </if>
+	     <if test="longitude != null">
+	        and longitude=#{longitude}
+	     </if>
+	     <if test="latitude != null">
+	        and latitude=#{latitude}
+	     </if>
+	   </where>
+	</select>
+
+	<select id="selectMap" parameterType="map" resultMap="mapResultMap">
+	   select 
+	    userid,
+	    birthday,
+	    job,
+	    signature,
+	    region_id,
+	    region_name,
+	    address,
+	    zipcode,
+	    source,
+	    qa,
+	    user_sn,
+	    company_name,
+	    remark_type,
+	    remark,
+	    invitation_code,
+	    longitude,
+	    latitude
+	   from cas_user_detail
+	   where 
+	    userid=#{userid} 
+	</select>
+
+	<select id="selectMapList" parameterType="map" resultMap="mapResultMap">
+	   select 
+	     userid,
+	     birthday,
+	     job,
+	     signature,
+	     region_id,
+	     region_name,
+	     address,
+	     zipcode,
+	     source,
+	     qa,
+	     user_sn,
+	     company_name,
+	     remark_type,
+	     remark,
+	     invitation_code,
+	     longitude,
+	     latitude
+	   from cas_user_detail
+	   <where>
+	     <if test="userid != null">
+	        userid=#{userid}
+	     </if>
+	     <if test="birthday != null">
+	        and birthday=#{birthday}
+	     </if>
+	     <if test="job != null">
+	        and job=#{job}
+	     </if>
+	     <if test="signature != null">
+	        and signature=#{signature}
+	     </if>
+	     <if test="regionId != null">
+	        and region_id=#{regionId}
+	     </if>
+	     <if test="regionName != null">
+	        and region_name=#{regionName}
+	     </if>
+	     <if test="address != null">
+	        and address=#{address}
+	     </if>
+	     <if test="zipcode != null">
+	        and zipcode=#{zipcode}
+	     </if>
+	     <if test="source != null">
+	        and source=#{source}
+	     </if>
+	     <if test="qa != null">
+	        and qa=#{qa}
+	     </if>
+	     <if test="userSn != null">
+	        and user_sn=#{userSn}
+	     </if>
+	     <if test="companyName != null">
+	        and company_name=#{companyName}
+	     </if>
+	     <if test="remarkType != null">
+	        and remark_type=#{remarkType}
+	     </if>
+	     <if test="remark != null">
+	        and remark=#{remark}
+	     </if>
+	     <if test="invitationCode != null">
+	        and invitation_code=#{invitationCode}
+	     </if>
+	     <if test="longitude != null">
+	        and longitude=#{longitude}
+	     </if>
+	     <if test="latitude != null">
+	        and latitude=#{latitude}
+	     </if>
+	   </where>
+	</select>
+	<sql id="pageCondition">
+	   from cas_user_detail
+       <where>
+         <if test="userid != null">
+            userid=#{userid}
+         </if>
+         <if test="birthday != null">
+            and birthday=#{birthday}
+         </if>
+         <if test="job != null">
+            and job=#{job}
+         </if>
+         <if test="signature != null">
+            and signature=#{signature}
+         </if>
+         <if test="regionId != null">
+            and region_id=#{regionId}
+         </if>
+         <if test="regionName != null">
+            and region_name=#{regionName}
+         </if>
+         <if test="address != null">
+            and address=#{address}
+         </if>
+         <if test="zipcode != null">
+            and zipcode=#{zipcode}
+         </if>
+         <if test="source != null">
+            and source=#{source}
+         </if>
+         <if test="qa != null">
+            and qa=#{qa}
+         </if>
+         <if test="userSn != null">
+            and user_sn=#{userSn}
+         </if>
+         <if test="companyName != null">
+            and company_name=#{companyName}
+         </if>
+         <if test="remarkType != null">
+            and remark_type=#{remarkType}
+         </if>
+         <if test="remark != null">
+            and remark=#{remark}
+         </if>
+         <if test="invitationCode != null">
+            and invitation_code=#{invitationCode}
+         </if>
+         <if test="longitude != null">
+            and longitude=#{longitude}
+         </if>
+         <if test="latitude != null">
+            and latitude=#{latitude}
+         </if>
+       </where>
+	</sql>
+	<select id="page" parameterType="map" resultMap="pageResultMap">
+	   select 
+	     userid,
+	     birthday,
+	     job,
+	     signature,
+	     region_id,
+	     region_name,
+	     address,
+	     zipcode,
+	     source,
+	     qa,
+	     user_sn,
+	     company_name,
+	     remark_type,
+	     remark,
+	     invitation_code,
+	     longitude,
+	     latitude
+	   <include refid="pageCondition" />
+       limit #{offset},#{rows}
+    </select>
+    <select id="pageCount" parameterType="map" resultType="int">
+        select count(1)
+        <include refid="pageCondition" />
+    </select>
+</mapper> 

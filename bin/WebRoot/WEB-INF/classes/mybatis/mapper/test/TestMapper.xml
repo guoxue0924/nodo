@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+@author AutoCode 309444359@qq.com
+@date 2015-07-16 10:59:33
+ -->
+<!--【】对象关系映射 配置 -->
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.bluemobi.dao.test.TestDao">
+
+	<resultMap id="testResultMap" type="com.bluemobi.po.test.Test">
+		<id property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="address" column="address" />
+		<result property="age" column="age" />
+	</resultMap>
+	<resultMap id="pageResultMap"  type="java.util.HashMap" extends="testResultMap"></resultMap>
+	<resultMap id="mapResultMap"  type="java.util.HashMap" extends="testResultMap"></resultMap>
+
+	<insert id="insert" parameterType="com.bluemobi.po.test.Test">
+	   insert into test (
+	     id,
+	     name,
+	     address,
+	     age
+	   )values (
+	     #{id},
+	     #{name},
+	     #{address},
+	     #{age}
+	   )
+	</insert>
+
+	<update id="update" parameterType="com.bluemobi.po.test.Test">
+	   update test set
+	     id=#{id},
+	     name=#{name},
+	     address=#{address},
+	     age=#{age}
+	   where 
+	    id=#{id} 
+	</update>
+
+	<delete id="delete" parameterType="map">
+	   delete from 
+	     test 
+	   where 
+	    id=#{id} 
+	</delete>
+
+	<select id="selectObject" parameterType="map" resultMap="testResultMap">
+	   select 
+	    id,
+	    name,
+	    address,
+	    age
+	   from test
+	   where 
+	    id=#{id} 
+	</select>
+	
+	<select id="selectObjectList" parameterType="map" resultMap="testResultMap">
+	   select 
+	     id,
+	     name,
+	     address,
+	     age
+	   from test
+	   <where>
+	     <if test="id != null">
+	        id=#{id}
+	     </if>
+	     <if test="name != null">
+	        and name=#{name}
+	     </if>
+	     <if test="address != null">
+	        and address=#{address}
+	     </if>
+	     <if test="age != null">
+	        and age=#{age}
+	     </if>
+	   </where>
+	</select>
+
+	<select id="selectMap" parameterType="map" resultMap="mapResultMap">
+	   select 
+	    id,
+	    name,
+	    address,
+	    age
+	   from test
+	   where 
+	    id=#{id} 
+	</select>
+
+	<select id="selectMapList" parameterType="map" resultMap="mapResultMap">
+	   select 
+	     id,
+	     name,
+	     address,
+	     age
+	   from test
+	   <where>
+	     <if test="id != null">
+	        id=#{id}
+	     </if>
+	     <if test="name != null">
+	        and name=#{name}
+	     </if>
+	     <if test="address != null">
+	        and address=#{address}
+	     </if>
+	     <if test="age != null">
+	        and age=#{age}
+	     </if>
+	   </where>
+	</select>
+	
+	<select id="page" parameterType="map" resultMap="pageResultMap">
+	   select 
+	     id,
+	     name,
+	     address,
+	     age
+	   from test
+	   <where>
+	     <if test="id != null">
+	        id=#{id}
+	     </if>
+	     <if test="name != null">
+	        and name=#{name}
+	     </if>
+	     <if test="address != null">
+	        and address=#{address}
+	     </if>
+	     <if test="age != null">
+	        and age=#{age}
+	     </if>
+	   </where>
+	</select>
+	
+</mapper> 

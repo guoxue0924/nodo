@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+【用户积分规则表】对象关系映射 配置 
+ @author AutoCode 309444359@qq.com
+ @date 2016-03-07 14:48:41
+ -->
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.bluemobi.dao.cas.CasUserPointRuleDao">
+
+	<resultMap id="casUserPointRuleResultMap" type="com.bluemobi.po.cas.CasUserPointRule">
+		<id property="pointRoleId" column="point_role_id" />
+       <result property="pointType" column="point_type" />
+       <result property="pointName" column="point_name" />
+       <result property="point" column="point" />
+       <result property="pointCoefficient" column="point_coefficient" />
+	</resultMap>
+	<resultMap id="mapResultMap"  type="java.util.HashMap" extends="casUserPointRuleResultMap"></resultMap>
+	<resultMap id="pageResultMap"  type="java.util.HashMap" extends="casUserPointRuleResultMap"></resultMap>
+	
+	
+	<insert id="insert" parameterType="com.bluemobi.po.cas.CasUserPointRule" useGeneratedKeys="true" keyProperty="pointRoleId" >
+	   insert into cas_user_point_rule (
+	     point_role_id,
+	     point_type,
+	     point_name,
+	     point,
+	     point_coefficient
+	   )values (
+	     #{pointRoleId},
+	     #{pointType},
+	     #{pointName},
+	     #{point},
+	     #{pointCoefficient}
+	   )
+	</insert>
+
+	<update id="update" parameterType="com.bluemobi.po.cas.CasUserPointRule">
+		update cas_user_point_rule
+		<set>
+			<if test="pointRoleId != null">
+				point_role_id=#{pointRoleId},
+			</if>
+			<if test="pointType != null">
+				point_type=#{pointType},
+			</if>
+			<if test="pointName != null">
+				point_name=#{pointName},
+			</if>
+			<if test="point != null">
+				point=#{point},
+			</if>
+			<if test="pointCoefficient != null">
+				point_coefficient=#{pointCoefficient},
+			</if>
+		</set>
+		<where>
+			point_role_id=#{pointRoleId} 
+		</where>
+	</update>
+
+	<delete id="delete" parameterType="map">
+	   delete from 
+	     cas_user_point_rule 
+	   where 
+	    point_role_id=#{pointRoleId} 
+	</delete>
+
+	<select id="selectObject" parameterType="map" resultMap="casUserPointRuleResultMap">
+	   select 
+	    point_role_id,
+	    point_type,
+	    point_name,
+	    point,
+	    point_coefficient
+	   from cas_user_point_rule
+	   where 
+	    point_role_id=#{pointRoleId} 
+	</select>
+	
+	<select id="selectObjectList" parameterType="map" resultMap="casUserPointRuleResultMap">
+	   select 
+	     point_role_id,
+	     point_type,
+	     point_name,
+	     point,
+	     point_coefficient
+	   from cas_user_point_rule
+	   <where>
+	     <if test="pointRoleId != null">
+	        point_role_id=#{pointRoleId}
+	     </if>
+	     <if test="pointType != null">
+	        and point_type=#{pointType}
+	     </if>
+	     <if test="pointName != null">
+	        and point_name=#{pointName}
+	     </if>
+	     <if test="point != null">
+	        and point=#{point}
+	     </if>
+	     <if test="pointCoefficient != null">
+	        and point_coefficient=#{pointCoefficient}
+	     </if>
+	   </where>
+	</select>
+
+	<select id="selectMap" parameterType="map" resultMap="mapResultMap">
+	   select 
+	    point_role_id,
+	    point_type,
+	    point_name,
+	    point,
+	    point_coefficient
+	   from cas_user_point_rule
+	   where 
+	    point_role_id=#{pointRoleId} 
+	</select>
+
+	<select id="selectMapList" parameterType="map" resultMap="mapResultMap">
+	   select 
+	     point_role_id,
+	     point_type,
+	     point_name,
+	     point,
+	     point_coefficient
+	   from cas_user_point_rule
+	   <where>
+	     <if test="pointRoleId != null">
+	        point_role_id=#{pointRoleId}
+	     </if>
+	     <if test="pointType != null">
+	        and point_type=#{pointType}
+	     </if>
+	     <if test="pointName != null">
+	        and point_name=#{pointName}
+	     </if>
+	     <if test="point != null">
+	        and point=#{point}
+	     </if>
+	     <if test="pointCoefficient != null">
+	        and point_coefficient=#{pointCoefficient}
+	     </if>
+	   </where>
+	</select>
+	
+	<select id="page" parameterType="map" resultMap="pageResultMap">
+	   select 
+	     point_role_id,
+	     point_type,
+	     point_name,
+	     point,
+	     point_coefficient
+	<include refid="pageCondition" />
+	limit #{offset},#{rows}
+	</select>
+
+	<select id="pageCount" parameterType="map" resultType="int">
+	   select count(1)
+	   <include refid="pageCondition" />
+	</select>
+
+	<sql id="pageCondition">
+	   from cas_user_point_rule
+	   <where>
+	     <if test="pointRoleId != null">
+	        point_role_id=#{pointRoleId}
+	     </if>
+	     <if test="pointType != null">
+	        and point_type=#{pointType}
+	     </if>
+	     <if test="pointName != null">
+	        and point_name=#{pointName}
+	     </if>
+	     <if test="point != null">
+	        and point=#{point}
+	     </if>
+	     <if test="pointCoefficient != null">
+	        and point_coefficient=#{pointCoefficient}
+	     </if>
+	   </where>
+	</sql>
+
+	
+</mapper> 

@@ -1,0 +1,440 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+【用户积分表】对象关系映射 配置 
+ @author AutoCode 309444359@qq.com
+ @date 2016-03-07 14:48:40
+ -->
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.bluemobi.dao.cas.CasUserPointDao">
+
+    <resultMap id="casUserPointResultMap" type="com.bluemobi.po.cas.CasUserPoint">
+        <id property="pointId" column="point_id" />
+       <result property="userid" column="userid" />
+       <result property="pointType" column="point_type" />
+       <result property="pointName" column="point_name" />
+       <result property="point" column="point" />
+       <result property="ctime" column="ctime" />
+       <result property="pointTypeId" column="point_type_id" />
+       <result property="overdueTime" column="overdue_time" />
+       <result property="status" column="status" />
+       <result property="isUsed" column="is_used" />
+       <result property="usedTime" column="used_time" />
+    </resultMap>
+    <resultMap id="mapResultMap"  type="java.util.HashMap" extends="casUserPointResultMap"></resultMap>
+    <resultMap id="pageResultMap"  type="java.util.HashMap" extends="casUserPointResultMap"></resultMap>
+    
+    
+    <insert id="insert" parameterType="com.bluemobi.po.cas.CasUserPoint" useGeneratedKeys="true" keyProperty="pointId" >
+       insert into cas_user_point (
+         point_id,
+         userid,
+         point_type,
+         point_name,
+         point,
+         ctime,
+         point_type_id,
+         overdue_time,
+         status,
+         is_used,
+         used_time
+       )values (
+         #{pointId},
+         #{userid},
+         #{pointType},
+         #{pointName},
+         #{point},
+         #{ctime},
+         #{pointTypeId},
+         #{overdueTime},
+         #{status},
+         #{isUsed},
+         #{usedTime}
+       )
+    </insert>
+
+    <update id="update" parameterType="com.bluemobi.po.cas.CasUserPoint">
+        update cas_user_point
+        <set>
+            <if test="pointId != null">
+                point_id=#{pointId},
+            </if>
+            <if test="userid != null">
+                userid=#{userid},
+            </if>
+            <if test="pointType != null">
+                point_type=#{pointType},
+            </if>
+            <if test="pointName != null">
+                point_name=#{pointName},
+            </if>
+            <if test="point != null">
+                point=#{point},
+            </if>
+            <if test="ctime != null">
+                ctime=#{ctime},
+            </if>
+            <if test="pointTypeId != null">
+                point_type_id=#{pointTypeId},
+            </if>
+            <if test="overdueTime != null">
+                overdue_time=#{overdueTime},
+            </if>
+            <if test="status != null">
+                status=#{status},
+            </if>
+            <if test="isUsed != null">
+                is_used=#{isUsed},
+            </if>
+            <if test="usedTime != null">
+                used_time=#{usedTime},
+            </if>
+        </set>
+        <where>
+            point_id=#{pointId} 
+        </where>
+    </update>
+
+    <delete id="delete" parameterType="map">
+       delete from 
+         cas_user_point 
+       where 
+        point_id=#{pointId} 
+    </delete>
+
+    <select id="selectObject" parameterType="map" resultMap="casUserPointResultMap">
+       select 
+        point_id,
+        userid,
+        point_type,
+        point_name,
+        point,
+        ctime,
+        point_type_id,
+        overdue_time,
+        status,
+        is_used,
+        used_time
+       from cas_user_point
+       where 
+        point_id=#{pointId} 
+    </select>
+    
+    <select id="selectObjectList" parameterType="map" resultMap="casUserPointResultMap">
+       select 
+         point_id,
+         userid,
+         point_type,
+         point_name,
+         point,
+         ctime,
+         point_type_id,
+         overdue_time,
+         status,
+         is_used,
+         used_time
+       from cas_user_point
+       <where>
+         <if test="pointId != null">
+            point_id=#{pointId}
+         </if>
+         <if test="userid != null">
+            and userid=#{userid}
+         </if>
+         <if test="pointType != null">
+            and point_type=#{pointType}
+         </if>
+         <if test="pointName != null">
+            and point_name=#{pointName}
+         </if>
+         <if test="point != null">
+            and point=#{point}
+         </if>
+         <if test="ctime != null">
+            and ctime=#{ctime}
+         </if>
+         <if test="pointTypeId != null">
+            and point_type_id=#{pointTypeId}
+         </if>
+         <if test="overdueTime != null">
+            and overdue_time=#{overdueTime}
+         </if>
+         <if test="status != null">
+            and status=#{status}
+         </if>
+         <if test="isUsed != null">
+            and is_used=#{isUsed}
+         </if>
+         <if test="usedTime != null">
+            and used_time=#{usedTime}
+         </if>
+       </where>
+    </select>
+
+    <select id="selectMap" parameterType="map" resultMap="mapResultMap">
+       select 
+        point_id,
+        userid,
+        point_type,
+        point_name,
+        point,
+        ctime,
+        point_type_id,
+        overdue_time,
+        status,
+        is_used,
+        used_time
+       from cas_user_point
+       where 
+        point_id=#{pointId} 
+    </select>
+
+    <select id="selectMapList" parameterType="map" resultMap="mapResultMap">
+       select 
+         point_id,
+         userid,
+         point_type,
+         point_name,
+         point,
+         ctime,
+         point_type_id,
+         overdue_time,
+         status,
+         is_used,
+         used_time
+       from cas_user_point
+       <where>
+         <if test="pointId != null">
+            point_id=#{pointId}
+         </if>
+         <if test="userid != null">
+            and userid=#{userid}
+         </if>
+         <if test="pointType != null">
+            and point_type=#{pointType}
+         </if>
+         <if test="pointName != null">
+            and point_name=#{pointName}
+         </if>
+         <if test="point != null">
+            and point=#{point}
+         </if>
+         <if test="ctime != null">
+            and ctime=#{ctime}
+         </if>
+         <if test="pointTypeId != null">
+            and point_type_id=#{pointTypeId}
+         </if>
+         <if test="overdueTime != null">
+            and overdue_time=#{overdueTime}
+         </if>
+         <if test="status != null">
+            and status=#{status}
+         </if>
+         <if test="isUsed != null">
+            and is_used=#{isUsed}
+         </if>
+         <if test="usedTime != null">
+            and used_time=#{usedTime}
+         </if>
+       </where>
+    </select>
+    
+    <select id="page" parameterType="map" resultMap="casUserPointResultMap">
+       select 
+         point_id,
+         userid,
+         point_type,
+         point_name,
+         point,
+         ctime,
+         point_type_id,
+         overdue_time,
+         status,
+         is_used,
+         used_time
+    <include refid="pageCondition" />
+    limit #{offset},#{rows}
+    </select>
+
+    <select id="pageCount" parameterType="map" resultType="int">
+       select count(1)
+       <include refid="pageCondition" />
+    </select>
+
+    <sql id="pageCondition">
+       from cas_user_point
+       <where>
+         <if test="pointId != null">
+            point_id=#{pointId}
+         </if>
+         <if test="userid != null">
+            and userid=#{userid}
+         </if>
+         <if test="pointType != null">
+            and point_type=#{pointType}
+         </if>
+         <if test="pointName != null">
+            and point_name=#{pointName}
+         </if>
+         <if test="point != null">
+            and point=#{point}
+         </if>
+         <if test="ctime != null">
+            and ctime=#{ctime}
+         </if>
+         <if test="pointTypeId != null">
+            and point_type_id=#{pointTypeId}
+         </if>
+         <if test="overdueTime != null">
+            and overdue_time=#{overdueTime}
+         </if>
+         <if test="status != null">
+            and status=#{status}
+         </if>
+         <if test="isUsed != null">
+            and is_used=#{isUsed}
+         </if>
+         <if test="usedTime != null">
+            and used_time=#{usedTime}
+         </if>
+       </where>
+    </sql>
+
+    <select id="selectUserLastRegister" parameterType="int" resultType="date">
+        select
+            ctime
+        from
+            cas_user_point
+        where
+            userid=#{userid} 
+        order by
+            ctime
+        desc
+        LIMIT 0,1
+    </select>
+    
+    <select id="selectUserAllPoint" parameterType="int" resultMap="casUserPointResultMap">
+        select
+            sum(point)
+        from
+            cas_user_point
+        where
+            userid=#{userid} 
+            and status = 0
+        order by
+            ctime
+        desc
+    </select>
+    
+    <select id="selectUserIsUsedPoint" parameterType="int" resultMap="casUserPointResultMap">
+        select
+            sum(is_used)
+        from
+            cas_user_point
+        where
+            userid=#{userid} 
+            and status = 0
+        order by
+            ctime
+        desc
+    </select>
+    
+    <select id="selectTimeUpPoint" parameterType="map" resultMap="casUserPointResultMap">
+        select
+            point_id,
+             userid,
+             point_type,
+             point_name,
+             point,
+             ctime,
+             point_type_id,
+             overdue_time,
+             status,
+             is_used,
+             used_time
+        from
+            cas_user_point
+        where
+            userid=#{userid} 
+            and YEAR(#{date}) = YEAR(NOW())  
+            and status = 0
+        order by
+            ctime
+        desc
+    </select>
+    
+    <select id="selectChangePoint" parameterType="map" resultMap="casUserPointResultMap">
+        select
+            point_id,
+            userid,
+             point_type,
+             point_name,
+             point,
+             ctime,
+             point_type_id,
+             overdue_time,
+             status,
+             is_used,
+             used_time
+         from
+            cas_user_point
+        where
+            userid = #{userid}
+            and overdue_time > #{overdueTime}
+            and status = #{status}
+            <if test="pointType != null">
+                and pointType = #{pointType}
+            </if>
+            <if test="otherType != null">
+                and pointType != #{otherType}
+            </if>
+        order by
+            ctime
+        desc
+    </select>
+    
+    <update id="updateUserPoints" parameterType="java.util.List">
+        <foreach collection="list" item="item" index="index" separator=";">
+                update cas_user_point 
+                <set>
+                    <if test="status != null">
+                        status=#{item.status},
+                    </if>
+                    <if test="isUsed != null">
+                        is_used=#{item.isUsed},
+                    </if>
+                    <if test="usedTime != null">
+                        used_time=#{item.usedTime},
+                    </if>
+                </set>
+                <where>
+                    point_id=#{item.pointId} 
+                </where>
+         </foreach>
+    </update>
+    
+    <select id="getTotlePoint" parameterType="int" resultMap="casUserPointResultMap">
+        select
+            sum(point)
+         from
+            cas_user_point
+        where
+            userid = #{userid}
+    </select>
+    
+    <select id="deductPoint" parameterType="map" resultType="int">
+        update
+            cas_user_point
+        set
+            status = 1
+        where
+            userid = #{userid}
+            <![CDATA[
+            and overdue_time < #{overdueTime}
+            ]]>
+            and used_time = #{date}
+    </select>
+    
+</mapper> 

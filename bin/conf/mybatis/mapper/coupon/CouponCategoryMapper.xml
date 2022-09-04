@@ -1,0 +1,468 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+【优惠券主表】对象关系映射 配置 
+ @author AutoCode 309444359@qq.com
+ @date 2015-10-27 14:36:19
+ -->
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.bluemobi.dao.coupon.CouponCategoryDao">
+
+	<resultMap id="couponCategoryResultMap" type="com.bluemobi.po.coupon.CouponCategory">
+		<id property="couponId" column="coupon_id" />
+       <result property="couponName" column="coupon_name" />
+       <result property="imageDefault" column="image_default" />
+       <result property="total" column="total" />
+       <result property="exchangedTotal" column="exchanged_total" />
+       <result property="basicPrice" column="basic_price" />
+       <result property="eachlimit" column="eachlimit" />
+       <result property="faceValue" column="face_value" />
+       <result property="status" column="status" />
+       <result property="couponType" column="coupon_type" />
+       <result property="couponPoint" column="coupon_point" />
+       <result property="disabled" column="disabled" />
+       <result property="isExchange" column="is_exchange" />
+       <result property="rule" column="rule" />
+       <result property="body" column="body" />
+       <result property="validStime" column="valid_stime" />
+       <result property="validEtime" column="valid_etime" />
+       <result property="grantStime" column="grant_stime" />
+       <result property="grantEtime" column="grant_etime" />
+       <result property="isDel" column="is_del" />
+       <result property="ctime" column="ctime" />
+       <result property="mtime" column="mtime" />
+	</resultMap>
+	<resultMap id="mapResultMap"  type="java.util.HashMap" extends="couponCategoryResultMap"></resultMap>
+	<resultMap id="pageResultMap"  type="java.util.HashMap" extends="couponCategoryResultMap"></resultMap>
+	
+	
+	<insert id="insert" parameterType="com.bluemobi.po.coupon.CouponCategory" useGeneratedKeys="true" keyProperty="couponId">
+	   insert into coupon_category (
+	     coupon_name,
+	     image_default,
+	     total,
+	     exchanged_total,
+	     basic_price,
+	     eachlimit,
+	     face_value,
+	     status,
+	     coupon_type,
+	     coupon_point,
+	     disabled,
+	     is_exchange,
+	     rule,
+	     body,
+	     valid_stime,
+	     valid_etime,
+	     grant_stime,
+	     grant_etime,
+	     is_del,
+	     ctime,
+	     mtime
+	   )values (
+	     #{couponName},
+	     #{imageDefault},
+	     #{total},
+	     #{exchangedTotal},
+	     #{basicPrice},
+	     #{eachlimit},
+	     #{faceValue},
+	     #{status},
+	     #{couponType},
+	     #{couponPoint},
+	     #{disabled},
+	     #{isExchange},
+	     #{rule},
+	     #{body},
+	     #{validStime},
+	     #{validEtime},
+	     #{grantStime},
+	     #{grantEtime},
+	     #{isDel},
+	     #{ctime},
+	     #{mtime}
+	   )
+	</insert>
+
+	<update id="update" parameterType="com.bluemobi.po.coupon.CouponCategory">
+		update coupon_category
+		<set>
+			<if test="couponName != null">
+				coupon_name=#{couponName},
+			</if>
+			<if test="imageDefault != null">
+				image_default=#{imageDefault},
+			</if>
+			<if test="total != null">
+				total=#{total},
+			</if>
+			<if test="exchangedTotal != null">
+				exchanged_total=#{exchangedTotal},
+			</if>
+			<if test="basicPrice != null">
+				basic_price=#{basicPrice},
+			</if>
+			<if test="eachlimit != null">
+				eachlimit=#{eachlimit},
+			</if>
+			<if test="faceValue != null">
+				face_value=#{faceValue},
+			</if>
+			<if test="status != null">
+				status=#{status},
+			</if>
+			<if test="couponType != null">
+				coupon_type=#{couponType},
+			</if>
+			<if test="couponPoint != null">
+				coupon_point=#{couponPoint},
+			</if>
+			<if test="disabled != null">
+				disabled=#{disabled},
+			</if>
+			<if test="isExchange != null">
+				is_exchange=#{isExchange},
+			</if>
+			<if test="rule != null">
+				rule=#{rule},
+			</if>
+			<if test="body != null">
+				body=#{body},
+			</if>
+			<if test="validStime != null">
+				valid_stime=#{validStime},
+			</if>
+			<if test="validEtime != null">
+				valid_etime=#{validEtime},
+			</if>
+			<if test="grantStime != null">
+				grant_stime=#{grantStime},
+			</if>
+			<if test="grantEtime != null">
+				grant_etime=#{grantEtime},
+			</if>
+			<if test="isDel != null">
+				is_del=#{isDel},
+			</if>
+			<if test="ctime != null">
+				ctime=#{ctime},
+			</if>
+			<if test="mtime != null">
+				mtime=#{mtime},
+			</if>
+		</set>
+		<where>
+			coupon_id=#{couponId} 
+		</where>
+	</update>
+
+	<delete id="delete" parameterType="map">
+	   delete from 
+	     coupon_category 
+	   where 
+	    coupon_id=#{couponId} 
+	</delete>
+
+	<select id="selectObject" parameterType="map" resultMap="couponCategoryResultMap">
+	   select 
+	     coupon_id,
+	     coupon_name,
+	     image_default,
+	     total,
+	     exchanged_total,
+	     basic_price,
+	     eachlimit,
+	     face_value,
+	     status,
+	     coupon_type,
+	     coupon_point,
+	     disabled,
+	     is_exchange,
+	     rule,
+	     body,
+	     valid_stime,
+	     valid_etime,
+	     grant_stime,
+	     grant_etime,
+	     is_del,
+	     ctime,
+	     mtime
+	   from coupon_category
+	   where 
+	    coupon_id=#{couponId} 
+	</select>
+	
+	<select id="selectObjectList" parameterType="map" resultMap="couponCategoryResultMap">
+	   select 
+	     coupon_id,
+	     coupon_name,
+	     image_default,
+	     total,
+	     exchanged_total,
+	     basic_price,
+	     eachlimit,
+	     face_value,
+	     status,
+	     coupon_type,
+	     coupon_point,
+	     disabled,
+	     is_exchange,
+	     rule,
+	     body,
+	     valid_stime,
+	     valid_etime,
+	     grant_stime,
+	     grant_etime,
+	     is_del,
+	     ctime,
+	     mtime
+	   from coupon_category
+	   <where>
+	     <if test="couponId != null">
+	        coupon_id=#{couponId}
+	     </if>
+	     <if test="couponName != null">
+			and coupon_name=#{couponName}
+		 </if>
+		 <if test="imageDefault != null">
+			and image_default=#{imageDefault}
+		 </if>
+		 <if test="total != null">
+			and total=#{total}
+		 </if>
+		 <if test="exchangedTotal != null">
+			and exchanged_total=#{exchangedTotal}
+		 </if>
+		 <if test="basicPrice != null">
+			and basic_price=#{basicPrice}
+		 </if>
+		 <if test="eachlimit != null">
+			and eachlimit=#{eachlimit}
+		 </if>
+		 <if test="faceValue != null">
+			and face_value=#{faceValue}
+		 </if>
+	     <if test="status != null">
+	        and status=#{status}
+	     </if>
+	     <if test="couponType != null">
+	        and coupon_type=#{couponType}
+	     </if>
+	     <if test="couponPoint != null">
+	        and coupon_point=#{couponPoint}
+	     </if>
+	     <if test="disabled != null">
+	        and disabled=#{disabled}
+	     </if>
+	     <if test="isExchange != null">
+	        and is_exchange=#{isExchange}
+	     </if>
+	     <if test="rule != null">
+	        and rule=#{rule}
+	     </if>
+	     <if test="body != null">
+	        and body=#{body}
+	     </if>
+	     <if test="validStime != null">
+	        and valid_stime=#{validStime}
+	     </if>
+	     <if test="validEtime != null">
+	        and valid_etime=#{validEtime}
+	     </if>
+	     <if test="grantStime != null">
+	        and grant_stime=#{grantStime}
+	     </if>
+	     <if test="grantEtime != null">
+	        and grant_etime=#{grantEtime}
+	     </if>
+	     <if test="isDel != null">
+	        and is_del=#{isDel}
+	     </if>
+	     <if test="ctime != null">
+	        and ctime=#{ctime}
+	     </if>
+	     <if test="mtime != null">
+	        and mtime=#{mtime}
+	     </if>
+	   </where>
+	</select>
+
+	<select id="selectMap" parameterType="map" resultMap="mapResultMap">
+	   select 
+	     coupon_id,
+	     coupon_name,
+	     image_default,
+	     total,
+	     exchanged_total,
+	     basic_price,
+	     eachlimit,
+	     face_value,
+	     status,
+	     coupon_type,
+	     coupon_point,
+	     disabled,
+	     is_exchange,
+	     rule,
+	     body,
+	     valid_stime,
+	     valid_etime,
+	     grant_stime,
+	     grant_etime,
+	     is_del,
+	     ctime,
+	     mtime
+	   from coupon_category
+	   where 
+	    coupon_id=#{couponId} 
+	</select>
+
+	<select id="selectMapList" parameterType="map" resultMap="mapResultMap">
+	   select 
+	     coupon_id,
+	     coupon_name,
+	     image_default,
+	     total,
+	     exchanged_total,
+	     basic_price,
+	     eachlimit,
+	     face_value,
+	     status,
+	     coupon_type,
+	     coupon_point,
+	     disabled,
+	     is_exchange,
+	     rule,
+	     body,
+	     valid_stime,
+	     valid_etime,
+	     grant_stime,
+	     grant_etime,
+	     is_del,
+	     ctime,
+	     mtime
+	   from coupon_category
+	   <where>
+	     <if test="couponId != null">
+	        coupon_id=#{couponId}
+	     </if>
+	     <if test="couponName != null">
+			and coupon_name=#{couponName}
+		 </if>
+		 <if test="imageDefault != null">
+			and image_default=#{imageDefault}
+		 </if>
+		 <if test="total != null">
+			and total=#{total}
+		 </if>
+		 <if test="exchangedTotal != null">
+			and exchanged_total=#{exchangedTotal}
+		 </if>
+		 <if test="basicPrice != null">
+			and basic_price=#{basicPrice}
+		 </if>
+		 <if test="eachlimit != null">
+			and eachlimit=#{eachlimit}
+		 </if>
+		 <if test="faceValue != null">
+			and face_value=#{faceValue}
+		 </if>
+	     <if test="status != null">
+	        and status=#{status}
+	     </if>
+	     <if test="couponType != null">
+	        and coupon_type=#{couponType}
+	     </if>
+	     <if test="couponPoint != null">
+	        and coupon_point=#{couponPoint}
+	     </if>
+	     <if test="disabled != null">
+	        and disabled=#{disabled}
+	     </if>
+	     <if test="isExchange != null">
+	        and is_exchange=#{isExchange}
+	     </if>
+	     <if test="rule != null">
+	        and rule=#{rule}
+	     </if>
+	     <if test="body != null">
+	        and body=#{body}
+	     </if>
+	     <if test="validStime != null">
+	        and valid_stime=#{validStime}
+	     </if>
+	     <if test="validEtime != null">
+	        and valid_etime=#{validEtime}
+	     </if>
+	     <if test="grantStime != null">
+	        and grant_stime=#{grantStime}
+	     </if>
+	     <if test="grantEtime != null">
+	        and grant_etime=#{grantEtime}
+	     </if>
+	     <if test="isDel != null">
+	        and is_del=#{isDel}
+	     </if>
+	     <if test="ctime != null">
+	        and ctime=#{ctime}
+	     </if>
+	     <if test="mtime != null">
+	        and mtime=#{mtime}
+	     </if>
+	   </where>
+	</select>
+	
+	<select id="page" parameterType="map" resultMap="pageResultMap">
+	   select 
+	     coupon_id,
+	     coupon_name,
+	     total,
+	     exchanged_total,
+	     basic_price,
+	     face_value,
+	     status,
+	     coupon_type,
+	     disabled,
+	     valid_stime,
+	     valid_etime,
+	     grant_stime,
+	     grant_etime,
+	     is_del
+	<include refid="pageCondition" />
+	limit #{offset},#{rows}
+	</select>
+
+	<select id="pageCount" parameterType="map" resultType="int">
+	   select count(1)
+	   <include refid="pageCondition" />
+	</select>
+
+	<sql id="pageCondition">
+	   from coupon_category
+	   <where>
+	     <if test="key != null">
+            coupon_name LIKE CONCAT(CONCAT('%', #{key}), '%')
+         </if>
+	     <if test="status != null and status != ''">
+	        and status=#{status}
+	     </if>
+	     <if test="type != null and type != ''">
+	        and coupon_type=#{type}
+	     </if>
+	     <if test="validStartDate != null">
+	        and valid_stime&gt;=#{validStartDate}
+	     </if>
+	     <if test="validEndDate != null">
+	        and valid_etime&lt;=#{validEndDate}
+	     </if>
+	     <if test="grantStartDate != null">
+	        and grant_stime&gt;=#{grantStartDate}
+	     </if>
+	     <if test="grantEndDate != null">
+	        and grant_etime&lt;=#{grantEndDate}
+	     </if>
+	   </where>
+	</sql>
+
+	
+</mapper> 

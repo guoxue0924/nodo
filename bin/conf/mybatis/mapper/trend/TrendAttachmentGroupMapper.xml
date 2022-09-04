@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+【】对象关系映射 配置 
+ @author AutoCode 309444359@qq.com
+ @date 2015-12-02 14:04:38
+ -->
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.bluemobi.dao.trend.TrendAttachmentGroupDao">
+
+	<resultMap id="trendAttachmentGroupResultMap" type="com.bluemobi.po.trend.TrendAttachmentGroup">
+		<id property="attachmentGroupId" column="attachment_group_id" />
+       <result property="attachmentId" column="attachment_id" />
+       <result property="mainId" column="main_id" />
+       <result property="type" column="type" />
+	</resultMap>
+	<resultMap id="mapResultMap"  type="java.util.HashMap" extends="trendAttachmentGroupResultMap"></resultMap>
+	<resultMap id="pageResultMap"  type="java.util.HashMap" extends="trendAttachmentGroupResultMap"></resultMap>
+	
+	
+	<insert id="insert" parameterType="com.bluemobi.po.trend.TrendAttachmentGroup">
+	   insert into trend_attachment_group (
+	     attachment_group_id,
+	     attachment_id,
+	     main_id,
+	     type
+	   )values (
+	     #{attachmentGroupId},
+	     #{attachmentId},
+	     #{mainId},
+	     #{type}
+	   )
+	</insert>
+
+	<update id="update" parameterType="com.bluemobi.po.trend.TrendAttachmentGroup">
+		update trend_attachment_group
+		<set>
+			<if test="attachmentGroupId != null">
+				attachment_group_id=#{attachmentGroupId},
+			</if>
+			<if test="attachmentId != null">
+				attachment_id=#{attachmentId},
+			</if>
+			<if test="mainId != null">
+				main_id=#{mainId},
+			</if>
+			<if test="type != null">
+				type=#{type},
+			</if>
+		</set>
+		<where>
+			attachment_group_id=#{attachmentGroupId} 
+		</where>
+	</update>
+
+	<delete id="delete" parameterType="map">
+	   delete from 
+	     trend_attachment_group 
+	   where 
+	    attachment_group_id=#{attachmentGroupId} 
+	</delete>
+
+	<select id="selectObject" parameterType="map" resultMap="trendAttachmentGroupResultMap">
+	   select 
+	    attachment_group_id,
+	    attachment_id,
+	    main_id,
+	    type
+	   from trend_attachment_group
+	   where 
+	    attachment_group_id=#{attachmentGroupId} 
+	</select>
+	
+	<select id="selectObjectList" parameterType="map" resultMap="trendAttachmentGroupResultMap">
+	   select 
+	     attachment_group_id,
+	     attachment_id,
+	     main_id,
+	     type
+	   from trend_attachment_group
+	   <where>
+	     <if test="attachmentGroupId != null">
+	        attachment_group_id=#{attachmentGroupId}
+	     </if>
+	     <if test="attachmentId != null">
+	        and attachment_id=#{attachmentId}
+	     </if>
+	     <if test="mainId != null">
+	        and main_id=#{mainId}
+	     </if>
+	     <if test="type != null">
+	        and type=#{type}
+	     </if>
+	   </where>
+	</select>
+
+	<select id="selectMap" parameterType="map" resultMap="mapResultMap">
+	   select 
+	    attachment_group_id,
+	    attachment_id,
+	    main_id,
+	    type
+	   from trend_attachment_group
+	   where 
+	    attachment_group_id=#{attachmentGroupId} 
+	</select>
+
+	<select id="selectMapList" parameterType="map" resultMap="mapResultMap">
+	   select 
+	     attachment_group_id,
+	     attachment_id,
+	     main_id,
+	     type
+	   from trend_attachment_group
+	   <where>
+	     <if test="attachmentGroupId != null">
+	        attachment_group_id=#{attachmentGroupId}
+	     </if>
+	     <if test="attachmentId != null">
+	        and attachment_id=#{attachmentId}
+	     </if>
+	     <if test="mainId != null">
+	        and main_id=#{mainId}
+	     </if>
+	     <if test="type != null">
+	        and type=#{type}
+	     </if>
+	   </where>
+	</select>
+	
+	<select id="page" parameterType="map" resultMap="pageResultMap">
+	   select 
+	     attachment_group_id,
+	     attachment_id,
+	     main_id,
+	     type
+	<include refid="pageCondition" />
+	limit #{offset},#{rows}
+	</select>
+
+	<select id="pageCount" parameterType="map" resultType="int">
+	   select count(1)
+	   <include refid="pageCondition" />
+	</select>
+
+	<sql id="pageCondition">
+	   from trend_attachment_group
+	   <where>
+	     <if test="attachmentGroupId != null">
+	        attachment_group_id=#{attachmentGroupId}
+	     </if>
+	     <if test="attachmentId != null">
+	        and attachment_id=#{attachmentId}
+	     </if>
+	     <if test="mainId != null">
+	        and main_id=#{mainId}
+	     </if>
+	     <if test="type != null">
+	        and type=#{type}
+	     </if>
+	   </where>
+	</sql>
+
+	
+</mapper> 

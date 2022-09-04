@@ -1,0 +1,424 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+【属性资源表】对象关系映射 配置 
+ @author AutoCode 309444359@qq.com
+ @date 2016-02-22 15:44:50
+ -->
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.bluemobi.dao.trend.TrendPropertyDao">
+
+	<resultMap id="trendPropertyResultMap" type="com.bluemobi.po.trend.TrendProperty">
+		<id property="propertyId" column="property_id" />
+		<result property="name" column="name" />
+		<result property="valInputtype" column="val_inputtype" />
+		<result property="labelName" column="label_name" />
+		<result property="placeholder" column="placeholder" />
+		<result property="note" column="note" />
+		<result property="sortOrder" column="sort_order" />
+		<result property="isSpec" column="is_spec" />
+		<result property="isImage" column="is_image" />
+		<result property="status" column="status" />
+	</resultMap>
+	<resultMap id="mapResultMap"  type="java.util.HashMap" extends="trendPropertyResultMap"></resultMap>
+	<resultMap id="pageResultMap"  type="java.util.HashMap" extends="trendPropertyResultMap">
+		<result property="propertyValues" column="property_values" />
+	</resultMap>
+	
+	<resultMap id="propertyAndPropertyValueResultMap" type="com.bluemobi.to.trend.PropertyAndPropertyValueTO">
+        <id property="propertyId" column="property_id" />
+        <result property="name" column="name" />
+        <result property="valInputtype" column="val_inputtype" />
+        <result property="labelName" column="label_name" />
+        <result property="placeholder" column="placeholder" />
+        <result property="note" column="note" />
+        <result property="sortOrder" column="sort_order" />
+        <result property="isSpec" column="is_spec" />
+        <result property="isImage" column="is_image" />
+        <result property="status" column="status" />
+        <result property="propertyValueId" column="property_value_id" />
+        <result property="propertyValue" column="property_value" />
+        <result property="propertyImage" column="property_image" />
+        <result property="valueSortOrder" column="value_sort_order" />
+        <result property="isDefault" column="is_default" />
+        <result property="valueStatus" column="value_status" />
+    </resultMap>
+    
+    
+    <insert id="insert" parameterType="com.bluemobi.po.trend.TrendProperty" useGeneratedKeys="true" keyProperty="propertyId" >
+       insert into trend_property (
+         property_id,
+         name,
+         val_inputtype,
+         label_name,
+         placeholder,
+         note,
+         sort_order,
+         is_spec,
+         status,
+         is_image
+       )values (
+         #{propertyId},
+         #{name},
+         #{valInputtype},
+         #{labelName},
+         #{placeholder},
+         #{note},
+         #{sortOrder},
+         #{isSpec},
+         #{status},
+         #{isImage}
+       )
+    </insert>
+
+    <update id="update" parameterType="com.bluemobi.po.trend.TrendProperty">
+        update trend_property
+        <set>
+            <if test="propertyId != null">
+                property_id=#{propertyId},
+            </if>
+            <if test="name != null">
+                name=#{name},
+            </if>
+            <if test="valInputtype != null">
+                val_inputtype=#{valInputtype},
+            </if>
+            <if test="labelName != null">
+                label_name=#{labelName},
+            </if>
+            <if test="placeholder != null">
+                placeholder=#{placeholder},
+            </if>
+            <if test="note != null">
+                note=#{note},
+            </if>
+            <if test="sortOrder != null">
+                sort_order=#{sortOrder},
+            </if>
+            <if test="isSpec != null">
+                is_spec=#{isSpec},
+            </if>
+            <if test="status != null">
+                status=#{status},
+            </if>
+            <if test="isImage != null">
+                is_image=#{isImage},
+            </if>
+        </set>
+        <where>
+            property_id=#{propertyId} 
+        </where>
+    </update>
+
+    <delete id="delete" parameterType="map">
+       delete from 
+         trend_property 
+       where 
+        property_id=#{propertyId} 
+    </delete>
+
+    <select id="selectObject" parameterType="map" resultMap="trendPropertyResultMap">
+       select 
+        property_id,
+        name,
+        val_inputtype,
+        label_name,
+        placeholder,
+        note,
+        sort_order,
+        is_spec,
+        status,
+        is_image
+       from trend_property
+       where 
+        property_id=#{propertyId} 
+    </select>
+    
+    <select id="selectObjectList" parameterType="map" resultMap="trendPropertyResultMap">
+       select 
+         property_id,
+         name,
+         val_inputtype,
+         label_name,
+         placeholder,
+         note,
+         sort_order,
+         is_spec,
+         status,
+         is_image
+       from trend_property
+       <where>
+         <if test="propertyId != null">
+            property_id=#{propertyId}
+         </if>
+         <if test="name != null">
+            and name=#{name}
+         </if>
+         <if test="valInputtype != null">
+            and val_inputtype=#{valInputtype}
+         </if>
+         <if test="labelName != null">
+            and label_name=#{labelName}
+         </if>
+         <if test="placeholder != null">
+            and placeholder=#{placeholder}
+         </if>
+         <if test="note != null">
+            and note=#{note}
+         </if>
+         <if test="sortOrder != null">
+            and sort_order=#{sortOrder}
+         </if>
+         <if test="isSpec != null">
+            and is_spec=#{isSpec}
+         </if>
+         <if test="status != null">
+            and status=#{status}
+         </if>
+         <if test="isImage != null">
+            and is_image=#{isImage}
+         </if>
+       </where>
+    </select>
+
+    <select id="selectMap" parameterType="map" resultMap="mapResultMap">
+       select 
+        property_id,
+        name,
+        val_inputtype,
+        label_name,
+        placeholder,
+        note,
+        sort_order,
+        is_spec,
+        status,
+        is_image
+       from trend_property
+       where 
+        property_id=#{propertyId} 
+    </select>
+
+    <select id="selectMapList" parameterType="map" resultMap="mapResultMap">
+       select 
+         property_id,
+         name,
+         val_inputtype,
+         label_name,
+         placeholder,
+         note,
+         sort_order,
+         is_spec,
+         status,
+         is_image
+       from trend_property
+       <where>
+         <if test="propertyId != null">
+            property_id=#{propertyId}
+         </if>
+         <if test="name != null">
+            and name=#{name}
+         </if>
+         <if test="valInputtype != null">
+            and val_inputtype=#{valInputtype}
+         </if>
+         <if test="labelName != null">
+            and label_name=#{labelName}
+         </if>
+         <if test="placeholder != null">
+            and placeholder=#{placeholder}
+         </if>
+         <if test="note != null">
+            and note=#{note}
+         </if>
+         <if test="sortOrder != null">
+            and sort_order=#{sortOrder}
+         </if>
+         <if test="isSpec != null">
+            and is_spec=#{isSpec}
+         </if>
+         <if test="status != null">
+            and status=#{status}
+         </if>
+         <if test="isImage != null">
+            and is_image=#{isImage}
+         </if>
+       </where>
+    </select>
+    
+    <select id="page" parameterType="map" resultMap="pageResultMap">
+	   select 
+	     p.property_id,
+	     p.name,
+	     p.val_inputtype,
+	     p.label_name,
+	     p.placeholder,
+	     p.note,
+	     p.sort_order,
+	     p.is_spec,
+	     p.is_image,
+	     p.status,
+	     group_concat(v.property_value) property_values 
+	   <include refid="pageCondition" />
+        limit #{offset},#{rows}
+	</select>
+	
+	<select id="pageCount" parameterType="map" resultType="int">
+        select count(1) from
+        (
+            select 1 
+	        <include refid="pageCondition" />
+        ) t
+    </select>
+	
+	<sql id="pageCondition">
+	   from trend_property p,trend_property_value v
+       <where>
+             p.property_id = v.property_id
+         <if test="key != null">
+             and p.label_name LIKE CONCAT(CONCAT('%', #{key}), '%')
+         </if>
+         <if test="propertyId != null">
+            and p.property_id=#{propertyId}
+         </if>
+         <if test="name != null">
+            and p.name=#{name}
+         </if>
+         <if test="valInputtype != null">
+            and p.val_inputtype=#{valInputtype}
+         </if>
+         <if test="labelName != null">
+            and p.label_name=#{labelName}
+         </if>
+         <if test="placeholder != null">
+            and p.placeholder=#{placeholder}
+         </if>
+         <if test="note != null">
+            and p.note=#{note}
+         </if>
+         <if test="sortOrder != null">
+            and p.sort_order=#{sortOrder}
+         </if>
+         <if test="isSpec != null">
+            and p.is_spec=#{isSpec}
+         </if>
+         <if test="isImage != null">
+         	and p.is_image=#{isImage}
+         </if>
+         <if test="status != null">
+            and p.status=#{status}
+         </if>
+       </where>
+       group by 
+                v.property_id
+	</sql>
+	
+    <select id="selectPropertyByCategoryId" parameterType="map" resultMap="propertyAndPropertyValueResultMap">
+        SELECT 
+            p.property_id, 
+            p.name, 
+            p.val_inputtype, 
+            p.label_name, 
+            p.placeholder, 
+            p.note, 
+            p.sort_order, 
+            p.is_spec, 
+            p.is_image,
+            p.status, 
+            v.property_value_id, 
+            v.property_value, 
+            v.property_image, 
+            v.sort_order AS value_sort_order, 
+            v.is_default, 
+            v.status AS value_status
+        FROM goods_property_category pc, trend_property_to_group tog, trend_property p, trend_property_value v
+        <where>
+            pc.property_group_id = tog.property_group_id
+            AND tog.property_id = p.property_id
+            AND p.property_id = v.property_id
+            OR pc.property_id = p.property_id
+            AND p.property_id = v.property_id
+            AND pc.category_id = #{categoryId}
+        </where>
+        GROUP BY v.property_value_id
+        ORDER BY p.sort_order,v.sort_order
+    </select>
+    
+    <select id="selectPropertyByGoodsContentId" parameterType="map" resultMap="propertyAndPropertyValueResultMap">
+        SELECT 
+            p.property_id, 
+            p.name, 
+            p.val_inputtype, 
+            p.label_name, 
+            p.placeholder, 
+            p.note, 
+            p.sort_order, 
+            p.is_spec, 
+            p.is_image,
+            p.status, 
+            v.property_value_id, 
+            v.property_value, 
+            v.property_image, 
+            v.sort_order AS value_sort_order, 
+            v.is_default, 
+            v.status AS value_status
+        FROM trend_property p, trend_property_value v, goods_property g
+        <where>
+            p.property_id = v.property_id
+            AND g.property_id = p.property_id
+            AND g.property_value_id = v.property_value_id
+            AND g.content_id = #{contentId}
+        </where>
+        ORDER BY p.sort_order,v.sort_order
+    </select>
+    
+    <select id="selectPropertyAndValueName" parameterType="map" resultType="string">
+        SELECT
+		    CONCAT(
+		        p.label_name,
+		        ":",
+		        v.property_value
+		    ) as property
+		FROM
+		    trend_property p,
+		    trend_property_value v
+		WHERE
+		    p.property_id = v.property_id
+		AND p.property_id = #{propertyId}
+		AND v.property_value_id = #{propertyValueId}
+    </select>
+    
+    <select id="selectPropertyIsImage" parameterType="int" resultType="int">
+        SELECT 
+            p.is_image
+        FROM 
+            trend_property p
+        WHERE 
+            p.property_id = #{propertyId}
+    </select>
+    
+    <select id="selectPropertyIsSpecCountByCategoryId" parameterType="int" resultType="int">
+        SELECT 
+            count(1)
+        FROM 
+            goods_property_category t,
+            trend_property p
+		WHERE 
+            t.property_id = p.property_id
+            AND t.category_id = #{categoryId}
+            AND p.is_spec = 1
+    </select>
+    
+    <select id="selectPropertyIsImageCountByCategoryId" parameterType="int" resultType="int">
+        SELECT 
+            count(1)
+        FROM 
+            goods_property_category t,
+            trend_property p
+        WHERE 
+            t.property_id = p.property_id
+            AND t.category_id = #{categoryId}
+            AND p.is_image = 1
+    </select>
+    
+</mapper> 

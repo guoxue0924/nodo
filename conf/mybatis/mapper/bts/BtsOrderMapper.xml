@@ -1,0 +1,1212 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+【订单表】对象关系映射 配置 
+ @author AutoCode 309444359@qq.com
+ @date 2015-11-17 13:27:04
+ -->
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.bluemobi.dao.bts.BtsOrderDao">
+
+	<resultMap id="btsOrderResultMap" type="com.bluemobi.po.bts.BtsOrder">
+	   <id property="orderId" column="order_id" />
+       <result property="paymentId" column="payment_id" />
+       <result property="paymentAlias" column="payment_alias" />
+       <result property="orderNumber" column="order_number" />
+       <result property="outOrderNumber" column="out_order_number" />
+       <result property="orderType" column="order_type" />
+       <result property="userid" column="userid" />
+       <result property="username" column="username" />
+       <result property="remark" column="remark" />
+       <result property="status" column="status" />
+       <result property="payTime" column="pay_time" />
+       <result property="payStatus" column="pay_status" />
+       <result property="payType" column="pay_type" />
+       <result property="logisticsCom" column="logistics_com" />
+       <result property="logisticsNumber" column="logistics_number" />
+       <result property="consigneeName" column="consignee_name" />
+       <result property="consigneeRegionId" column="consignee_region_id" />
+       <result property="consigneeRegionName" column="consignee_region_name" />
+       <result property="consigneeAddress" column="consignee_address" />
+       <result property="consigneeZipcode" column="consignee_zipcode" />
+       <result property="consigneeEmail" column="consignee_email" />
+       <result property="consigneeMobile" column="consignee_mobile" />
+       <result property="isInvoice" column="is_invoice" />
+       <result property="invoiceTax" column="invoice_tax" />
+       <result property="invoiceBelong" column="invoice_belong" />
+       <result property="freight" column="freight" />
+       <result property="count" column="count" />
+       <result property="totalAmount" column="total_amount" />
+       <result property="couponAmount" column="coupon_amount" />
+       <result property="deliveryTime" column="delivery_time" />
+       <result property="finishTime" column="finish_time" />
+       <result property="isCancel" column="is_cancel" />
+       <result property="isUrgent" column="is_urgent" />
+       <result property="isRefund" column="is_refund" />
+       <result property="isDel" column="is_del" />
+       <result property="isDelUser" column="is_del_user" />
+       <result property="ctime" column="ctime" />
+	</resultMap>
+	<resultMap id="mapResultMap"  type="java.util.HashMap" extends="btsOrderResultMap"></resultMap>
+	<resultMap id="pageResultMap"  type="java.util.HashMap" extends="btsOrderResultMap"></resultMap>
+	<resultMap id="detailResultMap"  type="com.bluemobi.to.bts.OrderDetailTO" extends="btsOrderResultMap">
+		<result property="commentTime" column="comment_time" />
+		<collection property="items" ofType="com.bluemobi.po.bts.BtsOrderItem">
+		   <id property="itemId" column="item_id" />
+	       <result property="skuId" column="sku_id" />
+	       <result property="goodsName" column="goods_name" />
+	       <result property="goodsImage" column="goods_image" />
+	       <result property="buyPrice" column="buy_price" />
+	       <result property="buyNum" column="buy_num" />
+	       <result property="isComment" column="is_comment" />
+	       <result property="isPackage" column="is_package" />
+		</collection>
+	</resultMap>
+	
+	<resultMap id="saleHistoryResultMap"  type="java.util.HashMap">
+		<id property="orderId" column="order_id" />
+       <result property="username" column="username" />
+       <result property="userintegral" column="userintegral" />
+       <result property="buyPrice" column="buy_price" />
+       <result property="buyNum" column="buy_num" />
+       <result property="ctime" column="ctime" />	
+	</resultMap>
+	
+	<resultMap id="CasUser" type="com.bluemobi.po.cas.CasUser">
+	   <id property="userid" column="userid" />
+       <result property="username" column="username" />
+       <result property="userintegral" column="userintegral" />
+       <result property="phone" column="phone" />
+       
+	</resultMap>
+	
+	
+	<insert id="insert" parameterType="com.bluemobi.po.bts.BtsOrder" useGeneratedKeys="true" keyProperty="orderId">
+	   insert into bts_order (
+	     payment_id,
+	     payment_alias,
+	     order_number,
+	     out_order_number,
+	     order_type,
+	     userid,
+	     username,
+	     remark,
+	     status,
+	     pay_time,
+	     pay_status,
+	     pay_type,
+	     logistics_com,
+	     logistics_number,
+	     consignee_name,
+	     consignee_region_id,
+	     consignee_region_name,
+	     consignee_address,
+	     consignee_zipcode,
+	     consignee_email,
+	     consignee_mobile,
+	     is_invoice,
+	     invoice_tax,
+	     invoice_belong,
+	     freight,
+	     count,
+	     total_amount,
+	     coupon_amount,
+	     delivery_time,
+	     is_cancel,
+	     is_urgent,
+	     is_refund,
+	     is_del,
+	     is_del_user,
+	     ctime
+	   )values (
+	     #{paymentId},
+	     #{paymentAlias},
+	     #{orderNumber},
+	     #{outOrderNumber},
+	     #{orderType},
+	     #{userid},
+	     #{username},
+	     #{remark},
+	     #{status},
+	     #{payTime},
+	     #{payStatus},
+	     #{payType},
+	     #{logisticsCom},
+	     #{logisticsNumber},
+	     #{consigneeName},
+	     #{consigneeRegionId},
+	     #{consigneeRegionName},
+	     #{consigneeAddress},
+	     #{consigneeZipcode},
+	     #{consigneeEmail},
+	     #{consigneeMobile},
+	     #{isInvoice},
+	     #{invoiceTax},
+	     #{invoiceBelong},
+	     #{freight},
+	     #{count},
+	     #{totalAmount},
+	     #{couponAmount},
+	     #{deliveryTime},
+	     #{isCancel},
+	     #{isUrgent},
+	     #{isRefund},
+	     #{isDel},
+	     #{isDelUser},
+	     #{ctime}
+	   )
+	</insert>
+
+	<update id="update" parameterType="com.bluemobi.po.bts.BtsOrder">
+		update bts_order
+		<set>
+			<if test="orderId != null">
+				order_id=#{orderId},
+			</if>
+			<if test="paymentId != null">
+				payment_id=#{paymentId},
+			</if>
+			<if test="paymentAlias != null">
+				payment_alias=#{paymentAlias},
+			</if>
+			<if test="orderNumber != null">
+				order_number=#{orderNumber},
+			</if>
+			<if test="outOrderNumber != null">
+				out_order_number=#{outOrderNumber},
+			</if>
+			<if test="orderType != null">
+				order_type=#{orderType},
+			</if>
+			<if test="userid != null">
+				userid=#{userid},
+			</if>
+			<if test="username != null">
+				username=#{username},
+			</if>
+			<if test="remark != null">
+				remark=#{remark},
+			</if>
+			<if test="status != null">
+				status=#{status},
+			</if>
+			<if test="payTime != null">
+				pay_time=#{payTime},
+			</if>
+			<if test="payStatus != null">
+				pay_status=#{payStatus},
+			</if>
+			<if test="payType != null">
+				pay_type=#{payType},
+			</if>
+			<if test="logisticsCom != null">
+				logistics_com=#{logisticsCom},
+			</if>
+			<if test="logisticsNumber != null">
+				logistics_number=#{logisticsNumber},
+			</if>
+			<if test="consigneeName != null">
+				consignee_name=#{consigneeName},
+			</if>
+			<if test="consigneeRegionId != null">
+				consignee_region_id=#{consigneeRegionId},
+			</if>
+			<if test="consigneeRegionName != null">
+				consignee_region_name=#{consigneeRegionName},
+			</if>
+			<if test="consigneeAddress != null">
+				consignee_address=#{consigneeAddress},
+			</if>
+			<if test="consigneeZipcode != null">
+				consignee_zipcode=#{consigneeZipcode},
+			</if>
+			<if test="consigneeEmail != null">
+				consignee_email=#{consigneeEmail},
+			</if>
+			<if test="consigneeMobile != null">
+				consignee_mobile=#{consigneeMobile},
+			</if>
+			<if test="isInvoice != null">
+				is_invoice=#{isInvoice},
+			</if>
+			<if test="invoiceTax != null">
+				invoice_tax=#{invoiceTax},
+			</if>
+			<if test="invoiceBelong != null">
+				invoice_belong=#{invoiceBelong},
+			</if>
+			<if test="freight != null">
+				freight=#{freight},
+			</if>
+			<if test="count != null">
+				count=#{count},
+			</if>
+			<if test="totalAmount != null">
+				total_amount=#{totalAmount},
+			</if>
+			<if test="couponAmount != null">
+				coupon_amount=#{couponAmount},
+			</if>
+			<if test="deliveryTime != null">
+				delivery_time=#{deliveryTime},
+			</if>
+			<if test="finishTime != null">
+				finish_time=#{finishTime},
+			</if>
+			<if test="isCancel != null">
+				is_cancel=#{isCancel},
+			</if>
+			<if test="isUrgent != null">
+				is_urgent=#{isUrgent},
+			</if>
+			<if test="isRefund != null">
+				is_refund=#{isRefund},
+			</if>
+			<if test="isDel != null">
+				is_del=#{isDel},
+			</if>
+			<if test="isDelUser != null">
+				is_del_user=#{isDelUser},
+			</if>
+			<if test="ctime != null">
+				ctime=#{ctime},
+			</if>
+		</set>
+		<where>
+			order_id=#{orderId} 
+		</where>
+	</update>
+
+	<!-- 根据newOutTradeNo修改未支付前的订单状态-->
+	<update id="updateStatus" parameterType="java.lang.String">
+		update bts_order
+		set
+				status= 2,
+				pay_time= now(),
+				pay_status= 0
+		where
+			order_number=#{newOutTradeNo} 
+	</update>
+	
+	<!-- 根据newOutTradeNo修改支付完的订单状态-->
+	<update id="updatePayOverStatus" parameterType="java.lang.String">
+		update bts_order
+		set
+				status= 3,
+				pay_time= now(),
+				pay_status= 1
+		where
+			order_number=#{newOutTradeNo} 
+	</update>
+
+	<delete id="delete" parameterType="map">
+	   delete from 
+	     bts_order 
+	   where 
+	    order_id=#{orderId} 
+	</delete>
+
+	<select id="selectObject" parameterType="map" resultMap="btsOrderResultMap">
+	   select 
+	    order_id,
+	    payment_id,
+	    payment_alias,
+	    order_number,
+	    out_order_number,
+	    order_type,
+	    userid,
+	    username,
+	    remark,
+	    status,
+	    pay_time,
+	    pay_status,
+	    pay_type,
+	    logistics_com,
+	    logistics_number,
+	    consignee_name,
+	    consignee_region_id,
+	    consignee_region_name,
+	    consignee_address,
+	    consignee_zipcode,
+	    consignee_email,
+	    consignee_mobile,
+	    is_invoice,
+	    invoice_tax,
+	    invoice_belong,
+	    freight,
+	    count,
+	    total_amount,
+	    coupon_amount,
+	    delivery_time,
+	    is_cancel,
+	    is_urgent,
+	    is_refund,
+	    is_del,
+	    is_del_user,
+	    ctime
+	   from bts_order
+	   where 
+	   	<if test="orderId != null">
+		    order_id=#{orderId} 
+	   	</if>
+	    <if test="orderNumber != null">
+	        order_number=#{orderNumber}
+	     </if>
+	</select>
+	
+	<select id="selectObjectList" parameterType="map" resultMap="btsOrderResultMap">
+	   select 
+	     order_id,
+	     payment_id,
+	     payment_alias,
+	     order_number,
+	     out_order_number,
+	     order_type,
+	     userid,
+	     username,
+	     remark,
+	     status,
+	     pay_time,
+	     pay_status,
+	     pay_type,
+	     logistics_com,
+	     logistics_number,
+	     consignee_name,
+	     consignee_region_id,
+	     consignee_region_name,
+	     consignee_address,
+	     consignee_zipcode,
+	     consignee_email,
+	     consignee_mobile,
+	     is_invoice,
+	     invoice_tax,
+	     invoice_belong,
+	     freight,
+	     count,
+	     total_amount,
+	     coupon_amount,
+	     delivery_time,
+	     is_cancel,
+	     is_urgent,
+	     is_refund,
+	     is_del,
+	     is_del_user,
+	     ctime
+	   from bts_order
+	   <where>
+	     <if test="orderId != null">
+	        order_id=#{orderId}
+	     </if>
+	     <if test="paymentId != null">
+	        and payment_id=#{paymentId}
+	     </if>
+	     <if test="paymentAlias != null">
+	        and payment_alias=#{paymentAlias}
+	     </if>
+	     <if test="orderNumber != null">
+	        and order_number=#{orderNumber}
+	     </if>
+	     <if test="outOrderNumber != null">
+	        and out_order_number=#{outOrderNumber}
+	     </if>
+	     <if test="orderType != null">
+	        and order_type=#{orderType}
+	     </if>
+	     <if test="userid != null">
+	        and userid=#{userid}
+	     </if>
+	     <if test="username != null">
+	        and username=#{username}
+	     </if>
+	     <if test="remark != null">
+	        and remark=#{remark}
+	     </if>
+	     <if test="status != null">
+	        and status=#{status}
+	     </if>
+	     <if test="payTime != null">
+	        and pay_time=#{payTime}
+	     </if>
+	     <if test="payStatus != null">
+	        and pay_status=#{payStatus}
+	     </if>
+	     <if test="payType != null">
+	        and pay_type=#{payType}
+	     </if>
+	     <if test="logisticsCom != null">
+	        and logistics_com=#{logisticsCom}
+	     </if>
+	     <if test="logisticsNumber != null">
+	        and logistics_number=#{logisticsNumber}
+	     </if>
+	     <if test="consigneeName != null">
+	        and consignee_name=#{consigneeName}
+	     </if>
+	     <if test="consigneeRegionId != null">
+	        and consignee_region_id=#{consigneeRegionId}
+	     </if>
+	     <if test="consigneeRegionName != null">
+	        and consignee_region_name=#{consigneeRegionName}
+	     </if>
+	     <if test="consigneeAddress != null">
+	        and consignee_address=#{consigneeAddress}
+	     </if>
+	     <if test="consigneeZipcode != null">
+	        and consignee_zipcode=#{consigneeZipcode}
+	     </if>
+	     <if test="consigneeEmail != null">
+	        and consignee_email=#{consigneeEmail}
+	     </if>
+	     <if test="consigneeMobile != null">
+	        and consignee_mobile=#{consigneeMobile}
+	     </if>
+	     <if test="isInvoice != null">
+	        and is_invoice=#{isInvoice}
+	     </if>
+	     <if test="invoiceTax != null">
+	        and invoice_tax=#{invoiceTax}
+	     </if>
+	     <if test="invoiceBelong != null">
+	        and invoice_belong=#{invoiceBelong}
+	     </if>
+	     <if test="freight != null">
+	        and freight=#{freight}
+	     </if>
+	     <if test="count != null">
+	        and count=#{count}
+	     </if>
+	     <if test="totalAmount != null">
+	        and total_amount=#{totalAmount}
+	     </if>
+	     <if test="couponAmount != null">
+	        and coupon_amount=#{couponAmount}
+	     </if>
+	     <if test="deliveryTime != null">
+	        and delivery_time=#{deliveryTime}
+	     </if>
+	     <if test="isCancel != null">
+	        and is_cancel=#{isCancel}
+	     </if>
+	     <if test="isUrgent != null">
+	        and is_urgent=#{isUrgent}
+	     </if>
+	     <if test="isRefund != null">
+	        and is_refund=#{isRefund}
+	     </if>
+	     <if test="isDel != null">
+	        and is_del=#{isDel}
+	     </if>
+	     <if test="isDelUser != null">
+	        and is_del_user=#{isDelUser}
+	     </if>
+	     <if test="ctime != null">
+	        and ctime=#{ctime}
+	     </if>
+	   </where>
+	</select>
+
+
+	<!-- 根据订单号获取部分订单信息-->
+	<select id="getOrderInfo" parameterType="java.lang.String" resultMap="btsOrderResultMap">
+	   select 
+	    order_id,
+	    payment_id,
+	    payment_alias,
+	    order_number,
+	    out_order_number,
+	    order_type,
+	    userid,
+	    username,
+	    remark,
+	    status,
+	    pay_time,
+	    pay_status,
+	    pay_type,
+	    freight,
+	    count,
+	    total_amount,
+	    coupon_amount,
+	    delivery_time,
+	    ctime
+	   from bts_order
+	   where 
+	    order_number=#{orderNumber} 
+	</select>
+
+	<!-- 根据订单号获取订单信息-->
+	<select id="OrderInfo" parameterType="java.lang.String" resultMap="btsOrderResultMap">
+	   select 
+	    order_id,
+	    payment_id,
+	    payment_alias,
+	    order_number,
+	    out_order_number,
+	    order_type,
+	    userid,
+	    username,
+	    remark,
+	    status,
+	    pay_time,
+	    pay_status,
+	    pay_type,
+	    freight,
+	    count,
+	    total_amount,
+	    coupon_amount,
+	    delivery_time,
+	    ctime
+	   from bts_order
+	   where 
+	    order_number=#{orderNum} 
+	</select>
+
+	<!-- 根据orderId获取订单信息-->
+	<select id="OrderInfoByOrderId" parameterType="java.lang.Long" resultMap="btsOrderResultMap">
+	   select 
+	    order_id,
+	    payment_id,
+	    payment_alias,
+	    order_number,
+	    out_order_number,
+	    order_type,
+	    userid,
+	    username,
+	    remark,
+	    status,
+	    pay_time,
+	    pay_status,
+	    pay_type,
+	    freight,
+	    count,
+	    total_amount,
+	    coupon_amount,
+	    delivery_time,
+	    ctime
+	   from bts_order
+	   where 
+	    order_id=#{orderId} 
+	</select>
+	
+	 <!-- 获取订单信息 -->
+	<select id="selectMap" parameterType="map" resultMap="mapResultMap">
+	   select 
+	    order_id,
+	    payment_id,
+	    payment_alias,
+	    order_number,
+	    out_order_number,
+	    order_type,
+	    userid,
+	    username,
+	    remark,
+	    status,
+	    pay_time,
+	    pay_status,
+	    pay_type,
+	    logistics_com,
+	    logistics_number,
+	    consignee_name,
+	    consignee_region_id,
+	    consignee_region_name,
+	    consignee_address,
+	    consignee_zipcode,
+	    consignee_email,
+	    consignee_mobile,
+	    is_invoice,
+	    invoice_tax,
+	    invoice_belong,
+	    freight,
+	    count,
+	    total_amount,
+	    coupon_amount,
+	    delivery_time,
+	    is_cancel,
+	    is_urgent,
+	    is_refund,
+	    is_del,
+	    is_del_user,
+	    ctime
+	   from bts_order
+	   where 
+	    order_id=#{orderId} 
+	</select>
+
+	<select id="selectMapList" parameterType="map" resultMap="mapResultMap">
+	   select 
+	     order_id,
+	     payment_id,
+	     payment_alias,
+	     order_number,
+	     out_order_number,
+	     order_type,
+	     userid,
+	     username,
+	     remark,
+	     status,
+	     pay_time,
+	     pay_status,
+	     pay_type,
+	     logistics_com,
+	     logistics_number,
+	     consignee_name,
+	     consignee_region_id,
+	     consignee_region_name,
+	     consignee_address,
+	     consignee_zipcode,
+	     consignee_email,
+	     consignee_mobile,
+	     is_invoice,
+	     invoice_tax,
+	     invoice_belong,
+	     freight,
+	     count,
+	     total_amount,
+	     coupon_amount,
+	     delivery_time,
+	     is_cancel,
+	     is_urgent,
+	     is_refund,
+	     is_del,
+	     is_del_user,
+	     ctime
+	   from bts_order
+	   <where>
+	     <if test="orderId != null">
+	        order_id=#{orderId}
+	     </if>
+	     <if test="paymentId != null">
+	        and payment_id=#{paymentId}
+	     </if>
+	     <if test="paymentAlias != null">
+	        and payment_alias=#{paymentAlias}
+	     </if>
+	     <if test="orderNumber != null">
+	        and order_number=#{orderNumber}
+	     </if>
+	     <if test="outOrderNumber != null">
+	        and out_order_number=#{outOrderNumber}
+	     </if>
+	     <if test="orderType != null">
+	        and order_type=#{orderType}
+	     </if>
+	     <if test="userid != null">
+	        and userid=#{userid}
+	     </if>
+	     <if test="username != null">
+	        and username=#{username}
+	     </if>
+	     <if test="remark != null">
+	        and remark=#{remark}
+	     </if>
+	     <if test="status != null">
+	        and status=#{status}
+	     </if>
+	     <if test="payTime != null">
+	        and pay_time=#{payTime}
+	     </if>
+	     <if test="payStatus != null">
+	        and pay_status=#{payStatus}
+	     </if>
+	     <if test="payType != null">
+	        and pay_type=#{payType}
+	     </if>
+	     <if test="logisticsCom != null">
+	        and logistics_com=#{logisticsCom}
+	     </if>
+	     <if test="logisticsNumber != null">
+	        and logistics_number=#{logisticsNumber}
+	     </if>
+	     <if test="consigneeName != null">
+	        and consignee_name=#{consigneeName}
+	     </if>
+	     <if test="consigneeRegionId != null">
+	        and consignee_region_id=#{consigneeRegionId}
+	     </if>
+	     <if test="consigneeRegionName != null">
+	        and consignee_region_name=#{consigneeRegionName}
+	     </if>
+	     <if test="consigneeAddress != null">
+	        and consignee_address=#{consigneeAddress}
+	     </if>
+	     <if test="consigneeZipcode != null">
+	        and consignee_zipcode=#{consigneeZipcode}
+	     </if>
+	     <if test="consigneeEmail != null">
+	        and consignee_email=#{consigneeEmail}
+	     </if>
+	     <if test="consigneeMobile != null">
+	        and consignee_mobile=#{consigneeMobile}
+	     </if>
+	     <if test="isInvoice != null">
+	        and is_invoice=#{isInvoice}
+	     </if>
+	     <if test="invoiceTax != null">
+	        and invoice_tax=#{invoiceTax}
+	     </if>
+	     <if test="invoiceBelong != null">
+	        and invoice_belong=#{invoiceBelong}
+	     </if>
+	     <if test="freight != null">
+	        and freight=#{freight}
+	     </if>
+	     <if test="count != null">
+	        and count=#{count}
+	     </if>
+	     <if test="totalAmount != null">
+	        and total_amount=#{totalAmount}
+	     </if>
+	     <if test="couponAmount != null">
+	        and coupon_amount=#{couponAmount}
+	     </if>
+	     <if test="deliveryTime != null">
+	        and delivery_time=#{deliveryTime}
+	     </if>
+	     <if test="isCancel != null">
+	        and is_cancel=#{isCancel}
+	     </if>
+	     <if test="isUrgent != null">
+	        and is_urgent=#{isUrgent}
+	     </if>
+	     <if test="isRefund != null">
+	        and is_refund=#{isRefund}
+	     </if>
+	     <if test="isDel != null">
+	        and is_del=#{isDel}
+	     </if>
+	     <if test="isDelUser != null">
+	        and is_del_user=#{isDelUser}
+	     </if>
+	     <if test="ctime != null">
+	        and ctime=#{ctime}
+	     </if>
+	   </where>
+	</select>
+	
+	<select id="page" parameterType="map" resultMap="pageResultMap">
+	   select 
+	     order_id,
+	     payment_id,
+	     payment_alias,
+	     order_number,
+	     out_order_number,
+	     order_type,
+	     userid,
+	     username,
+	     remark,
+	     status,
+	     pay_time,
+	     pay_status,
+	     pay_type,
+	     logistics_com,
+	     logistics_number,
+	     consignee_name,
+	     consignee_region_id,
+	     consignee_region_name,
+	     consignee_address,
+	     consignee_zipcode,
+	     consignee_email,
+	     consignee_mobile,
+	     is_invoice,
+	     invoice_tax,
+	     invoice_belong,
+	     freight,
+	     count,
+	     total_amount,
+	     coupon_amount,
+	     delivery_time,
+	     is_cancel,
+	     is_urgent,
+	     is_refund,
+	     is_del,
+	     is_del_user,
+	     ctime
+	<include refid="pageCondition" />
+	limit #{offset},#{rows}
+	</select>
+
+	<select id="pageCount" parameterType="map" resultType="int">
+	   select count(1)
+	   <include refid="pageCondition" />
+	</select>
+
+	<sql id="pageCondition">
+	   from bts_order
+	   <where>
+	   	 <if test="key != null and key != ''">
+	        and order_number LIKE CONCAT(CONCAT('%', #{key}), '%')
+	     </if>
+	     <if test="payStatus != null">
+	        and pay_status=#{payStatus}
+	     </if>
+	     <if test="status != null">
+	        and status=#{status}
+	     </if>
+	   	 <if test="startDate != null">
+	        and ctime &gt;=#{startDate}
+	     </if>
+	     <if test="endDate != null">
+	        and ctime &lt;=#{endDate}
+	     </if>
+	     <if test="orderId != null">
+	        order_id=#{orderId}
+	     </if>
+	     <if test="paymentId != null">
+	        and payment_id=#{paymentId}
+	     </if>
+	     <if test="paymentAlias != null">
+	        and payment_alias=#{paymentAlias}
+	     </if>
+	     <if test="orderNumber != null">
+	        and order_number=#{orderNumber}
+	     </if>
+	     <if test="outOrderNumber != null">
+	        and out_order_number=#{outOrderNumber}
+	     </if>
+	     <if test="orderType != null">
+	        and order_type=#{orderType}
+	     </if>
+	     <if test="userid != null">
+	        and userid=#{userid}
+	     </if>
+	     <if test="username != null">
+	        and username=#{username}
+	     </if>
+	     <if test="remark != null">
+	        and remark=#{remark}
+	     </if>
+	     <if test="payTime != null">
+	        and pay_time=#{payTime}
+	     </if>
+	     
+	     <if test="payType != null">
+	        and pay_type=#{payType}
+	     </if>
+	     <if test="logisticsCom != null">
+	        and logistics_com=#{logisticsCom}
+	     </if>
+	     <if test="logisticsNumber != null">
+	        and logistics_number=#{logisticsNumber}
+	     </if>
+	     <if test="consigneeName != null">
+	        and consignee_name=#{consigneeName}
+	     </if>
+	     <if test="consigneeRegionId != null">
+	        and consignee_region_id=#{consigneeRegionId}
+	     </if>
+	     <if test="consigneeRegionName != null">
+	        and consignee_region_name=#{consigneeRegionName}
+	     </if>
+	     <if test="consigneeAddress != null">
+	        and consignee_address=#{consigneeAddress}
+	     </if>
+	     <if test="consigneeZipcode != null">
+	        and consignee_zipcode=#{consigneeZipcode}
+	     </if>
+	     <if test="consigneeEmail != null">
+	        and consignee_email=#{consigneeEmail}
+	     </if>
+	     <if test="consigneeMobile != null">
+	        and consignee_mobile=#{consigneeMobile}
+	     </if>
+	     <if test="isInvoice != null">
+	        and is_invoice=#{isInvoice}
+	     </if>
+	     <if test="invoiceTax != null">
+	        and invoice_tax=#{invoiceTax}
+	     </if>
+	     <if test="invoiceBelong != null">
+	        and invoice_belong=#{invoiceBelong}
+	     </if>
+	     <if test="freight != null">
+	        and freight=#{freight}
+	     </if>
+	     <if test="count != null">
+	        and count=#{count}
+	     </if>
+	     <if test="totalAmount != null">
+	        and total_amount=#{totalAmount}
+	     </if>
+	     <if test="couponAmount != null">
+	        and coupon_amount=#{couponAmount}
+	     </if>
+	     <if test="deliveryTime != null">
+	        and delivery_time=#{deliveryTime}
+	     </if>
+	     <if test="isCancel != null">
+	        and is_cancel=#{isCancel}
+	     </if>
+	     <if test="isUrgent != null">
+	        and is_urgent=#{isUrgent}
+	     </if>
+	     <if test="isRefund != null">
+	        and is_refund=#{isRefund}
+	     </if>
+	     <if test="isDel != null">
+	        and is_del=#{isDel}
+	     </if>
+	     <if test="isDelUser != null">
+	        and is_del_user=#{isDelUser}
+	     </if>
+	   </where>
+	</sql>
+	
+	<select id="getDetailInfo" resultMap="detailResultMap">
+		select 
+	     o.order_id,
+	     o.payment_id,
+	     o.payment_alias,
+	     o.order_number,
+	     o.out_order_number,
+	     o.order_type,
+	     o.userid,
+	     o.username,
+	     o.remark,
+	     o.status,
+	     o.pay_time,
+	     o.pay_status,
+	     o.pay_type,
+	     o.logistics_com,
+	     o.logistics_number,
+	     o.consignee_name,
+	     o.consignee_region_id,
+	     o.consignee_region_name,
+	     o.consignee_address,
+	     o.consignee_zipcode,
+	     o.consignee_email,
+	     o.consignee_mobile,
+	     o.is_invoice,
+	     o.invoice_tax,
+	     o.invoice_belong,
+	     o.freight,
+	     o.count,
+	     o.total_amount,
+	     o.coupon_amount,
+	     o.delivery_time,
+	     o.is_cancel,
+	     o.is_urgent,
+	     o.is_refund,
+	     o.is_del,
+	     o.is_del_user,
+	     o.ctime,
+	     i.item_id,
+	     i.sku_id,
+	     i.goods_name,
+	     i.goods_image,
+	     i.buy_price,
+	     i.buy_num,
+	     c.ctime as comment_time
+	   from 
+	   	 bts_order o, bts_order_item i left join comment_content c on i.item_id = c.to_order_item_id
+	   where
+	   	 o.order_id = i.order_id and
+	   	 o.order_id = #{orderId}
+	</select>
+	
+	<!-- 根据newOutTradeNo获取订单详情信息 -->
+	<select id="getDetailInfoByOutTradeNo" resultMap="detailResultMap">
+		select 
+	     o.order_id,
+	     o.payment_id,
+	     o.payment_alias,
+	     o.order_number,
+	     o.out_order_number,
+	     o.order_type,
+	     o.userid,
+	     o.username,
+	     o.remark,
+	     o.status,
+	     o.pay_time,
+	     o.pay_status,
+	     o.pay_type,
+	     o.logistics_com,
+	     o.logistics_number,
+	     o.consignee_name,
+	     o.consignee_region_id,
+	     o.consignee_region_name,
+	     o.consignee_address,
+	     o.consignee_zipcode,
+	     o.consignee_email,
+	     o.consignee_mobile,
+	     o.is_invoice,
+	     o.invoice_tax,
+	     o.invoice_belong,
+	     o.freight,
+	     o.count,
+	     o.total_amount,
+	     o.coupon_amount,
+	     o.delivery_time,
+	     o.is_cancel,
+	     o.is_urgent,
+	     o.is_refund,
+	     o.is_del,
+	     o.is_del_user,
+	     o.ctime,
+	     i.item_id,
+	     i.sku_id,
+	     i.goods_name,
+	     i.goods_image,
+	     i.buy_price,
+	     i.buy_num,
+	     c.ctime as comment_time
+	   from 
+	   	 bts_order o, bts_order_item i left join comment_content c on i.item_id = c.to_order_item_id
+	   where
+	   	 o.order_id = i.order_id and
+	   	 o.order_number = #{newOutTradeNo}
+	</select>
+	
+	<select id="frontPage" parameterType="map" resultMap="detailResultMap">
+	   SELECT
+			t.*, i.item_id,
+			i.sku_id,
+			i.goods_name,
+			i.goods_image,
+			i.buy_price,
+			i.buy_num,
+			i.is_comment
+		FROM
+			(
+				SELECT
+					o.order_id,
+					o.payment_id,
+					o.payment_alias,
+					o.order_number,
+					o.out_order_number,
+					o.order_type,
+					o.userid,
+					o.username,
+					o.remark,
+					o. STATUS,
+					o.pay_time,
+					o.pay_status,
+					o.pay_type,
+					o.logistics_com,
+					o.logistics_number,
+					o.consignee_name,
+					o.consignee_region_id,
+					o.consignee_region_name,
+					o.consignee_address,
+					o.consignee_zipcode,
+					o.consignee_email,
+					o.consignee_mobile,
+					o.is_invoice,
+					o.invoice_tax,
+					o.invoice_belong,
+					o.freight,
+					o.count,
+					o.total_amount,
+					o.coupon_amount,
+					o.delivery_time,
+					o.is_cancel,
+					o.is_urgent,
+					o.is_refund,
+					o.is_del,
+					o.is_del_user,
+					o.ctime
+				FROM
+					bts_order o
+				<where>
+			   	 <if test="key != null and key != ''">
+			        and o.order_number LIKE CONCAT(CONCAT('%', #{key}), '%')
+			     </if>
+			     <if test="status != null">
+			        and o.status=#{status}
+			     </if>
+			   	 <if test="startDate != null">
+			        and o.ctime &gt;=#{startDate}
+			     </if>
+			     <if test="endDate != null">
+			        and o.ctime &lt;=#{endDate}
+			     </if>
+			     <if test="userid != null">
+			        and o.userid=#{userid}
+			     </if>
+			     <if test="isUserDel != null">
+			        and o.is_del_user=#{isUserDel}
+			     </if>
+			   </where>
+			    order by o.ctime
+				limit #{offset},#{rows}
+			) t
+		JOIN bts_order_item i
+		WHERE
+			t.order_id = i.order_id
+			order by i.ctime desc
+			
+	</select>
+
+	<select id="frontPageCount" parameterType="map" resultType="int">
+	   select count(1)
+	   <include refid="frontPageCountCondition" />
+	</select>
+
+	<sql id="frontPageCountCondition">
+	   from 
+	   	 bts_order o
+	   <where>
+	   	 <if test="key != null and key != ''">
+	        and o.order_number LIKE CONCAT(CONCAT('%', #{key}), '%')
+	     </if>
+	     <if test="status != null">
+	        and o.status=#{status}
+	     </if>
+	   	 <if test="startDate != null">
+	        and o.ctime &gt;=#{startDate}
+	     </if>
+	     <if test="endDate != null">
+	        and o.ctime &lt;=#{endDate}
+	     </if>
+	     <if test="userid != null">
+	        and o.userid=#{userid}
+	     </if>
+	     <if test="isUserDel != null">
+	        and o.is_del_user=#{isUserDel}
+	     </if>
+	   </where>
+	</sql>
+	
+	<select id="saleHistoryPage" parameterType="map" resultMap="saleHistoryResultMap">
+	   SELECT
+			o.order_id,
+			u.username,
+		  i.buy_price,
+			i.buy_num,
+			o.ctime
+		FROM
+			bts_order_item i,
+			bts_order o,
+			cas_user u
+		WHERE
+			i.order_id = o.order_id
+		AND o.userid = u.userid
+		and i.sku_id = #{skuId}
+		and o.status = 1
+		limit #{offset},#{rows}
+	</select>
+
+	<select id="saleHistoryCount" parameterType="map" resultType="int">
+	    SELECT
+			count(1)
+		FROM
+			bts_order_item i,
+			bts_order o,
+			cas_user u
+		WHERE
+			i.order_id = o.order_id
+		AND o.userid = u.userid
+		and i.sku_id = #{skuId}
+		and o.`status` = 1
+	</select>
+
+	<!--fxz add 根据username扣除用户积分  star-->
+	<!--  <update id="updateIntegral" parameterType="map" resultMap="saleHistoryResultMap"> -->
+	 <update id="updateIntegral" parameterType="com.bluemobi.po.cas.CasUser"> 
+			update cas_user
+		set
+				userintegral=#{userintegral}
+		where
+			username=#{username}
+	</update>
+	<!--fxz add 根据username扣除用户积分  end-->
+</mapper> 
