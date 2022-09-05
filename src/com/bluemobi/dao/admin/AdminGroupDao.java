@@ -1,6 +1,6 @@
 package com.bluemobi.dao.admin;
 
-import com.appcore.dao.MyBatisBaseDao;
+import com.appcore.dao.MyBatisBaseDao; 
 
 /**
  * 【管理员分组表】 数据访问对象 接口
